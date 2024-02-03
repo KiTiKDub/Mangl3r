@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT id="e6fZiy" name="Mangl3r" projectType="audioplug" useAppConfig="0"
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music">
+  <MAINGROUP id="oey3d3" name="Mangl3r">
+    <GROUP id="{4E6E2CD4-042B-B174-D651-1260E7FC76EE}" name="Assets">
+      <FILE id="RnVCFc" name="OFFSHORE.TTF" compile="0" resource="1" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>
+      <FILE id="wFzJ82" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="1"
+            file="../../Muisc/Pictures/KITIK_LOGO_NO_BKGD.png"/>
+    </GROUP>
+    <GROUP id="{F0EBD4C2-FE48-7CB3-F666-6DF6B659699A}" name="Source">
+      <GROUP id="{2DB4C669-3F36-519F-D481-71245BFE79A7}" name="Utility">
+        <FILE id="xSlJO9" name="KiTiK_utilityViz.cpp" compile="1" resource="0"
+              file="Source/Utility/KiTiK_utilityViz.cpp"/>
+        <FILE id="NmhmvJ" name="KiTiK_utilityViz.h" compile="0" resource="0"
+              file="Source/Utility/KiTiK_utilityViz.h"/>
+        <FILE id="biF9xA" name="KitikToolbar.cpp" compile="1" resource="0"
+              file="Source/Utility/KitikToolbar.cpp"/>
+        <FILE id="DajNNH" name="KitikToolbar.h" compile="0" resource="0" file="Source/Utility/KitikToolbar.h"/>
+        <FILE id="MkJlHd" name="Params.h" compile="0" resource="0" file="Source/Utility/Params.h"/>
+        <FILE id="qD8dSf" name="PresetManager.cpp" compile="1" resource="0"
+              file="Source/Utility/PresetManager.cpp"/>
+        <FILE id="TiHtMW" name="PresetManager.h" compile="0" resource="0" file="Source/Utility/PresetManager.h"/>
+        <FILE id="T0UQKu" name="PresetPanel.cpp" compile="1" resource="0" file="Source/Utility/PresetPanel.cpp"/>
+        <FILE id="onW6lx" name="PresetPanel.h" compile="0" resource="0" file="Source/Utility/PresetPanel.h"/>
+      </GROUP>
+      <GROUP id="{B1C26CB3-62F3-9114-7B0A-5C2CA7B821CF}" name="DSP">
+        <FILE id="BA6EqQ" name="BitCrusherData.cpp" compile="1" resource="0"
+              file="Source/DSP/BitCrusherData.cpp"/>
+        <FILE id="Qz83iJ" name="BitCrusherData.h" compile="0" resource="0"
+              file="Source/DSP/BitCrusherData.h"/>
+        <FILE id="BFVHOK" name="clipperData.cpp" compile="1" resource="0" file="Source/DSP/clipperData.cpp"/>
+        <FILE id="wUaRu3" name="clipperData.h" compile="0" resource="0" file="Source/DSP/clipperData.h"/>
+        <FILE id="EDDqAR" name="DistorkEngine.cpp" compile="1" resource="0"
+              file="Source/DSP/DistorkEngine.cpp"/>
+        <FILE id="GCWcyq" name="DistorkEngine.h" compile="0" resource="0" file="Source/DSP/DistorkEngine.h"/>
+        <FILE id="FKmO5V" name="kLevelMeterData.h" compile="0" resource="0"
+              file="Source/DSP/kLevelMeterData.h"/>
+        <FILE id="wzv7jG" name="SaturationData.cpp" compile="1" resource="0"
+              file="Source/DSP/SaturationData.cpp"/>
+        <FILE id="oNVWRJ" name="SaturationData.h" compile="0" resource="0"
+              file="Source/DSP/SaturationData.h"/>
+        <FILE id="mseZmE" name="WaveShaperData.cpp" compile="1" resource="0"
+              file="Source/DSP/WaveShaperData.cpp"/>
+        <FILE id="HUCXUF" name="WaveShaperData.h" compile="0" resource="0"
+              file="Source/DSP/WaveShaperData.h"/>
+      </GROUP>
+      <GROUP id="{813E8A4A-7EDC-232B-8DC7-FCE58FB1FED7}" name="GUI">
+        <FILE id="okeqRY" name="BitCrusher.cpp" compile="1" resource="0" file="Source/GUI/BitCrusher.cpp"/>
+        <FILE id="yh4FlM" name="BitCrusher.h" compile="0" resource="0" file="Source/GUI/BitCrusher.h"/>
+        <FILE id="IGkN5D" name="Clipper.cpp" compile="1" resource="0" file="Source/GUI/Clipper.cpp"/>
+        <FILE id="juZnsd" name="Clipper.h" compile="0" resource="0" file="Source/GUI/Clipper.h"/>
+        <FILE id="njaibx" name="kLevelMeter.h" compile="0" resource="0" file="Source/GUI/kLevelMeter.h"/>
+        <FILE id="fpVx1U" name="kLookAndFeel.cpp" compile="1" resource="0"
+              file="Source/GUI/kLookAndFeel.cpp"/>
+        <FILE id="HyisF5" name="kLookAndFeel.h" compile="0" resource="0" file="Source/GUI/kLookAndFeel.h"/>
+        <FILE id="PTqK0X" name="MasterControls.cpp" compile="1" resource="0"
+              file="Source/GUI/MasterControls.cpp"/>
+        <FILE id="oJGTlT" name="MasterControls.h" compile="0" resource="0"
+              file="Source/GUI/MasterControls.h"/>
+        <FILE id="DZdFps" name="rotarySliderWithLabels.cpp" compile="1" resource="0"
+              file="Source/GUI/rotarySliderWithLabels.cpp"/>
+        <FILE id="aaMMPK" name="rotarySliderWithLabels.h" compile="0" resource="0"
+              file="Source/GUI/rotarySliderWithLabels.h"/>
+        <FILE id="ObEGh2" name="Saturation.cpp" compile="1" resource="0" file="Source/GUI/Saturation.cpp"/>
+        <FILE id="nfnrlc" name="Saturation.h" compile="0" resource="0" file="Source/GUI/Saturation.h"/>
+        <FILE id="NyYqI7" name="SliderWithLabels.cpp" compile="1" resource="0"
+              file="Source/GUI/SliderWithLabels.cpp"/>
+        <FILE id="VghdQQ" name="SliderWithLabels.h" compile="0" resource="0"
+              file="Source/GUI/SliderWithLabels.h"/>
+        <FILE id="c8AMo2" name="Toolbar.cpp" compile="1" resource="0" file="Source/GUI/Toolbar.cpp"/>
+        <FILE id="iwrb1u" name="Toolbar.h" compile="0" resource="0" file="Source/GUI/Toolbar.h"/>
+        <FILE id="vBlhwu" name="WaveShaper.cpp" compile="1" resource="0" file="Source/GUI/WaveShaper.cpp"/>
+        <FILE id="UvLsb0" name="WaveShaper.h" compile="0" resource="0" file="Source/GUI/WaveShaper.h"/>
+      </GROUP>
+      <FILE id="pWxcTw" name="PluginProcessor.cpp" compile="1" resource="0"
+            file="Source/PluginProcessor.cpp"/>
+      <FILE id="yJfVj2" name="PluginProcessor.h" compile="0" resource="0"
+            file="Source/PluginProcessor.h"/>
+      <FILE id="lifdJ3" name="PluginEditor.cpp" compile="1" resource="0"
+            file="Source/PluginEditor.cpp"/>
+      <FILE id="KBLf2v" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+    </GROUP>
+  </MAINGROUP>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_plugin_client" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_dsp" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS JUCE_STRICT_REFCOUNTEDPOINTER="1" JUCE_VST3_CAN_REPLACE_VST2="0"/>
+  <EXPORTFORMATS>
+    <VS2022 targetFolder="Builds/VisualStudio2022">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" targetName="Mangl3r"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Mangl3r"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_plugin_client" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_dsp" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+  </EXPORTFORMATS>
+</JUCERPROJECT>
