@@ -43,6 +43,7 @@ struct DistorkEngine
     juce::AudioParameterFloat* satInGain{ nullptr };
     juce::AudioParameterFloat* satOutGain{ nullptr };
     juce::AudioParameterFloat* satMix{ nullptr };
+    juce::AudioParameterBool* satToggle{ nullptr };
 
     BitCrusher bitcrusher;
     Clipper clipper;

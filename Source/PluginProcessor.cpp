@@ -50,6 +50,7 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     engine1.satInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_One_In)));
     engine1.satMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_One_Mix)));
     engine1.satOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_One_Out)));
+    engine1.satToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Saturator_One_Toggle)));
 
     engine1.waveShaperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Waveshaper_One_Type)));
     engine1.waveShaperSin = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_One_Drive_Sin)));
@@ -369,6 +370,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_One_In), params.at(names::Saturator_One_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_One_Out), params.at(names::Saturator_One_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_One_Mix), params.at(names::Saturator_One_Mix), mixRange, 100));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Saturator_One_Toggle), params.at(names::Saturator_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Two_Drive), params.at(names::Saturator_Two_Drive), driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Two_In), params.at(names::Saturator_Two_In), gainRange, 0));

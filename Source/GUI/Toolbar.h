@@ -12,6 +12,8 @@
 #include "JuceHeader.h"
 #include "kLookAndFeel.h"
 #include "../Utility/KitikToolbar.h"
+#include "../PluginProcessor.h"
+#include "../Utility/Params.h"
 
 
 struct ToolbarItem : public KitikToolbarItemComponent
@@ -65,6 +67,7 @@ struct ToolbarItem : public KitikToolbarItemComponent
 
 private:
     juce::ToggleButton power;
+    //juce::AudioProcessorValueTreeState::ButtonAttachment powerAT;
     Laf lnf;
 };
 
@@ -123,14 +126,26 @@ struct ToolbarComp : public juce::Component
 
     KitikToolbar* getCurrentEffect();
     juce::String getActiveBand();
+    void setPowerButtons(juce::AudioProcessorValueTreeState&);
 
 private:
-     
+    
+    using Attachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
+
     KitikToolbar toolbarHigh, toolbarMid, toolbarLow;
     ToolbarFactory tbf;
     Laf lnf;
     juce::ToggleButton low{ "Low" }, mid{ "Mids" }, high{ "Highs" };
-    juce::AudioProcessorValueTreeState::ButtonAttachment lowAT, midAT, highAT;
+    Attachment lowAT, midAT, highAT;
 
+    std::unique_ptr<Attachment> satToggle1AT, satToggle2AT, satToggle3AT,
+                                clipToggle1AT, clipToggle2AT, clipToggle3AT,
+                                waveToggle1AT, waveToggle2AT, waveToggle3AT,
+                                bitToggle1AT, bitToggle2AT, bitToggle3AT;
+
+    std::vector<std::unique_ptr<Attachment>*> vectorAT{&satToggle1AT, &satToggle2AT, &satToggle3AT,
+                                                       &clipToggle1AT, &clipToggle2AT, &clipToggle3AT,
+                                                       &waveToggle1AT, &waveToggle2AT, &waveToggle3AT,
+                                                       &bitToggle1AT, &bitToggle2AT, &bitToggle3AT};
 };
 

@@ -155,12 +155,12 @@ namespace Params
             {Saturator_Three_Toggle,"Saturation Three Toggle" },
 
             {Clipper_One_Toggle, "Clipper One Toggle" },
-            {Clipper_Two_Toggle, "Clipper One Toggle"},
-            {Clipper_Three_Toggle, "Clipper One Toggle"},
+            {Clipper_Two_Toggle, "Clipper Two Toggle"},
+            {Clipper_Three_Toggle, "Clipper Three Toggle"},
 
             {Waveshaper_One_Toggle, "Waveshaper One Toggle"},
-            {Waveshaper_Two_Toggle, "Waveshaper One Toggle"},
-            {Waveshaper_Three_Toggle, "Waveshaper One Toggle" },
+            {Waveshaper_Two_Toggle, "Waveshaper Two Toggle"},
+            {Waveshaper_Three_Toggle, "Waveshaper Three Toggle" },
 
             {Bitcrusher_One_Toggle, "Bitcrusher One Toggle"},
             {Bitcrusher_Two_Toggle, "Bitcrusher Two Toggle"},

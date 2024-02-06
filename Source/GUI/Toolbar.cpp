@@ -65,6 +65,8 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
             toolbarMid.setVisible(false);
             toolbarLow.setVisible(true);
         };
+
+    setPowerButtons(apvts);
 }
 
 ToolbarComp::~ToolbarComp()
@@ -121,5 +123,52 @@ juce::String ToolbarComp::getActiveBand()
     else
     {
         return toolbarLow.getComponentID();
+    }
+}
+
+void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
+{
+    auto children = toolbarHigh.getChildren();
+    auto childernMid = toolbarMid.getChildren();
+    auto childrenLow = toolbarLow.getChildren();
+
+    children.addArray(childernMid);
+    children.addArray(childrenLow);
+
+
+    const auto& params = Params::getParams();
+    std::vector<Params::names> Names
+    {
+        Params::names::Saturator_One_Toggle,
+        Params::names::Clipper_One_Toggle,
+        Params::names::Waveshaper_One_Toggle,
+        Params::names::Bitcrusher_One_Toggle,   
+
+        Params::names::Saturator_Two_Toggle,
+        Params::names::Clipper_Two_Toggle,
+        Params::names::Waveshaper_Two_Toggle,
+        Params::names::Bitcrusher_Two_Toggle,
+
+        Params::names::Saturator_Three_Toggle,
+        Params::names::Clipper_Three_Toggle,
+        Params::names::Waveshaper_Three_Toggle,
+        Params::names::Bitcrusher_Three_Toggle,
+    };
+
+    for (int i = 0; i < children.size(); i++)
+    {
+        satToggle1AT.reset();
+        if (auto* tbComp = dynamic_cast<KitikToolbarItemComponent*>(children[i]))
+        {
+            if(auto* power = dynamic_cast<juce::ToggleButton*>(tbComp->getChildComponent(0)))
+            {
+                auto check = Names.at(i);
+                auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID(); //Need to add the other toggles to our processor constructor and layout
+                auto attachment = vectorAT.at(i);
+                *attachment = std::make_unique<Attachment>(apvts, ID, *power);
+                DBG(power->getComponentID());
+            }
+            
+        }
     }
 }
