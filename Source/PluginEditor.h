@@ -15,6 +15,7 @@
 #include "GUI/Toolbar.h"
 #include "GUI/Saturation.h"
 #include "GUI/BitCrusher.h"
+#include "GUI/Analyzer.h"
 
 //==============================================================================
 /**
@@ -38,6 +39,8 @@ private:
 
     Mangl3rAudioProcessor& audioProcessor;
     ToolbarComp toolbar{ audioProcessor.apvts };
+
+    AnalyzerComp analyzer{ audioProcessor };
 
     SaturationComp saturationHigh{ audioProcessor.apvts, toolbar }, SaturationMid{ audioProcessor.apvts, toolbar };
     BitCrusherComp bitcrusherHigh{ audioProcessor.apvts, toolbar }, bitcrusherMid{ audioProcessor.apvts, toolbar };

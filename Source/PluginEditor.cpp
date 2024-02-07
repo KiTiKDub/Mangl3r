@@ -21,6 +21,7 @@ Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor&
     addChildComponent(SaturationMid);
     addChildComponent(bitcrusherHigh);
     addChildComponent(bitcrusherMid);
+    addAndMakeVisible(analyzer);
 
     setSize (700, 600);
     startTimerHz(24);
@@ -73,6 +74,8 @@ void Mangl3rAudioProcessorEditor::resized()
 
     masterComp.setBounds(masterArea);
     toolbar.setBounds(selectArea);
+
+    analyzer.setBounds(analyzerBounds);
 }
 
 void Mangl3rAudioProcessorEditor::timerCallback()

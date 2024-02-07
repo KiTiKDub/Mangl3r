@@ -46,6 +46,8 @@
               file="Source/DSP/WaveShaperData.h"/>
       </GROUP>
       <GROUP id="{813E8A4A-7EDC-232B-8DC7-FCE58FB1FED7}" name="GUI">
+        <FILE id="l8HXsJ" name="Analyzer.cpp" compile="1" resource="0" file="Source/GUI/Analyzer.cpp"/>
+        <FILE id="SOxd3K" name="Analyzer.h" compile="0" resource="0" file="Source/GUI/Analyzer.h"/>
         <FILE id="okeqRY" name="BitCrusher.cpp" compile="1" resource="0" file="Source/GUI/BitCrusher.cpp"/>
         <FILE id="yh4FlM" name="BitCrusher.h" compile="0" resource="0" file="Source/GUI/BitCrusher.h"/>
         <FILE id="IGkN5D" name="Clipper.cpp" compile="1" resource="0" file="Source/GUI/Clipper.cpp"/>
