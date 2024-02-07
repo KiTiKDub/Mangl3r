@@ -99,7 +99,7 @@ void Laf::drawToggleButton(juce::Graphics& g, juce::ToggleButton& button,
 
         juce::PathStrokeType pst(2.f, juce::PathStrokeType::JointStyle::curved);
 
-        auto color = button.getToggleState() ? juce::Colours::dimgrey : juce::Colours::white;
+        auto color = button.getToggleState() ? juce::Colours::white : juce::Colours::dimgrey;
 
         g.setColour(color);
         g.strokePath(powerButton, pst);

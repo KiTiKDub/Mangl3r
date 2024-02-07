@@ -23,7 +23,7 @@ void Saturation::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void Saturation::process(juce::dsp::AudioBlock<float>& block, int channel)
 {
-    if (satBypass) { return; };
+    if (!satBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 

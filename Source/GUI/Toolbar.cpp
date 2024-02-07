@@ -41,7 +41,7 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
     addAndMakeVisible(high);
     high.setComponentID("Select");
 
-    high.setToggleState(true, juce::NotificationType::dontSendNotification);
+    //high.setToggleState(true, juce::NotificationType::dontSendNotification);
 
     low.setRadioGroupId(1);
     mid.setRadioGroupId(1);
@@ -140,6 +140,10 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
     children.addArray(childrenMid);
     children.addArray(childrenLow);
 
+    auto highOrder = toolbarHigh.getAllItems();
+    auto midOrder = toolbarMid.getAllItems();
+    auto lowOrder = toolbarLow.getAllItems();
+
     const auto& params = Params::getParams();
     std::vector<Params::names> Names
     {
@@ -169,7 +173,16 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
                 auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID(); //Need to add the other toggles to our processor constructor and layout
                 auto attachment = vectorAT.at(i);
                 *attachment = std::make_unique<Attachment>(apvts, ID, *power);
-                DBG(power->getComponentID());
+
+                String toggleState;
+                if (power->getToggleState())
+                {
+                    toggleState = "on";
+                }
+                else
+                    toggleState = "off";
+
+                DBG("Toggle State at Attachment: " << toggleState);
             }
             
         }

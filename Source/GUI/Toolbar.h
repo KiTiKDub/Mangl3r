@@ -127,6 +127,9 @@ struct ToolbarComp : public juce::Component
     KitikToolbar* getCurrentEffect();
     juce::String getActiveBand();
     void setPowerButtons(juce::AudioProcessorValueTreeState&);
+    KitikToolbar* getHigh() { return &toolbarHigh; };
+    KitikToolbar* getMid() { return &toolbarMid; };
+    KitikToolbar* getLow() { return &toolbarLow; };
 
 private:
     

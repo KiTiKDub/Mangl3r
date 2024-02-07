@@ -537,13 +537,21 @@ int KitikToolbar::getItemId(const int itemIndex) const noexcept
     return 0;
 }
 
-KitikToolbarItemComponent* KitikToolbar::getItemComponent(const int itemIndex) const noexcept
+std::vector<int> KitikToolbar::getAllItems()
 {
-    for (auto item : items)
+    std::vector<int> allItems;
+
+    for (int i = 0; i < items.size(); i++)
     {
-        
+        if (auto* tc = getItemComponent(i))
+            allItems.push_back(tc->getItemId());
     }
 
+    return allItems;
+}
+
+KitikToolbarItemComponent* KitikToolbar::getItemComponent(const int itemIndex) const noexcept
+{
     return items[itemIndex];
 }
 

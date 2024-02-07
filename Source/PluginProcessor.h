@@ -63,6 +63,8 @@ public:
     LevelMeterData levelMeterData;
     FFTData fftData;
 
+    void setToolbarOrder(std::vector<int>, std::vector<int>, std::vector<int>);
+
 private:
 
     juce::AudioParameterBool* globalBypass{ nullptr };
@@ -74,23 +76,36 @@ private:
     juce::AudioParameterBool* selectToolbarTwo{ nullptr };
     juce::AudioParameterBool* selectToolbarThree{ nullptr };
 
+    using Filter = juce::dsp::LinkwitzRileyFilter<float>;
+    //     fc0  fc1
+    Filter LP1, AP2,
+           HP1, LP2,
+           HP2;
+
     juce::AudioParameterFloat* lowMidCrossover{ nullptr };
     juce::AudioParameterFloat* midHighCrossover{ nullptr };
 
     DistorkEngine engine1, engine2, engine3;
 
+    std::array <juce::AudioBuffer<float>, 3> filterBuffers;
+    std::vector<int> toolbarHighOrder{ 1, 2, 3, 4 };
+    std::vector<int> toolbarMidOrder{ 1, 2, 3, 4 };
+    std::vector<int> toolbarLowOrder{ 1, 2, 3, 4 };
+
     //TODO:
         //Spectrum Anylzer:
             //Get image rendered and sized
-            //Set up slider for vertical crossovers
+            //Set up slider for vertical crossovers DONE
             //Where do I put analyzer button?
             // Click on section to allow for change in toolbar
-        //Toolbar:
-            //Figure out how to set up toolbar with buttons
-            //Set up three of them
-            //Need to be able to distinguish from each of them
+                //I could do on mouse click for this? This will have to be done less
+        //Toolbar: DONE
+            //Figure out how to set up toolbar with buttons DONE
+            //Set up three of them DONE
+            //Need to be able to distinguish from each of them DONE
         //DSP
-            //Need to create Distork Engine, and have three instances of them
+            //Need to create Distork Engine, and have three instances of them DONE
+            //Seperate the bands
             ///Maybe add some more functionality. 
         //GUI
             //Maybe make it less wide?

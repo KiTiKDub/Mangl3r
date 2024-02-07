@@ -198,8 +198,37 @@ void Mangl3rAudioProcessor::changeProgramName (int index, const juce::String& ne
 //==============================================================================
 void Mangl3rAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    juce::dsp::ProcessSpec spec;
+    spec.maximumBlockSize = samplesPerBlock;
+    spec.numChannels = getTotalNumOutputChannels();
+    spec.sampleRate = sampleRate;
+
+    engine1.prepareToPlay(spec);
+    engine2.prepareToPlay(spec);
+    engine3.prepareToPlay(spec);
+
+    LP1.reset();
+    LP1.setType(juce::dsp::LinkwitzRileyFilterType::lowpass);
+    LP1.prepare(spec);
+    HP1.reset();
+    HP1.setType(juce::dsp::LinkwitzRileyFilterType::highpass);
+    HP1.prepare(spec);
+
+    AP2.reset();
+    AP2.setType(juce::dsp::LinkwitzRileyFilterType::allpass);
+    AP2.prepare(spec);
+
+    LP2.reset();
+    LP2.setType(juce::dsp::LinkwitzRileyFilterType::lowpass);
+    LP2.prepare(spec);
+    HP2.reset();
+    HP2.setType(juce::dsp::LinkwitzRileyFilterType::highpass);
+    HP2.prepare(spec);
+
+    for (auto& buffer : filterBuffers)
+    {
+        buffer.setSize(spec.numChannels, samplesPerBlock);
+    }
 }
 
 void Mangl3rAudioProcessor::releaseResources()
@@ -243,18 +272,62 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    juce::String toggleState;
+    auto lowMidCutoff = lowMidCrossover->get();
+    LP1.setCutoffFrequency(lowMidCutoff);
+    HP1.setCutoffFrequency(lowMidCutoff);
 
-    if (engine1.satToggle->get()) //it works, but the painting is wrong
+    auto midHighCutoff = midHighCrossover->get();
+    AP2.setCutoffFrequency(midHighCutoff);
+    LP2.setCutoffFrequency(midHighCutoff);
+    HP2.setCutoffFrequency(midHighCutoff);
+
+    for (auto& fb : filterBuffers)
     {
-        toggleState = "on";
-    }
-    else
-    {
-        toggleState = "off";
+        fb = buffer;
     }
 
-    DBG("Toggle State: " << toggleState);
+    auto fb0Block = juce::dsp::AudioBlock<float>(filterBuffers[0]);
+    auto fb1Block = juce::dsp::AudioBlock<float>(filterBuffers[1]);
+    auto fb2Block = juce::dsp::AudioBlock<float>(filterBuffers[2]);
+
+    auto fb0Ctx = juce::dsp::ProcessContextReplacing<float>(fb0Block);
+    auto fb1Ctx = juce::dsp::ProcessContextReplacing<float>(fb1Block);
+    auto fb2Ctx = juce::dsp::ProcessContextReplacing<float>(fb2Block);
+
+    LP1.process(fb0Ctx);
+    AP2.process(fb0Ctx);
+
+    HP1.process(fb1Ctx);
+    filterBuffers[2] = filterBuffers[1];
+    LP2.process(fb1Ctx);
+
+    HP2.process(fb2Ctx);
+
+    auto check = engine1.satToggle->get();
+
+    for (int ch = 0; ch < totalNumInputChannels; ch++)
+    {
+        engine1.process(filterBuffers[2], toolbarHighOrder, ch);
+        engine2.process(filterBuffers[1], toolbarMidOrder, ch);
+        engine3.process(filterBuffers[0], toolbarLowOrder, ch);
+    }
+
+    auto numSamples = buffer.getNumSamples();
+    auto numChannels = buffer.getNumChannels();
+
+    buffer.clear();
+
+    auto addFilterBand = [nc = getTotalNumOutputChannels(), ns = numSamples](auto& inputBuffer, const auto& source)
+        {
+            for (auto i = 0; i < nc; i++)
+            {
+                inputBuffer.addFrom(i, 0, source, i, 0, ns);
+            };
+        };
+
+    addFilterBand(buffer, filterBuffers[0]);
+    addFilterBand(buffer, filterBuffers[1]);
+    addFilterBand(buffer, filterBuffers[2]);
 
     fftData.pushNextSampleIntoFifo(buffer);
 }
@@ -409,6 +482,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique <AudioParameterBool>(params.at(names::Saturator_Three_Toggle), params.at(names::Saturator_Three_Toggle), true));
 
     return layout;
+}
+
+void Mangl3rAudioProcessor::setToolbarOrder(std::vector<int> high, std::vector<int> mid, std::vector<int> low)
+{
+    toolbarHighOrder = high;
+    toolbarMidOrder = mid;
+    toolbarLowOrder = low;
 }
 
 //==============================================================================

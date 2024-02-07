@@ -23,7 +23,7 @@ void Clipper::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void Clipper::process(juce::dsp::AudioBlock<float>& block, int channel)
 {
-    if (clipperBypass) { return; };
+    if (!clipperBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 

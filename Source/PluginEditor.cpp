@@ -82,6 +82,15 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 {
     if(toolbar.isMouseButtonDown(true))
         displayCorrectDistortion();
+
+    auto currentToolbar = toolbar.getCurrentEffect();
+    auto id = currentToolbar->getAllItems();
+
+    auto toolbarHigh = toolbar.getHigh();
+    auto toolbarMid = toolbar.getMid();
+    auto toolbarLow = toolbar.getLow();
+
+    audioProcessor.setToolbarOrder(toolbarHigh->getAllItems(), toolbarMid->getAllItems(), toolbarLow->getAllItems());
 }
 
 void Mangl3rAudioProcessorEditor::displayCorrectDistortion()

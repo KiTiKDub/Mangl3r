@@ -152,6 +152,8 @@ public:
 
     int getItemId(int itemIndex) const noexcept;
 
+    std::vector<int> KitikToolbar::getAllItems();
+
     KitikToolbarItemComponent* getItemComponent(int itemIndex) const noexcept;
 
     void addDefaultItems(TestToolbarItemFactory& factoryToUse);

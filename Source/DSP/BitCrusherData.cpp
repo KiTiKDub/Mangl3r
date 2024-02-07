@@ -23,7 +23,7 @@ void BitCrusher::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void BitCrusher::process(juce::dsp::AudioBlock<float>& block, int channel)
 {
-    if (crusherBypass) { return; };
+    if (!crusherBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 
