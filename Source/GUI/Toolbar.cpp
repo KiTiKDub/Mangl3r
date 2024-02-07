@@ -129,12 +129,16 @@ juce::String ToolbarComp::getActiveBand()
 void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
 {
     auto children = toolbarHigh.getChildren();
-    auto childernMid = toolbarMid.getChildren();
+    auto childrenMid = toolbarMid.getChildren();
     auto childrenLow = toolbarLow.getChildren();
 
-    children.addArray(childernMid);
-    children.addArray(childrenLow);
+    //Needs to remove "Additional Items" from the array
+    children.removeLast(1);
+    childrenMid.removeLast(1);
+    childrenLow.removeLast(1);
 
+    children.addArray(childrenMid);
+    children.addArray(childrenLow);
 
     const auto& params = Params::getParams();
     std::vector<Params::names> Names
@@ -157,7 +161,6 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
 
     for (int i = 0; i < children.size(); i++)
     {
-        satToggle1AT.reset();
         if (auto* tbComp = dynamic_cast<KitikToolbarItemComponent*>(children[i]))
         {
             if(auto* power = dynamic_cast<juce::ToggleButton*>(tbComp->getChildComponent(0)))

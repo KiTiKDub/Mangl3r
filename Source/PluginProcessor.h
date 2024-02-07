@@ -12,6 +12,7 @@
 #include "DSP/kLevelMeterData.h"
 #include "DSP/DistorkEngine.h"
 #include "Utility/Params.h"
+#include "Utility/KiTiK_utilityViz.h"
 
 //==============================================================================
 /**
@@ -60,6 +61,7 @@ public:
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "parameters", createParameterLayout() };
 
     LevelMeterData levelMeterData;
+    FFTData fftData;
 
 private:
 
@@ -71,6 +73,9 @@ private:
     juce::AudioParameterBool* selectToolbarOne{ nullptr };
     juce::AudioParameterBool* selectToolbarTwo{ nullptr };
     juce::AudioParameterBool* selectToolbarThree{ nullptr };
+
+    juce::AudioParameterFloat* lowMidCrossover{ nullptr };
+    juce::AudioParameterFloat* midHighCrossover{ nullptr };
 
     DistorkEngine engine1, engine2, engine3;
 

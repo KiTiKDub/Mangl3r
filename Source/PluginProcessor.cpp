@@ -30,6 +30,9 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     masterMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Master_Mix)));
     masterOutValue = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Master_Out_Gain)));
 
+    lowMidCrossover = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Low_Mid_Crossover_Freq)));
+    midHighCrossover = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Mid_High_Crossover_Freq)));
+
     selectToolbarOne = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarOne"));
     selectToolbarTwo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarTwo"));
     selectToolbarThree = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarThree"));
@@ -39,12 +42,14 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     engine1.clipperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_Out)));
     engine1.clipperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Clipper_One_Type)));
     engine1.clipperThresh = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_Threshold)));
+    engine1.clipperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Clipper_One_Toggle)));
 
     engine1.crusherBitDepth = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_One_Depth)));
     engine1.crusherBitRate = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_One_Rate)));
     engine1.crusherInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_One_In)));
     engine1.crusherMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_One_Mix)));
     engine1.crusherOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_One_Out)));
+    engine1.crusherToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Bitcrusher_One_Toggle)));
 
     engine1.satDrive = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_One_Drive)));
     engine1.satInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_One_In)));
@@ -60,23 +65,27 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     engine1.waveShaperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_One_In)));
     engine1.waveShaperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_One_Mix)));
     engine1.waveShaperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_One_Out)));
+    engine1.waveShaperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Waveshaper_One_Toggle)));
 
     engine2.clipperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Two_In)));
     engine2.clipperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Two_Mix)));
     engine2.clipperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Two_Out)));
     engine2.clipperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Clipper_Two_Type)));
     engine2.clipperThresh = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Two_Threshold)));
+    engine2.clipperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Clipper_Two_Toggle)));
 
     engine2.crusherBitDepth = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_Two_Depth)));
     engine2.crusherBitRate = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_Two_Rate)));
     engine2.crusherInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Two_In)));
     engine2.crusherMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Two_Mix)));
     engine2.crusherOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Two_Out)));
+    engine2.crusherToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Bitcrusher_Two_Toggle)));
 
     engine2.satDrive = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Two_Drive)));
     engine2.satInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Two_In)));
     engine2.satMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Two_Mix)));
     engine2.satOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Two_Out)));
+    engine2.satToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Saturator_Two_Toggle)));
 
     engine2.waveShaperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Waveshaper_Two_Type)));
     engine2.waveShaperSin = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Two_Drive_Sin)));
@@ -86,23 +95,27 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     engine2.waveShaperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Two_In)));
     engine2.waveShaperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Two_Mix)));
     engine2.waveShaperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Two_Out)));
+    engine2.waveShaperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Waveshaper_Two_Toggle)));
 
     engine3.clipperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Three_In)));
     engine3.clipperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Three_Mix)));
     engine3.clipperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Three_Out)));
     engine3.clipperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Clipper_Three_Type)));
     engine3.clipperThresh = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_Three_Threshold)));
+    engine3.clipperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Clipper_Three_Toggle)));
 
     engine3.crusherBitDepth = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_Three_Depth)));
     engine3.crusherBitRate = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Bitcrusher_Three_Rate)));
     engine3.crusherInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Three_In)));
     engine3.crusherMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Three_Mix)));
     engine3.crusherOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Bitcrusher_Three_Out)));
+    engine3.crusherToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Bitcrusher_Three_Toggle)));
 
     engine3.satDrive = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Three_Drive)));
     engine3.satInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Three_In)));
     engine3.satMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Three_Mix)));
     engine3.satOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Saturator_Three_Out)));
+    engine3.satToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Saturator_Three_Toggle)));
 
     engine3.waveShaperSelect = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Waveshaper_Three_Type)));
     engine3.waveShaperSin = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Three_Drive_Sin)));
@@ -112,6 +125,7 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     engine3.waveShaperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Three_In)));
     engine3.waveShaperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Three_Mix)));
     engine3.waveShaperOutGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Waveshaper_Three_Out)));
+    engine3.waveShaperToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Waveshaper_Three_Toggle)));
 
 }
 
@@ -226,27 +240,23 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
 
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // This is here to avoid people getting screaming feedback
-    // when they first compile a plugin, but obviously you don't need to keep
-    // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
-    // audio processing...
-    // Make sure to reset the state if your inner loop is processing
-    // the samples and the outer loop is handling the channels.
-    // Alternatively, you can process the samples with the channels
-    // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
+    juce::String toggleState;
 
-        // ..do something to the data...
+    if (engine1.satToggle->get()) //it works, but the painting is wrong
+    {
+        toggleState = "on";
     }
+    else
+    {
+        toggleState = "off";
+    }
+
+    DBG("Toggle State: " << toggleState);
+
+    fftData.pushNextSampleIntoFifo(buffer);
 }
 
 //==============================================================================
@@ -284,6 +294,8 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
 
     auto gainRange = NormalisableRange<float>(-24, 24, .1, 1);
     auto mixRange = NormalisableRange<float>(0, 100, 1, 1);
+    auto lowMidRange = NormalisableRange<float>(20, 999, 1, 1);
+    auto midHighRange = NormalisableRange<float>(1000, 20000, 1, 1);
 
     layout.add(std::make_unique<AudioParameterBool>("globalBypass", "Global Bypass", false));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_In_Gain), params.at(names::Master_Mix), gainRange, 0));
@@ -294,6 +306,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterBool>("selectToolbarTwo", "Toolbar Two", false));
     layout.add(std::make_unique<AudioParameterBool>("selectToolbarThree", "Toolbar Three", false));
 
+    layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Low_Mid_Crossover_Freq), params.at(names::Low_Mid_Crossover_Freq), lowMidRange, 400));
+    layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Mid_High_Crossover_Freq), params.at(names::Mid_High_Crossover_Freq), midHighRange, 2000));
+
     //Clipper Controls
     auto threshRange = NormalisableRange<float>(-60, 0, .1, 1);
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Clipper_One_Type), params.at(names::Clipper_One_Type), 0, 5, 0));
@@ -301,18 +316,21 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_One_In), params.at(names::Clipper_One_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_One_Out), params.at(names::Clipper_One_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_One_Mix), params.at(names::Clipper_One_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Clipper_One_Toggle), params.at(names::Clipper_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Clipper_Two_Type), params.at(names::Clipper_Two_Type), 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Two_Threshold), params.at(names::Clipper_Two_Threshold), threshRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Two_In), params.at(names::Clipper_Two_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Two_Out), params.at(names::Clipper_Two_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Two_Mix), params.at(names::Clipper_Two_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Clipper_Two_Toggle), params.at(names::Clipper_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Clipper_Three_Type), params.at(names::Clipper_Three_Type), 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Three_Threshold), params.at(names::Clipper_Three_Threshold), threshRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Three_In), params.at(names::Clipper_Three_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Three_Out), params.at(names::Clipper_Three_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Clipper_Three_Mix), params.at(names::Clipper_Three_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Clipper_Three_Toggle), params.at(names::Clipper_Three_Toggle), true));
 
     //WaveShaper Controls
     auto lessThanOne = NormalisableRange<float>(.01, .99, .01, 1);
@@ -326,6 +344,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_One_In), params.at(names::Waveshaper_One_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_One_Mix), params.at(names::Waveshaper_One_Mix), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_One_Out), params.at(names::Waveshaper_One_Out), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Waveshaper_One_Toggle), params.at(names::Waveshaper_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Waveshaper_Two_Type), params.at(names::Waveshaper_Two_Type), 0, 3, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Two_Drive_Sin), params.at(names::Waveshaper_Two_Drive_Sin), sineFactor, .5));
@@ -335,6 +354,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Two_In), params.at(names::Waveshaper_Two_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Two_Mix), params.at(names::Waveshaper_Two_Mix), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Two_Out), params.at(names::Waveshaper_Two_Out), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Waveshaper_Two_Toggle), params.at(names::Waveshaper_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Waveshaper_Three_Type), params.at(names::Waveshaper_Three_Type), 0, 3, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Three_Drive_Sin), params.at(names::Waveshaper_Three_Drive_Sin), sineFactor, .5));
@@ -344,6 +364,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Three_In), params.at(names::Waveshaper_Three_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Three_Mix), params.at(names::Waveshaper_Three_Mix), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Waveshaper_Three_Out), params.at(names::Waveshaper_Three_Out), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Waveshaper_Three_Toggle), params.at(names::Waveshaper_Three_Toggle), true));
 
     //BitCrusher Controls
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Bitcrusher_One_Depth), params.at(names::Bitcrusher_One_Depth), 1, 16, 16));
@@ -351,18 +372,21 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_One_In), params.at(names::Bitcrusher_One_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_One_Out), params.at(names::Bitcrusher_One_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_One_Mix), params.at(names::Bitcrusher_One_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Bitcrusher_One_Toggle), params.at(names::Bitcrusher_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Bitcrusher_Two_Depth), params.at(names::Bitcrusher_Two_Depth), 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Bitcrusher_Two_Rate), params.at(names::Bitcrusher_Two_Rate), 1, 25, 1));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Two_In), params.at(names::Bitcrusher_Two_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Two_Out), params.at(names::Bitcrusher_Two_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Two_Mix), params.at(names::Bitcrusher_Two_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Bitcrusher_Two_Toggle), params.at(names::Bitcrusher_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Bitcrusher_Three_Depth), params.at(names::Bitcrusher_Three_Depth), 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Bitcrusher_Three_Rate), params.at(names::Bitcrusher_Three_Rate), 1, 25, 1));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Three_In), params.at(names::Bitcrusher_Three_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Three_Out), params.at(names::Bitcrusher_Three_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Bitcrusher_Three_Mix), params.at(names::Bitcrusher_Three_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Bitcrusher_Three_Toggle), params.at(names::Bitcrusher_Three_Toggle), true));
 
     //Saturation Controls
     auto driveRange = NormalisableRange<float>(1, 10, .1, 1);
@@ -376,11 +400,13 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Two_In), params.at(names::Saturator_Two_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Two_Out), params.at(names::Saturator_Two_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Two_Mix), params.at(names::Saturator_Two_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Saturator_Two_Toggle), params.at(names::Saturator_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Three_Drive), params.at(names::Saturator_Three_Drive), driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Three_In), params.at(names::Saturator_Three_In), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Three_Out), params.at(names::Saturator_Three_Out), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Saturator_Three_Mix), params.at(names::Saturator_Three_Mix), mixRange, 100));
+    layout.add(std::make_unique <AudioParameterBool>(params.at(names::Saturator_Three_Toggle), params.at(names::Saturator_Three_Toggle), true));
 
     return layout;
 }
