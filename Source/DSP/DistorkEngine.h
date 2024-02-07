@@ -17,11 +17,15 @@
 
 struct DistorkEngine
 {
+    void prepareToPlay(juce::dsp::ProcessSpec&);
+    void process(juce::dsp::AudioBlock<float>&, int);
+
     juce::AudioParameterInt* clipperSelect{ nullptr };
     juce::AudioParameterFloat* clipperThresh{ nullptr };
     juce::AudioParameterFloat* clipperInGain{ nullptr };
     juce::AudioParameterFloat* clipperOutGain{ nullptr };
     juce::AudioParameterFloat* clipperMix{ nullptr };
+    juce::AudioParameterBool* clipperToggle{ nullptr };
 
     juce::AudioParameterInt* waveShaperSelect{ nullptr };
     juce::AudioParameterFloat* waveShaperSin{ nullptr };
@@ -31,6 +35,7 @@ struct DistorkEngine
     juce::AudioParameterFloat* waveShaperInGain{ nullptr };
     juce::AudioParameterFloat* waveShaperOutGain{ nullptr };
     juce::AudioParameterFloat* waveShaperMix{ nullptr };
+    juce::AudioParameterBool* waveShaperToggle{ nullptr };
     std::vector<juce::AudioParameterFloat*> waveShaperFactorsHolder{ waveShaperSin, waveShaperQuadratic, waveShaperFactor, waveShaperGB };
 
     juce::AudioParameterInt* crusherBitDepth{ nullptr };
@@ -38,6 +43,7 @@ struct DistorkEngine
     juce::AudioParameterFloat* crusherInGain{ nullptr };
     juce::AudioParameterFloat* crusherOutGain{ nullptr };
     juce::AudioParameterFloat* crusherMix{ nullptr };
+    juce::AudioParameterBool* crusherToggle{ nullptr };
 
     juce::AudioParameterFloat* satDrive{ nullptr };
     juce::AudioParameterFloat* satInGain{ nullptr };
@@ -45,8 +51,11 @@ struct DistorkEngine
     juce::AudioParameterFloat* satMix{ nullptr };
     juce::AudioParameterBool* satToggle{ nullptr };
 
+private:
     BitCrusher bitcrusher;
     Clipper clipper;
     Saturation saturator;
     WaveShaper waveshaper;
+
+    void updateParams();
 };
