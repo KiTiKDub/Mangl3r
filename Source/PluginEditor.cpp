@@ -15,12 +15,13 @@ Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor&
 {
     setLookAndFeel(&lnf);
 
+    addAndMakeVisible(saturation);
+    addChildComponent(clipper);
+    addChildComponent(waveShaper);
+    addChildComponent(bitCrusher);
+
     addAndMakeVisible(masterComp);
     addAndMakeVisible(toolbar);
-    addAndMakeVisible(saturationHigh);
-    addChildComponent(SaturationMid);
-    addChildComponent(bitcrusherHigh);
-    addChildComponent(bitcrusherMid);
     addAndMakeVisible(analyzer);
 
     setSize (700, 600);
@@ -67,10 +68,10 @@ void Mangl3rAudioProcessorEditor::resized()
     auto selectArea = bounds.removeFromBottom(bounds.getHeight() * .15);
     auto masterArea = bounds.removeFromRight(bounds.getWidth() * .3);
 
-    saturationHigh.setBounds(bounds);
-    SaturationMid.setBounds(bounds);
-    bitcrusherHigh.setBounds(bounds);
-    bitcrusherMid.setBounds(bounds);
+    saturation.setBounds(bounds);
+    clipper.setBounds(bounds);
+    waveShaper.setBounds(bounds);
+    bitCrusher.setBounds(bounds);
 
     masterComp.setBounds(masterArea);
     toolbar.setBounds(selectArea);
@@ -96,6 +97,7 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
 {
     auto currentToolbar = toolbar.getCurrentEffect();
+
     auto& childComps = currentToolbar->getChildren();
     for (auto* child : childComps)
     {
@@ -103,17 +105,47 @@ void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
         {
             if (tbComp->isClicked)
             {
-                if (tbComp->getName() == "Saturation")
-                {   
-                    saturationHigh.setVisible(true);
-                    bitcrusherHigh.setVisible(false);
-                }
-                else if(tbComp->getName() == "Bitcrusher")
+                auto name = tbComp->getName();
+
+                if (name == "Saturation")
                 {
-                    saturationHigh.setVisible(false);
-                    bitcrusherHigh.setVisible(true);
+                    saturation.setVisible(true);
+                    clipper.setVisible(false);
+                    waveShaper.setVisible(false);
+                    bitCrusher.setVisible(false);
+
+                    saturation.updateAttachments(audioProcessor.apvts, toolbar);
+
                 }
-                
+                else if (name == "Clipper")
+                {
+                    saturation.setVisible(false);
+                    clipper.setVisible(true);
+                    waveShaper.setVisible(false);
+                    bitCrusher.setVisible(false);
+
+                    clipper.updateAttachments(audioProcessor.apvts, toolbar);
+
+                }
+                else if (name == "Waveshaper")
+                {
+                    saturation.setVisible(false);
+                    clipper.setVisible(false);
+                    waveShaper.setVisible(true);
+                    bitCrusher.setVisible(false);
+
+                    waveShaper.updateAttachments(audioProcessor.apvts, toolbar);
+                }
+                else if (name == "Bitcrusher")
+                {
+                    saturation.setVisible(false);
+                    clipper.setVisible(false);
+                    waveShaper.setVisible(false);
+                    bitCrusher.setVisible(true);
+
+                    bitCrusher.updateAttachments(audioProcessor.apvts, toolbar);
+                }
+
             }
         }
     }

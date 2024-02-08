@@ -41,8 +41,6 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
     addAndMakeVisible(high);
     high.setComponentID("Select");
 
-    //high.setToggleState(true, juce::NotificationType::dontSendNotification);
-
     low.setRadioGroupId(1);
     mid.setRadioGroupId(1);
     high.setRadioGroupId(1);
@@ -52,6 +50,7 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
             toolbarHigh.setVisible(true);
             toolbarMid.setVisible(false);
             toolbarLow.setVisible(false);
+
         };
     mid.onClick = [this]()
         {

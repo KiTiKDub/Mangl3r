@@ -20,6 +20,9 @@ SaturationComp::SaturationComp(juce::AudioProcessorValueTreeState& apvts, Toolba
     addAndMakeVisible(*drive);
     addAndMakeVisible(*mix);
     addAndMakeVisible(*outGain);
+
+    //updateAttachments(apvts, tb);
+
 }
 
 SaturationComp::~SaturationComp()
@@ -82,6 +85,64 @@ void SaturationComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, Toolb
     drive = std::make_unique<RotarySliderWithLabels>(&driveParam, "", "Drive");
     mix = std::make_unique<RotarySliderWithLabels>(&mixParam, "%", "Mix");
     outGain = std::make_unique<RotarySliderWithLabels>(&outGainParam, "dB", "Out Gain");
+
+    makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
+    makeAttachment(driveAT, apvts, params, bandNames.at(Pos::Drive), *drive);
+    makeAttachment(mixAT, apvts, params, bandNames.at(Pos::Mix), *mix);
+    makeAttachment(outGainAT, apvts, params, bandNames.at(Pos::Out), *outGain);
+
+    addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB"); //lets add default values here instead of using constants
+    addLabelPairs(drive->labels, 1, 3, driveParam, "", 24);
+    addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+    addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+
+    inGain.get()->onValueChange = [this, &inGainParam]()
+        {
+            addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
+        };
+    drive.get()->onValueChange = [this, &driveParam]()
+        {
+            addLabelPairs(drive->labels, 1, 3, driveParam, "", 24);
+        };
+    mix.get()->onValueChange = [this, &mixParam]()
+        {
+            addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+        };
+    outGain.get()->onValueChange = [this, &outGainParam]()
+        {
+            addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+        };
+}
+
+void SaturationComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
+{
+    inGainAT.reset();
+    driveAT.reset();
+    mixAT.reset();
+    outGainAT.reset();
+
+    const auto& params = Params::getParams();
+
+    auto band = tb.getActiveBand();
+    auto bandNames = getParamsAtBand(band);
+
+    enum Pos
+    {
+        Drive,
+        In,
+        Mix,
+        Out
+    };
+
+    auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
+    auto& driveParam = getParam(apvts, params, bandNames.at(Pos::Drive));
+    auto& mixParam = getParam(apvts, params, bandNames.at(Pos::Mix));
+    auto& outGainParam = getParam(apvts, params, bandNames.at(Pos::Out));
+
+    inGain.get()->changeParam(&inGainParam);
+    drive.get()->changeParam(&driveParam);
+    mix.get()->changeParam(&mixParam);
+    outGain.get()->changeParam(&outGainParam);
 
     makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
     makeAttachment(driveAT, apvts, params, bandNames.at(Pos::Drive), *drive);

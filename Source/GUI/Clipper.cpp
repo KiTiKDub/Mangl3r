@@ -51,6 +51,74 @@ void ClipperComp::resized()
     mix->setBounds(bounds);
 }
 
+void ClipperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
+{
+    inGainAT.reset();
+    selectAT.reset();
+    mixAT.reset();
+    outGainAT.reset();
+    thresholdAT.reset();
+
+    const auto& params = Params::getParams();
+
+    auto band = tb.getActiveBand();
+    auto bandNames = getParamsAtBand(band);
+
+    enum Pos
+    {
+        Type,
+        Threshold,
+        In,
+        Mix,
+        Out
+    };
+
+    auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
+    auto& selectParam = getParam(apvts, params, bandNames.at(Pos::Type));
+    auto& mixParam = getParam(apvts, params, bandNames.at(Pos::Mix));
+    auto& thresholdParam = getParam(apvts, params, bandNames.at(Pos::Threshold));
+    auto& outGainParam = getParam(apvts, params, bandNames.at(Pos::Out));
+
+    inGain.get()->changeParam(&inGainParam);
+    select.get()->changeParam(&selectParam);
+    mix.get()->changeParam(&mixParam);
+    threshold.get()->changeParam(&thresholdParam);
+    outGain.get()->changeParam(&outGainParam);
+
+    makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
+    makeAttachment(selectAT, apvts, params, bandNames.at(Pos::Type), *select);
+    makeAttachment(thresholdAT, apvts, params, bandNames.at(Pos::Threshold), *threshold);
+    makeAttachment(mixAT, apvts, params, bandNames.at(Pos::Mix), *mix);
+    makeAttachment(outGainAT, apvts, params, bandNames.at(Pos::Out), *outGain);
+
+    addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
+    addLabelPairs(select->labels, 1, 3, selectParam, "", 24, typeText);
+    addLabelPairs(threshold->labels, thresholdParam, " dB");
+    addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+    addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+
+    inGain.get()->onValueChange = [this, &inGainParam]()
+        {
+            addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
+        };
+    select.get()->onValueChange = [this, &selectParam]()
+        {
+            addLabelPairs(select->labels, 1, 3, selectParam, "", 24, typeText);
+        };
+    threshold.get()->onValueChange = [this, &thresholdParam]()
+        {
+            addLabelPairs(threshold->labels, thresholdParam, " dB");
+        };
+    mix.get()->onValueChange = [this, &mixParam]()
+        {
+            addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+        };
+    outGain.get()->onValueChange = [this, &outGainParam]()
+        {
+            addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+        };
+}
+
 void ClipperComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
 {
     const auto& params = Params::getParams();

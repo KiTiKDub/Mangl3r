@@ -20,7 +20,7 @@ WaveShaperComp::WaveShaperComp(juce::AudioProcessorValueTreeState& apvts, Toolba
     addAndMakeVisible(*mix);
     addAndMakeVisible(*outGain);
  
-    updateAttachments(apvts, tb);
+    updateDistortType(apvts, tb);
 }
 
 WaveShaperComp::~WaveShaperComp()
@@ -49,6 +49,75 @@ void WaveShaperComp::resized()
     outGain->setBounds(rightSide);
     mix->setBounds(bounds);
 }
+
+void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
+{
+    inGainAT.reset();
+    selectAT.reset();
+    distortAT.reset();
+    mixAT.reset();
+    outGainAT.reset();
+
+    const auto& params = Params::getParams();
+
+    auto band = tb.getActiveBand();
+    auto bandNames = getParamsAtBand(band);
+
+    enum Pos
+    {
+        Type,
+        Sin,
+        holder1,
+        holder2,
+        holder3,
+        In,
+        Mix,
+        Out
+    };
+
+    auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
+    auto& selectParam = getParam(apvts, params, bandNames.at(Pos::Type));
+    auto& distortParm = getParam(apvts, params, bandNames.at(Pos::Sin));
+    auto& mixParam = getParam(apvts, params, bandNames.at(Pos::Mix));
+    auto& outGainParam = getParam(apvts, params, bandNames.at(Pos::Out));
+
+    inGain.get()->changeParam(&inGainParam);
+    select.get()->changeParam(&selectParam);
+    distort.get()->changeParam(&distortParm);
+    mix.get()->changeParam(&mixParam);
+    outGain.get()->changeParam(&outGainParam);
+
+    makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
+    makeAttachment(selectAT, apvts, params, bandNames.at(Pos::Type), *select);
+    makeAttachment(distortAT, apvts, params, bandNames.at(Pos::Sin), *distort);
+    makeAttachment(mixAT, apvts, params, bandNames.at(Pos::Mix), *mix);
+    makeAttachment(outGainAT, apvts, params, bandNames.at(Pos::Out), *outGain);
+
+    addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
+    addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
+    addLabelPairs(distort->labels, 1, 3, distortParm, "", 20);
+    addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+    addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+
+    inGain.get()->onValueChange = [this, &inGainParam]()
+        {
+            addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
+        };
+    select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
+        {
+            addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
+            updateDistortType(apvts, tb);
+        };
+    mix.get()->onValueChange = [this, &mixParam]()
+        {
+            addLabelPairs(mix->labels, 1, 3, mixParam, "%");
+        };
+    outGain.get()->onValueChange = [this, &outGainParam]()
+        {
+            addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
+        };
+}
+
 
 void WaveShaperComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
 {
@@ -100,7 +169,7 @@ void WaveShaperComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, Toolb
     select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
         {
             addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
-            updateAttachments(apvts, tb);
+            updateDistortType(apvts, tb);
         };
     mix.get()->onValueChange = [this, &mixParam]()
         {
@@ -112,7 +181,7 @@ void WaveShaperComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, Toolb
         };
 }
 
-void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
+void WaveShaperComp::updateDistortType(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb)
 {
     const auto& params = Params::getParams();
 

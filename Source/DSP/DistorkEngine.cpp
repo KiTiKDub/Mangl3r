@@ -22,7 +22,7 @@ void DistorkEngine::process(juce::AudioBuffer<float>& buffer, std::vector<int> o
 {
     updateParams();
 
-    auto block = juce::dsp::AudioBlock<float>(buffer);
+    auto block = juce::dsp::AudioBlock<float>(buffer); //Need to have clipper to do real testing
 
     for (int i = 0; i < order.size(); i++)
     {

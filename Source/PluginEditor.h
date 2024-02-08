@@ -14,6 +14,8 @@
 #include "GUI/MasterControls.h"
 #include "GUI/Toolbar.h"
 #include "GUI/Saturation.h"
+#include "GUI/Clipper.h"
+#include "GUI/WaveShaper.h"
 #include "GUI/BitCrusher.h"
 #include "GUI/Analyzer.h"
 
@@ -42,8 +44,10 @@ private:
 
     AnalyzerComp analyzer{ audioProcessor };
 
-    SaturationComp saturationHigh{ audioProcessor.apvts, toolbar }, SaturationMid{ audioProcessor.apvts, toolbar };
-    BitCrusherComp bitcrusherHigh{ audioProcessor.apvts, toolbar }, bitcrusherMid{ audioProcessor.apvts, toolbar };
+    SaturationComp saturation{ audioProcessor.apvts, toolbar };
+    ClipperComp clipper{ audioProcessor.apvts, toolbar };
+    WaveShaperComp waveShaper{ audioProcessor.apvts, toolbar };
+    BitCrusherComp bitCrusher{ audioProcessor.apvts, toolbar };
 
     MasterComp masterComp{ audioProcessor };
 

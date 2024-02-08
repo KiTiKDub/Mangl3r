@@ -22,11 +22,12 @@ struct WaveShaperComp : public juce::Component
 
     void paint(juce::Graphics& g) override;
     void resized() override;
+    void updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb);
 
 private:
 
     void updateRSWL(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb);
-    void updateAttachments(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb);
+    void updateDistortType(juce::AudioProcessorValueTreeState& apvts, ToolbarComp& tb);
     void updateSelectLabels();
     std::vector<Params::names> getParamsAtBand(juce::String&);
 
