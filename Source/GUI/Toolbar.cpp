@@ -93,16 +93,16 @@ void ToolbarComp::resized()
 
 KitikToolbar* ToolbarComp::getCurrentEffect()
 {
-    if (toolbarHigh.isVisible())
+    if (high.getToggleState())
     {
         return &toolbarHigh;
 
     }
-    else if (toolbarMid.isVisible())
+    else if (mid.getToggleState())
     {
         return &toolbarMid;
     }
-    else
+    else if(low.getToggleState())
     {
         return &toolbarLow;
     }
@@ -110,16 +110,16 @@ KitikToolbar* ToolbarComp::getCurrentEffect()
 
 juce::String ToolbarComp::getActiveBand()
 {
-    if (toolbarHigh.isVisible())
+    if (high.getToggleState())
     {
         return toolbarHigh.getComponentID();
 
     }
-    else if (toolbarMid.isVisible())
+    else if (mid.getToggleState())
     {
         return toolbarMid.getComponentID();
     }
-    else
+    else if(low.getToggleState())
     {
         return toolbarLow.getComponentID();
     }

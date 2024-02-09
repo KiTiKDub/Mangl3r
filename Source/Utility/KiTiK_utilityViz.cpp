@@ -62,6 +62,8 @@
             data.nextFFTBlockReady = false;
         }
 
+        g.setColour(juce::Colours::red);
+
         juce::Path p;
 
         p.startNewSubPath(0, height);
@@ -83,7 +85,7 @@
         data.window.multiplyWithWindowingTable(data.fftData, data.fftSize);
         data.forwardFFT.performFrequencyOnlyForwardTransform(data.fftData);
 
-        float min_dB = -72.f;
+        float min_dB = -100.f;
         float max_dB = 0;
 
         for (int i = 0; i < data.scopeSize; i++)

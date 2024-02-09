@@ -23,6 +23,7 @@ struct AnalyzerComp : public juce::Component
     void paint(juce::Graphics&) override;
 
     void updateRSWL(juce::AudioProcessorValueTreeState& apvts);
+    void update();
 
 private:
 

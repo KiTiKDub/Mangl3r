@@ -72,3 +72,8 @@ void AnalyzerComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts)
             addLabelPairs(lowMid->labels, 1, 3, midHighParam, "Hz");
         };
 }
+
+void AnalyzerComp::update()
+{
+    fftComp.repaint();
+}

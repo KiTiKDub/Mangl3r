@@ -81,11 +81,9 @@ void Mangl3rAudioProcessorEditor::resized()
 
 void Mangl3rAudioProcessorEditor::timerCallback()
 {
-    if(toolbar.isMouseButtonDown(true))
-        displayCorrectDistortion();
-
-    auto currentToolbar = toolbar.getCurrentEffect();
-    auto id = currentToolbar->getAllItems();
+    //if(toolbar.isMouseButtonDown(true)) If I don't have this then on click will update in real time
+    displayCorrectDistortion();
+    analyzer.update();
 
     auto toolbarHigh = toolbar.getHigh();
     auto toolbarMid = toolbar.getMid();
@@ -97,6 +95,8 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
 {
     auto currentToolbar = toolbar.getCurrentEffect();
+
+    DBG("Toolbar on click:" << toolbar.getActiveBand()); //this doesn't get updated with timercall back. May just be screwed
 
     auto& childComps = currentToolbar->getChildren();
     for (auto* child : childComps)

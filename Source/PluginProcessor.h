@@ -99,13 +99,16 @@ private:
             //Where do I put analyzer button?
             // Click on section to allow for change in toolbar
                 //I could do on mouse click for this? This will have to be done less
-        //Toolbar: DONE
+            //Add solo, bypass, mute?
+            // Add Bars to frquency cutoff
+        //Toolbar:
             //Figure out how to set up toolbar with buttons DONE
             //Set up three of them DONE
             //Need to be able to distinguish from each of them DONE
+            // Add/Fix oversampling
         //DSP
             //Need to create Distork Engine, and have three instances of them DONE
-            //Seperate the bands
+            //Seperate the bands DONE
             ///Maybe add some more functionality. 
         //GUI
             //Maybe make it less wide?
