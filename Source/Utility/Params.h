@@ -23,6 +23,10 @@ namespace Params
         Low_Mid_Crossover_Freq,
         Mid_High_Crossover_Freq,
 
+        Select_Toolbar_One,
+        Select_Toolbar_Two,
+        Select_Toolbar_Three,
+
         Oversample_Rate,
 
         Saturator_One_Toggle,
@@ -147,6 +151,10 @@ namespace Params
 
             {Low_Mid_Crossover_Freq, "Low-Mid Crossover Frequency"},
             {Mid_High_Crossover_Freq, "Mid-High Crossover Frequency"},
+
+            {Select_Toolbar_One, "Toolbar One"},
+            {Select_Toolbar_Two, "Toolbar Two"},
+            {Select_Toolbar_Three, "Toolbar Three"},
 
             {Oversample_Rate, "Oversample Rate"},
 

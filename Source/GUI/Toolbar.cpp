@@ -11,11 +11,13 @@
 #include "Toolbar.h"
 
 ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
-    lowAT(apvts, "selectToolbarThree", low), 
-    midAT(apvts, "selectToolbarTwo", mid),
-    highAT(apvts, "selectToolbarOne", high)
+    lowAT(apvts, "Toolbar Three", low),
+    midAT(apvts, "Toolbar Two", mid),
+    highAT(apvts, "Toolbar One", high)
 {
     setLookAndFeel(&lnf);
+
+    attachRSWL(apvts);
 
     addAndMakeVisible(toolbarHigh);
     toolbarHigh.addDefaultItems(tbf);
@@ -65,6 +67,8 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
             toolbarLow.setVisible(true);
         };
 
+    addAndMakeVisible(*oversampleSelect);
+
     setPowerButtons(apvts);
 }
 
@@ -89,6 +93,8 @@ void ToolbarComp::resized()
     high.setBounds(topSelect);
     mid.setBounds(midSelect);
     low.setBounds(barSelect);
+
+    oversampleSelect->setBounds(overSelect);
 }
 
 KitikToolbar* ToolbarComp::getCurrentEffect()
@@ -162,14 +168,14 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
         Params::names::Bitcrusher_Three_Toggle,
     };
 
-    for (int i = 0; i < children.size(); i++)
+    for (int i = 0; i < children.size(); i++) //maybe change this so it can dynmically update the power buttons
     {
         if (auto* tbComp = dynamic_cast<KitikToolbarItemComponent*>(children[i]))
         {
             if(auto* power = dynamic_cast<juce::ToggleButton*>(tbComp->getChildComponent(0)))
             {
                 auto check = Names.at(i);
-                auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID(); //Need to add the other toggles to our processor constructor and layout
+                auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID();
                 auto attachment = vectorAT.at(i);
                 *attachment = std::make_unique<Attachment>(apvts, ID, *power);
 
@@ -186,4 +192,19 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
             
         }
     }
+}
+
+void ToolbarComp::attachRSWL(juce::AudioProcessorValueTreeState& apvts)
+{
+    auto name = Params::names::Oversample_Rate;
+
+    auto& osParam = getParam(apvts, params, name);
+    oversampleSelect = std::make_unique<RotarySliderWithLabels>(&osParam, "", "OverSampling");
+    makeAttachment(oversampleSelectAT, apvts, params, name, *oversampleSelect);
+    addLabelPairs(oversampleSelect->labels, 1, 3, osParam, "", 14, oversamplingText);
+
+    oversampleSelect.get()->onValueChange = [this, &osParam]()
+        {
+            addLabelPairs(oversampleSelect->labels, 1, 3, osParam, "", 14, oversamplingText);
+        };
 }

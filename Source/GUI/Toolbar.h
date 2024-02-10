@@ -11,6 +11,7 @@
 #pragma once
 #include "JuceHeader.h"
 #include "kLookAndFeel.h"
+#include "rotarySliderWithLabels.h"
 #include "../Utility/KitikToolbar.h"
 #include "../PluginProcessor.h"
 #include "../Utility/Params.h"
@@ -132,6 +133,8 @@ struct ToolbarComp : public juce::Component
     KitikToolbar* getLow() { return &toolbarLow; };
 
 private:
+
+    void attachRSWL(juce::AudioProcessorValueTreeState& apvts);
     
     using Attachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
 
@@ -150,5 +153,11 @@ private:
                                                        &clipToggle1AT, &clipToggle2AT, &clipToggle3AT,
                                                        &waveToggle1AT, &waveToggle2AT, &waveToggle3AT,
                                                        &bitToggle1AT, &bitToggle2AT, &bitToggle3AT};
+
+    std::unique_ptr<RotarySliderWithLabels> oversampleSelect;
+    std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> oversampleSelectAT;
+
+    std::vector<juce::String> oversamplingText{ "1x", "2x", "4x", "8x" };
+    const std::map<Params::names, juce::String>& params = Params::getParams();
 };
 

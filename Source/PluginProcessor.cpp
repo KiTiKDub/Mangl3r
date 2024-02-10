@@ -25,7 +25,7 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     using namespace Params;
     const auto& params = getParams();
 
-    globalBypass = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("globalBypass"));
+    globalBypass = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Global_Bypass)));
     masterInValue = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Master_In_Gain)));
     masterMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Master_Mix)));
     masterOutValue = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Master_Out_Gain)));
@@ -33,9 +33,10 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     lowMidCrossover = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Low_Mid_Crossover_Freq)));
     midHighCrossover = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Mid_High_Crossover_Freq)));
 
-    selectToolbarOne = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarOne"));
-    selectToolbarTwo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarTwo"));
-    selectToolbarThree = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter("selectToolbarThree"));
+    selectToolbarOne = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_One)));
+    selectToolbarTwo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_Two)));
+    selectToolbarThree = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_Three)));
+    oversampleRate = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Oversample_Rate)));
 
     engine1.clipperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_In)));
     engine1.clipperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_Mix)));
@@ -370,17 +371,19 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     auto lowMidRange = NormalisableRange<float>(20, 999, 1, 1);
     auto midHighRange = NormalisableRange<float>(1000, 20000, 1, 1);
 
-    layout.add(std::make_unique<AudioParameterBool>("globalBypass", "Global Bypass", false));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Global_Bypass), "Global Bypass", false));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_In_Gain), params.at(names::Master_Mix), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_Out_Gain), params.at(names::Master_Out_Gain), gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_Mix), params.at(names::Master_Mix), mixRange, 100));
 
-    layout.add(std::make_unique<AudioParameterBool>("selectToolbarOne", "Toolbar One", true));
-    layout.add(std::make_unique<AudioParameterBool>("selectToolbarTwo", "Toolbar Two", false));
-    layout.add(std::make_unique<AudioParameterBool>("selectToolbarThree", "Toolbar Three", false));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Select_Toolbar_One), "Toolbar One", true));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Select_Toolbar_Two), "Toolbar Two", false));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Select_Toolbar_Three), "Toolbar Three", false));
 
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Low_Mid_Crossover_Freq), params.at(names::Low_Mid_Crossover_Freq), lowMidRange, 400));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Mid_High_Crossover_Freq), params.at(names::Mid_High_Crossover_Freq), midHighRange, 2000));
+
+    layout.add(std::make_unique<AudioParameterInt>(params.at(names::Oversample_Rate), "Oversample Rate", 0, 3, 0));
 
     //Clipper Controls
     auto threshRange = NormalisableRange<float>(-60, 0, .1, 1);

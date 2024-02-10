@@ -12,7 +12,7 @@
 
 MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     audioP(p),
-    bypassAT(p.apvts, "globalBypass", bypass)
+    bypassAT(p.apvts, "Global Bypass", bypass)
 
 {
     updateSWL(p.apvts);

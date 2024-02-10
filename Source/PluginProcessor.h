@@ -75,6 +75,7 @@ private:
     juce::AudioParameterBool* selectToolbarOne{ nullptr };
     juce::AudioParameterBool* selectToolbarTwo{ nullptr };
     juce::AudioParameterBool* selectToolbarThree{ nullptr };
+    juce::AudioParameterFloat* oversampleRate{ nullptr };
 
     using Filter = juce::dsp::LinkwitzRileyFilter<float>;
     //     fc0  fc1
