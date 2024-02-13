@@ -18,11 +18,9 @@ void DistorkEngine::prepareToPlay(juce::dsp::ProcessSpec& spec)
     bitcrusher.prepareToPlay(spec);
 }
 
-void DistorkEngine::process(juce::AudioBuffer<float>& buffer, std::vector<int> order, int channel)
+void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int> order, int channel)
 {
     updateParams();
-
-    auto block = juce::dsp::AudioBlock<float>(buffer); //Need to have clipper to do real testing
 
     for (int i = 0; i < order.size(); i++)
     {

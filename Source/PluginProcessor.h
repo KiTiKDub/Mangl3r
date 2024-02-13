@@ -67,6 +67,26 @@ public:
 
 private:
 
+    std::array<juce::dsp::Oversampling<float>, 12> overSamplers
+    { {
+        {2, 0, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 1, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 2, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 3, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+
+        {2, 0, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 1, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 2, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 3, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+
+        {2, 0, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 1, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 2, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+        {2, 3, juce::dsp::Oversampling<float>::filterHalfBandPolyphaseIIR, true, true},
+    } };
+
+    int lastOSValue{ 0 };
+
     juce::AudioParameterBool* globalBypass{ nullptr };
     juce::AudioParameterFloat* masterInValue{ nullptr };
     juce::AudioParameterFloat* masterOutValue{ nullptr };
@@ -75,7 +95,7 @@ private:
     juce::AudioParameterBool* selectToolbarOne{ nullptr };
     juce::AudioParameterBool* selectToolbarTwo{ nullptr };
     juce::AudioParameterBool* selectToolbarThree{ nullptr };
-    juce::AudioParameterFloat* oversampleRate{ nullptr };
+    juce::AudioParameterInt* oversampleRate{ nullptr };
 
     using Filter = juce::dsp::LinkwitzRileyFilter<float>;
     //     fc0  fc1
@@ -102,11 +122,12 @@ private:
                 //I could do on mouse click for this? This will have to be done less
             //Add solo, bypass, mute?
             // Add Bars to frquency cutoff
+            // Make sure frequency analyzer is lined up.
         //Toolbar:
             //Figure out how to set up toolbar with buttons DONE
             //Set up three of them DONE
             //Need to be able to distinguish from each of them DONE
-            // Add/Fix oversampling
+            // Add/Fix oversampling ->chowdsp has one that might be worth using.
         //DSP
             //Need to create Distork Engine, and have three instances of them DONE
             //Seperate the bands DONE

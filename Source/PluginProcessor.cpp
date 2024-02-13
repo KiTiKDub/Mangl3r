@@ -36,7 +36,7 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     selectToolbarOne = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_One)));
     selectToolbarTwo = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_Two)));
     selectToolbarThree = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_Three)));
-    oversampleRate = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Oversample_Rate)));
+    oversampleRate = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Oversample_Rate)));
 
     engine1.clipperInGain = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_In)));
     engine1.clipperMix = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(params.at(names::Clipper_One_Mix)));
@@ -230,6 +230,12 @@ void Mangl3rAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
     {
         buffer.setSize(spec.numChannels, samplesPerBlock);
     }
+
+    for (auto& oversample : overSamplers)
+    {
+        oversample.reset();
+        oversample.initProcessing(samplesPerBlock);
+    }
 }
 
 void Mangl3rAudioProcessor::releaseResources()
@@ -273,6 +279,9 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
+    levelMeterData.process(true, 0, buffer);
+    levelMeterData.process(true, 1, buffer);
+
     auto lowMidCutoff = lowMidCrossover->get();
     LP1.setCutoffFrequency(lowMidCutoff);
     HP1.setCutoffFrequency(lowMidCutoff);
@@ -304,14 +313,34 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
     HP2.process(fb2Ctx);
 
-    auto check = engine1.satToggle->get();
+    auto ovRate = oversampleRate->get();
+    if (ovRate != lastOSValue)
+    {
+        lastOSValue = ovRate;
+        suspendProcessing(true);
+
+        prepareToPlay(getSampleRate(), buffer.getNumSamples());
+        auto latency = overSamplers[ovRate].getLatencyInSamples();
+
+        setLatencySamples(latency);
+
+        suspendProcessing(false);
+    }
+
+    auto ov0Block = overSamplers[ovRate].processSamplesUp(fb0Ctx.getInputBlock());
+    auto ov1Block = overSamplers[ovRate + 4].processSamplesUp(fb1Ctx.getInputBlock());
+    auto ov2Block = overSamplers[ovRate + 8].processSamplesUp(fb2Ctx.getInputBlock());
 
     for (int ch = 0; ch < totalNumInputChannels; ch++)
     {
-        engine1.process(filterBuffers[2], toolbarHighOrder, ch);
-        engine2.process(filterBuffers[1], toolbarMidOrder, ch);
-        engine3.process(filterBuffers[0], toolbarLowOrder, ch);
+        engine1.process(ov2Block, toolbarHighOrder, ch);
+        engine2.process(ov1Block, toolbarMidOrder, ch); 
+        engine3.process(ov0Block, toolbarLowOrder, ch);
     }
+
+    overSamplers[ovRate].processSamplesDown(fb0Ctx.getOutputBlock());
+    overSamplers[ovRate + 4].processSamplesDown(fb1Ctx.getOutputBlock());
+    overSamplers[ovRate + 8].processSamplesDown(fb2Ctx.getOutputBlock());
 
     auto numSamples = buffer.getNumSamples();
     auto numChannels = buffer.getNumChannels();
@@ -331,6 +360,9 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     addFilterBand(buffer, filterBuffers[2]);
 
     fftData.pushNextSampleIntoFifo(buffer);
+
+    levelMeterData.process(false, 0, buffer);
+    levelMeterData.process(false, 1, buffer);
 }
 
 //==============================================================================

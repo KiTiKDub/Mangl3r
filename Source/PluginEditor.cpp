@@ -36,7 +36,6 @@ Mangl3rAudioProcessorEditor::~Mangl3rAudioProcessorEditor()
 //==============================================================================
 void Mangl3rAudioProcessorEditor::paint (juce::Graphics& g)
 {
-    // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::black);
 
     g.setColour (juce::Colours::white);
@@ -94,9 +93,10 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 
 void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
 {
-    auto currentToolbar = toolbar.getCurrentEffect();
+    auto currentToolbar = toolbar.getCurrentEffect(); //maybe I can make the band toggles buttons public and direct access them on click, then I can bring back the if condition. Or just do all of this in the on click
+    //optimize this later.
 
-    DBG("Toolbar on click:" << toolbar.getActiveBand()); //this doesn't get updated with timercall back. May just be screwed
+    DBG("Toolbar on click:" << toolbar.getActiveBand()); //this doesn't get updated with mouse button down condition.
 
     auto& childComps = currentToolbar->getChildren();
     for (auto* child : childComps)

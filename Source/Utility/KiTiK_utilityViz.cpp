@@ -91,7 +91,9 @@
         for (int i = 0; i < data.scopeSize; i++)
         {
             auto skewedProportionX = 1.0f - std::exp(std::log(1.0f - (float)i / (float)data.scopeSize));
+
             auto fftDataIndex = juce::jlimit(0, data.fftSize / 2, (int)(skewedProportionX * (float)data.fftSize * 0.5f));
+
             auto level = juce::jmap(juce::jlimit(min_dB, max_dB, juce::Decibels::gainToDecibels(data.fftData[fftDataIndex])
                 - juce::Decibels::gainToDecibels((float)data.fftSize)),
                 min_dB, max_dB, 0.0f, 1.0f);
