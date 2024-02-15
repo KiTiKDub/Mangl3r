@@ -9,3 +9,24 @@
 */
 
 #pragma once
+#include <JuceHeader.h>
+
+struct WavefolderData
+{
+    void prepareToPlay(juce::dsp::ProcessSpec& spec);
+    void process(juce::dsp::AudioBlock<float>& block, int ch);
+    void updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix);
+
+private:
+
+    juce::dsp::Gain<float> inGain;
+    juce::dsp::Gain<float> outGain;
+
+    bool wavefolderBypass;
+    int wavefolderTypeSelect;
+    std::vector<juce::AudioParameterFloat*> wavefolderFactors;
+    float wavefolderInGainValue;
+    float wavefolderOutGainValue;
+    float wavefolderMix;
+    float sampleRate;
+};
