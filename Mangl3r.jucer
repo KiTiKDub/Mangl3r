@@ -40,6 +40,10 @@
               file="Source/DSP/SaturationData.cpp"/>
         <FILE id="oNVWRJ" name="SaturationData.h" compile="0" resource="0"
               file="Source/DSP/SaturationData.h"/>
+        <FILE id="CUnvmI" name="WavefolderData.cpp" compile="1" resource="0"
+              file="Source/DSP/WavefolderData.cpp"/>
+        <FILE id="CkiJEY" name="WavefolderData.h" compile="0" resource="0"
+              file="Source/DSP/WavefolderData.h"/>
         <FILE id="mseZmE" name="WaveShaperData.cpp" compile="1" resource="0"
               file="Source/DSP/WaveShaperData.cpp"/>
         <FILE id="HUCXUF" name="WaveShaperData.h" compile="0" resource="0"
@@ -72,6 +76,8 @@
               file="Source/GUI/SliderWithLabels.h"/>
         <FILE id="c8AMo2" name="Toolbar.cpp" compile="1" resource="0" file="Source/GUI/Toolbar.cpp"/>
         <FILE id="iwrb1u" name="Toolbar.h" compile="0" resource="0" file="Source/GUI/Toolbar.h"/>
+        <FILE id="A4POae" name="Wavefolder.cpp" compile="1" resource="0" file="Source/GUI/Wavefolder.cpp"/>
+        <FILE id="JMjsN0" name="Wavefolder.h" compile="0" resource="0" file="Source/GUI/Wavefolder.h"/>
         <FILE id="vBlhwu" name="WaveShaper.cpp" compile="1" resource="0" file="Source/GUI/WaveShaper.cpp"/>
         <FILE id="UvLsb0" name="WaveShaper.h" compile="0" resource="0" file="Source/GUI/WaveShaper.h"/>
       </GROUP>
@@ -104,8 +110,10 @@
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" targetName="Mangl3r" enablePluginBinaryCopyStep="1"/>
-        <CONFIGURATION isDebug="0" name="Release" targetName="Mangl3r"/>
+        <CONFIGURATION isDebug="1" name="Host" targetName="Mangl3r" enablePluginBinaryCopyStep="1"/>
+        <CONFIGURATION isDebug="0" name="Release" targetName="Mangl3r" enablePluginBinaryCopyStep="1"/>
+        <CONFIGURATION isDebug="1" name="Ableton" targetName="Mangl3r" enablePluginBinaryCopyStep="1"/>
+        <CONFIGURATION isDebug="1" name="FL" targetName="Mangl3r" enablePluginBinaryCopyStep="1"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>

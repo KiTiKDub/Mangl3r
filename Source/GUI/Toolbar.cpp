@@ -155,17 +155,20 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
         Params::names::Saturator_One_Toggle,
         Params::names::Clipper_One_Toggle,
         Params::names::Waveshaper_One_Toggle,
-        Params::names::Bitcrusher_One_Toggle,   
+        Params::names::Bitcrusher_One_Toggle,
+        Params::names::Wavefolder_One_Toggle,
 
         Params::names::Saturator_Two_Toggle,
         Params::names::Clipper_Two_Toggle,
         Params::names::Waveshaper_Two_Toggle,
         Params::names::Bitcrusher_Two_Toggle,
+        Params::names::Wavefolder_Two_Toggle,
 
         Params::names::Saturator_Three_Toggle,
         Params::names::Clipper_Three_Toggle,
         Params::names::Waveshaper_Three_Toggle,
         Params::names::Bitcrusher_Three_Toggle,
+        Params::names::Wavefolder_Three_Toggle,
     };
 
     for (int i = 0; i < children.size(); i++) //maybe change this so it can dynmically update the power buttons

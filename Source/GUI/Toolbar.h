@@ -81,7 +81,8 @@ struct ToolbarFactory : public TestToolbarItemFactory
         saturation = 1,
         clipper = 2,
         waveshaper = 3,
-        bitcrusher = 4
+        bitcrusher = 4,
+        wavefolder = 5
     };
 
     void getAllToolbarItemIds(juce::Array<int>& ids) override
@@ -90,6 +91,7 @@ struct ToolbarFactory : public TestToolbarItemFactory
         ids.add(clipper);
         ids.add(waveshaper);
         ids.add(bitcrusher);
+        ids.add(wavefolder);
     }
 
     void getDefaultItemSet(juce::Array<int>& ids) override
@@ -98,6 +100,7 @@ struct ToolbarFactory : public TestToolbarItemFactory
         ids.add(clipper);
         ids.add(waveshaper);
         ids.add(bitcrusher);
+        ids.add(wavefolder);
     }
 
     KitikToolbarItemComponent* createItem(int itemId) override
@@ -112,6 +115,8 @@ struct ToolbarFactory : public TestToolbarItemFactory
             return new ToolbarItem(waveshaper, "Waveshaper");
         case bitcrusher:
             return new ToolbarItem(bitcrusher, "Bitcrusher");
+        case wavefolder:
+            return new ToolbarItem(wavefolder, "Wavefolder");
         }
 
     }

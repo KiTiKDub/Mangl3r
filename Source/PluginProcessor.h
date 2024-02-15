@@ -135,6 +135,9 @@ private:
         //GUI
             //Maybe make it less wide?
 
+    //create wavefolder class
+    //add signalsmith algo. 
+
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Mangl3rAudioProcessor)
 };

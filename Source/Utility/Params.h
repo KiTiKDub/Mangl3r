@@ -45,6 +45,10 @@ namespace Params
         Bitcrusher_Two_Toggle,
         Bitcrusher_Three_Toggle,
 
+        Wavefolder_One_Toggle,
+        Wavefolder_Two_Toggle,
+        Wavefolder_Three_Toggle,
+
         //Saturator Params
         Saturator_One_Drive,
         Saturator_Two_Drive,
@@ -173,6 +177,10 @@ namespace Params
             {Bitcrusher_One_Toggle, "Bitcrusher One Toggle"},
             {Bitcrusher_Two_Toggle, "Bitcrusher Two Toggle"},
             {Bitcrusher_Three_Toggle, "Bitcrusher Three Toggle"},
+
+            {Wavefolder_One_Toggle, "Wavefolder One Toggle"},
+            {Wavefolder_Two_Toggle, "Wavefolder Two Toggle"},
+            {Wavefolder_Three_Toggle, "Wavefolder Three Toggle"},
 
             {Saturator_One_Drive, "Saturator One Drive"},
             {Saturator_Two_Drive, "Saturator Two Drive"},

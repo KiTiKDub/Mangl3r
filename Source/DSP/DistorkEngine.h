@@ -51,6 +51,15 @@ struct DistorkEngine
     juce::AudioParameterFloat* satMix{ nullptr };
     juce::AudioParameterBool* satToggle{ nullptr };
 
+    juce::AudioParameterInt* wavefolderSelect{ nullptr };
+    juce::AudioParameterFloat* wavefolderSin{ nullptr };
+    juce::AudioParameterFloat* wavefolderTri{ nullptr };
+    juce::AudioParameterFloat* wavefolderInGain{ nullptr };
+    juce::AudioParameterFloat* wavefolderOutGain{ nullptr };
+    juce::AudioParameterFloat* wavefolderMix{ nullptr };
+    juce::AudioParameterBool* wavefolderToggle{ nullptr };
+    std::vector<juce::AudioParameterFloat*> waveShaperFactorsHolder{ wavefolderSin, wavefolderTri };
+
 private:
     BitCrusher bitcrusher;
     Clipper clipper;
