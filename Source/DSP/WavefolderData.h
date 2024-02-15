@@ -11,7 +11,7 @@
 #pragma once
 #include <JuceHeader.h>
 
-struct WavefolderData
+struct Wavefolder
 {
     void prepareToPlay(juce::dsp::ProcessSpec& spec);
     void process(juce::dsp::AudioBlock<float>& block, int ch);

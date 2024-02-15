@@ -16,6 +16,7 @@ void DistorkEngine::prepareToPlay(juce::dsp::ProcessSpec& spec)
     clipper.prepareToPlay(spec);
     waveshaper.prepareToPlay(spec);
     bitcrusher.prepareToPlay(spec);
+    wavefolder.prepareToPlay(spec);
 }
 
 void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int> order, int channel)
@@ -24,23 +25,24 @@ void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int
 
     for (int i = 0; i < order.size(); i++)
     {
-        if(order[i] == 1)
+        if (order[i] == 1)
             saturator.process(block, channel);
-        else if(order[i] == 2)
+        else if (order[i] == 2)
             clipper.process(block, channel);
-        else if(order[i] == 3)
+        else if (order[i] == 3)
             waveshaper.process(block, channel);
-        else if(order[i] == 4)
+        else if (order[i] == 4)
             bitcrusher.process(block, channel);
+        else if (order[i] == 5)
+            wavefolder.process(block, channel);
     }
 }
 
 void DistorkEngine::updateParams()
 {
-    auto check = satToggle->get();
-
     saturator.updateParams(satToggle->get(), satDrive->get(), satInGain->get(), satOutGain->get(), satMix->get());
     clipper.updateParams(clipperToggle->get(), clipperSelect->get(), clipperThresh->get(), clipperInGain->get(), clipperOutGain->get(), clipperMix->get());
     waveshaper.updateParams(waveShaperToggle->get(), waveShaperSelect->get(), waveShaperFactorsHolder, waveShaperInGain->get(), waveShaperOutGain->get(), waveShaperMix->get());
     bitcrusher.updateParams(crusherToggle->get(), crusherBitDepth->get(), crusherBitRate->get(), crusherInGain->get(), crusherOutGain->get(), crusherMix->get());
+    wavefolder.updateParams(wavefolderToggle->get(), wavefolderSelect->get(), wavefolderFactorsHolder, wavefolderInGain->get(), wavefolderOutGain->get(), wavefolderMix->get());
 }

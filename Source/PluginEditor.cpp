@@ -19,6 +19,7 @@ Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor&
     addChildComponent(clipper);
     addChildComponent(waveShaper);
     addChildComponent(bitCrusher);
+    addChildComponent(wavefolder);
 
     addAndMakeVisible(masterComp);
     addAndMakeVisible(toolbar);
@@ -71,6 +72,7 @@ void Mangl3rAudioProcessorEditor::resized()
     clipper.setBounds(bounds);
     waveShaper.setBounds(bounds);
     bitCrusher.setBounds(bounds);
+    wavefolder.setBounds(bounds);
 
     masterComp.setBounds(masterArea);
     toolbar.setBounds(selectArea);
@@ -80,8 +82,9 @@ void Mangl3rAudioProcessorEditor::resized()
 
 void Mangl3rAudioProcessorEditor::timerCallback()
 {
-    //if(toolbar.isMouseButtonDown(true)) If I don't have this then on click will update in real time
-    displayCorrectDistortion();
+    if(toolbar.isMouseOver(true)) //only update when mouse is in vicinity, a little better
+        displayCorrectDistortion();
+
     analyzer.update();
 
     auto toolbarHigh = toolbar.getHigh();
@@ -113,6 +116,7 @@ void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
                     clipper.setVisible(false);
                     waveShaper.setVisible(false);
                     bitCrusher.setVisible(false);
+                    wavefolder.setVisible(false);
 
                     saturation.updateAttachments(audioProcessor.apvts, toolbar);
 
@@ -123,6 +127,7 @@ void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
                     clipper.setVisible(true);
                     waveShaper.setVisible(false);
                     bitCrusher.setVisible(false);
+                    wavefolder.setVisible(false);
 
                     clipper.updateAttachments(audioProcessor.apvts, toolbar);
 
@@ -133,6 +138,7 @@ void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
                     clipper.setVisible(false);
                     waveShaper.setVisible(true);
                     bitCrusher.setVisible(false);
+                    wavefolder.setVisible(false);
 
                     waveShaper.updateAttachments(audioProcessor.apvts, toolbar);
                 }
@@ -142,8 +148,19 @@ void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
                     clipper.setVisible(false);
                     waveShaper.setVisible(false);
                     bitCrusher.setVisible(true);
+                    wavefolder.setVisible(false);
 
                     bitCrusher.updateAttachments(audioProcessor.apvts, toolbar);
+                }
+                else if (name == "Wavefolder")
+                {
+                    saturation.setVisible(false);
+                    clipper.setVisible(false);
+                    waveShaper.setVisible(false);
+                    bitCrusher.setVisible(false);
+                    wavefolder.setVisible(true);
+
+                    wavefolder.updateAttachments(audioProcessor.apvts, toolbar);
                 }
 
             }

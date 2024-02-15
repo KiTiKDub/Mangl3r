@@ -152,12 +152,14 @@ private:
     std::unique_ptr<Attachment> satToggle1AT, satToggle2AT, satToggle3AT,
                                 clipToggle1AT, clipToggle2AT, clipToggle3AT,
                                 waveToggle1AT, waveToggle2AT, waveToggle3AT,
-                                bitToggle1AT, bitToggle2AT, bitToggle3AT;
+                                bitToggle1AT, bitToggle2AT, bitToggle3AT,
+                                wavefolder1AT, wavefolder2AT, wavefolder3AT;
 
     std::vector<std::unique_ptr<Attachment>*> vectorAT{&satToggle1AT, &satToggle2AT, &satToggle3AT,
                                                        &clipToggle1AT, &clipToggle2AT, &clipToggle3AT,
                                                        &waveToggle1AT, &waveToggle2AT, &waveToggle3AT,
-                                                       &bitToggle1AT, &bitToggle2AT, &bitToggle3AT};
+                                                       &bitToggle1AT, &bitToggle2AT, &bitToggle3AT,
+                                                       &wavefolder1AT, &wavefolder2AT, &wavefolder3AT};
 
     std::unique_ptr<RotarySliderWithLabels> oversampleSelect;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> oversampleSelectAT;

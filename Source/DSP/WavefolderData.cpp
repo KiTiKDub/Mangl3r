@@ -10,7 +10,7 @@
 
 #include "WavefolderData.h"
 
-void WavefolderData::prepareToPlay(juce::dsp::ProcessSpec& spec)
+void Wavefolder::prepareToPlay(juce::dsp::ProcessSpec& spec)
 {
     inGain.reset();
     inGain.prepare(spec);
@@ -23,7 +23,7 @@ void WavefolderData::prepareToPlay(juce::dsp::ProcessSpec& spec)
     sampleRate = spec.sampleRate;
 }
 
-void WavefolderData::process(juce::dsp::AudioBlock<float>& block, int ch)
+void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
 {
     if (wavefolderBypass) { return; };
 
@@ -52,7 +52,7 @@ void WavefolderData::process(juce::dsp::AudioBlock<float>& block, int ch)
     }
 }
 
-void WavefolderData::updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix)
+void Wavefolder::updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix)
 {
     wavefolderBypass = bypass;
     wavefolderTypeSelect = typeSelect;

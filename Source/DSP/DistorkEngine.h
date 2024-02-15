@@ -14,6 +14,7 @@
 #include "clipperData.h"
 #include "SaturationData.h"
 #include "WaveShaperData.h"
+#include "WavefolderData.h"
 
 struct DistorkEngine
 {
@@ -58,13 +59,14 @@ struct DistorkEngine
     juce::AudioParameterFloat* wavefolderOutGain{ nullptr };
     juce::AudioParameterFloat* wavefolderMix{ nullptr };
     juce::AudioParameterBool* wavefolderToggle{ nullptr };
-    std::vector<juce::AudioParameterFloat*> waveShaperFactorsHolder{ wavefolderSin, wavefolderTri };
+    std::vector<juce::AudioParameterFloat*> wavefolderFactorsHolder{ wavefolderSin, wavefolderTri };
 
 private:
     BitCrusher bitcrusher;
     Clipper clipper;
     Saturation saturator;
     WaveShaper waveshaper;
+    Wavefolder wavefolder;
 
     void updateParams();
 };

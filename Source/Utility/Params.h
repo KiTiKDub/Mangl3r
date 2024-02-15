@@ -138,6 +138,30 @@ namespace Params
         Bitcrusher_Two_Out,
         Bitcrusher_Three_Out,
 
+        //wavefolder params
+        Wavefolder_One_Type,
+        Wavefolder_Two_Type,
+        Wavefolder_Three_Type,
+
+        Wavefolder_One_Drive_Sin,
+        WaveFolder_One_Drive_Tri,
+        Wavefolder_Two_Drive_Sin,
+        WaveFolder_Two_Drive_Tri,
+        Wavefolder_Three_Drive_Sin,
+        WaveFolder_Three_Drive_Tri,
+
+        Wavefolder_One_In,
+        Wavefolder_Two_In,
+        Wavefolder_Three_In,
+
+        Wavefolder_One_Mix,
+        Wavefolder_Two_Mix,
+        Wavefolder_Three_Mix,
+
+        Wavefolder_One_Out,
+        Wavefolder_Two_Out,
+        Wavefolder_Three_Out,
+
         //Global Params
         Global_In,
         Global_Out,
@@ -266,6 +290,29 @@ namespace Params
             { Bitcrusher_One_Out, "Bitcrusher One Out Gain" },
             { Bitcrusher_Two_Out, "Bitcrusher Two Out Gain" },
             { Bitcrusher_Three_Out, "Bitcrusher Three Out Gain" },
+
+            { Wavefolder_One_Type, "Wavefolder One Type" },
+            { Wavefolder_Two_Type, "Wavefolder Two Type" },
+            { Wavefolder_Three_Type, "Wavefolder Three Type" },
+
+            { Wavefolder_One_Drive_Sin, "Wavefolder One Drive Sin" },
+            { WaveFolder_One_Drive_Tri, "Wavefolder One Drive Tri" },
+            { Wavefolder_Two_Drive_Sin, "Wavefolder Two Drive Sin" },
+            { WaveFolder_Two_Drive_Tri, "Wavefolder Two Drive Tri" },
+            { Wavefolder_Three_Drive_Sin, "Wavefolder Three Drive Sin" },
+            { WaveFolder_Three_Drive_Tri, "Wavefolder Three Drive Tri" },
+
+            { Wavefolder_One_In, "Wavefolder One In" },
+            { Wavefolder_Two_In, "Wavefolder Two In" },
+            { Wavefolder_Three_In, "Wavefolder Three In" },
+
+            { Wavefolder_One_Mix, "Wavefolder One Mix" },
+            { Wavefolder_Two_Mix, "Wavefolder Two Mix" },
+            { Wavefolder_Three_Mix, "Wavefolder Three Mix" },
+
+            { Wavefolder_One_Out, "Waveolder One Out" },
+            { Wavefolder_Two_Out, "Wavefolder Two Out" },
+            { Wavefolder_Three_Out, "Wavefoldr Three Out" },
 
             { Global_In, "Global In Gain" },
             { Global_Out, "Global Out Gain" },

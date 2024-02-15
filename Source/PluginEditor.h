@@ -18,6 +18,7 @@
 #include "GUI/WaveShaper.h"
 #include "GUI/BitCrusher.h"
 #include "GUI/Analyzer.h"
+#include "GUI/Wavefolder.h"
 
 //==============================================================================
 /**
@@ -48,6 +49,7 @@ private:
     ClipperComp clipper{ audioProcessor.apvts, toolbar };
     WaveShaperComp waveShaper{ audioProcessor.apvts, toolbar };
     BitCrusherComp bitCrusher{ audioProcessor.apvts, toolbar };
+    WavefolderComp wavefolder{ audioProcessor.apvts, toolbar };
 
     MasterComp masterComp{ audioProcessor };
 
