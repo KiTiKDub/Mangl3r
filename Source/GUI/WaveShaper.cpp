@@ -67,17 +67,30 @@ void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
     {
         Type,
         Sin,
-        holder1,
-        holder2,
-        holder3,
+        Quad,
+        Factor,
+        GB,
         In,
         Mix,
         Out
     };
 
+    Pos pos;
+
     auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
     auto& selectParam = getParam(apvts, params, bandNames.at(Pos::Type));
-    auto& distortParm = getParam(apvts, params, bandNames.at(Pos::Sin));
+
+    auto correctParam = selectParam.getValue();
+    if (correctParam == 0)
+        pos = Pos::Sin;
+    else if (correctParam == 1)
+        pos = Pos::Quad;
+    else if (correctParam == 2)
+        pos = Pos::Factor;
+    else
+        pos = Pos::GB;
+
+    auto& distortParm = getParam(apvts, params, bandNames.at(pos));
     auto& mixParam = getParam(apvts, params, bandNames.at(Pos::Mix));
     auto& outGainParam = getParam(apvts, params, bandNames.at(Pos::Out));
 
