@@ -260,6 +260,13 @@ void Mangl3rAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
         oversample.reset();
         oversample.initProcessing(samplesPerBlock);
     }
+
+    osc.initialise([](float x) {return std::sin(x); });
+    osc.prepare(spec);
+    osc.setFrequency(200);
+
+    gain.prepare(spec);
+    gain.setGainDecibels(-12.f);
 }
 
 void Mangl3rAudioProcessor::releaseResources()
@@ -314,6 +321,17 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     AP2.setCutoffFrequency(midHighCutoff);
     LP2.setCutoffFrequency(midHighCutoff);
     HP2.setCutoffFrequency(midHighCutoff);
+
+    if (true) //Spectrum analyzer testing
+    {
+        buffer.clear();
+        auto block = juce::dsp::AudioBlock<float>(buffer);
+        auto ctx = juce::dsp::ProcessContextReplacing<float>(block);
+        osc.process(ctx);
+        osc.setFrequency(JUCE_LIVE_CONSTANT(200));
+
+        gain.process(ctx);
+    }
 
     for (auto& fb : filterBuffers)
     {

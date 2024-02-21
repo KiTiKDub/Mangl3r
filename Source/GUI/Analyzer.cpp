@@ -17,6 +17,17 @@ AnalyzerComp::AnalyzerComp(Mangl3rAudioProcessor& ap) : fftComp(ap.fftData)
     addAndMakeVisible(fftComp);
     addAndMakeVisible(*lowMid);
     addAndMakeVisible(*midHigh);
+
+    using namespace Params;
+    const auto& paramNames = getParams();
+
+    auto floatHelper = [&apvts = ap.apvts, &paramNames](auto& param, const auto& paramName)
+        {
+            param = dynamic_cast<juce::AudioParameterFloat*>(apvts.getParameter(paramNames.at(paramName)));
+        };
+
+    floatHelper(lowMidCrossover, names::Low_Mid_Crossover_Freq);
+    floatHelper(midHighCrossover, names::Mid_High_Crossover_Freq);
 }
 
 AnalyzerComp::~AnalyzerComp()
@@ -41,9 +52,18 @@ void AnalyzerComp::paint(juce::Graphics& g)
 {
     auto bounds = getLocalBounds();
     auto paintArea = bounds.reduced(bounds.getWidth() * .1, bounds.getHeight() * .1);
+    auto border = paintArea;
+    border.setBottom(paintArea.getBottom() + 2);
 
     g.setColour(juce::Colours::whitesmoke);
     g.fillRoundedRectangle(paintArea.toFloat(), 2);
+    g.setColour(/*juce::Colour(186u, 34u, 34u)*/juce::Colour(64u, 194u, 230u));
+    ;
+    g.fillRect(paintArea.getX() - 2, paintArea.getY(), 2, paintArea.getHeight());
+    g.fillRect(paintArea.getRight(), paintArea.getY(), 2, paintArea.getHeight());
+    g.fillRect(paintArea.getX() - 2, paintArea.getY() - 2, paintArea.getWidth() + 4, 2);
+
+    drawCrossovers(g, paintArea);
 }
 
 void AnalyzerComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts)
@@ -76,4 +96,30 @@ void AnalyzerComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts)
 void AnalyzerComp::update()
 {
     fftComp.repaint();
+}
+
+void AnalyzerComp::drawCrossovers(juce::Graphics& g, juce::Rectangle<int>& r)
+{
+    using namespace juce;
+
+    auto bounds = r;
+
+    const auto top = bounds.getY();
+    const auto bottom = bounds.getBottom();
+
+    auto mapX = [left = bounds.getX(), width = bounds.getWidth()](float frequency)
+        {
+            auto normX = mapFromLog10(frequency, 20.f, 20000.f);
+
+            return left + width * normX;
+        };
+
+    auto lowMidx = mapX(lowMidCrossover->get());
+    g.setColour(Colours::blue);
+    g.drawVerticalLine(lowMidx, top, bottom);
+
+    auto midHighx = mapX(midHighCrossover->get());
+    g.setColour(Colours::blue);
+    g.drawVerticalLine(midHighx, top, bottom);
+
 }

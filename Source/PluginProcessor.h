@@ -127,7 +127,7 @@ private:
             //Figure out how to set up toolbar with buttons DONE
             //Set up three of them DONE
             //Need to be able to distinguish from each of them DONE
-            // Add/Fix oversampling ->chowdsp has one that might be worth using.
+            // Add/Fix oversampling ->chowdsp has one that might be worth using. DONE
         //DSP
             //Need to create Distork Engine, and have three instances of them DONE
             //Seperate the bands DONE
@@ -135,8 +135,10 @@ private:
         //GUI
             //Maybe make it less wide?
 
-    //create wavefolder class
     //add signalsmith algo. 
+
+    juce::dsp::Oscillator<float> osc;
+    juce::dsp::Gain<float> gain;
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Mangl3rAudioProcessor)

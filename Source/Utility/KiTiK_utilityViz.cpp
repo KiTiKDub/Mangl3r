@@ -55,6 +55,7 @@
         auto bounds = getLocalBounds();
         float width = bounds.getWidth();
         float height = bounds.getHeight();
+        auto skewFactor = width / data.scopeSize;
 
         if (data.nextFFTBlockReady)
         {
@@ -70,9 +71,12 @@
 
         for (int i = 1; i < data.scopeSize; ++i)
         {
+            //float binfreq = 44100 * i;
             auto point = juce::jmap(data.scopeData[i], 0.f, 1.f, (height - 1), 0.f);
+            //auto normalizedX = juce::mapFromLog10((float)i, (float)bounds.getX() + 1, width);
+            //auto binX = std::floor(normalizedX * width);
 
-            p.lineTo(i, point);
+            p.lineTo(i*skewFactor, point);
         }
 
         g.strokePath(p, juce::PathStrokeType(1));
@@ -85,20 +89,49 @@
         data.window.multiplyWithWindowingTable(data.fftData, data.fftSize);
         data.forwardFFT.performFrequencyOnlyForwardTransform(data.fftData);
 
-        float min_dB = -100.f;
+        float min_dB = -72.f;
         float max_dB = 0;
 
-        for (int i = 0; i < data.scopeSize; i++)
+        //int numBins = (int)data.fftSize / 2;
+
+        ////normalize the fft values.
+        //for (int i = 0; i < numBins; ++i)
+        //{
+        //    auto v = data.fftData[i];
+
+        //    if (!std::isinf(v) && !std::isnan(v))
+        //    {
+        //        v /= float(numBins);
+        //    }
+        //    else
+        //    {
+        //        v = 0.f;
+        //    }
+        //    data.fftData[i] = v;
+        //}
+
+        ////convert them to decibels
+        //for (int i = 0; i < numBins; ++i)
+        //{
+        //    data.fftData[i] = juce::Decibels::gainToDecibels(data.fftData[i], min_dB);
+        //}
+
+        //for (int i = 0; i < data.scopeSize; i++)
+        //{
+        //    data.scopeData[i] = data.fftData[i];
+        //}
+
+        for (int i = 0; i < data.scopeSize; ++i)                         // [3]
         {
-            auto skewedProportionX = 1.0f - std::exp(std::log(1.0f - (float)i / (float)data.scopeSize));
-
+            auto skewedProportionX = 1.0f - std::exp(std::log(1.0f - (float)i / (float)data.scopeSize) * 0.05f);
+            //skewedProportionX =  (std::log10((float)i / (float)data.scopeSize));
+            
             auto fftDataIndex = juce::jlimit(0, data.fftSize / 2, (int)(skewedProportionX * (float)data.fftSize * 0.5f));
-
             auto level = juce::jmap(juce::jlimit(min_dB, max_dB, juce::Decibels::gainToDecibels(data.fftData[fftDataIndex])
                 - juce::Decibels::gainToDecibels((float)data.fftSize)),
                 min_dB, max_dB, 0.0f, 1.0f);
 
-            data.scopeData[i] = level;
+            data.scopeData[i] = level;                                   // [4]
         }
     }
 
