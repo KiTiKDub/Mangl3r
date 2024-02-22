@@ -82,6 +82,7 @@ void ToolbarComp::resized()
     auto bounds = getLocalBounds();
     auto barSelect = bounds.removeFromLeft(bounds.getWidth() * .1);
     auto overSelect = bounds.removeFromRight(bounds.getWidth() * .11);
+    overSelect.translate(0, 5);
 
     auto topSelect = barSelect.removeFromTop(barSelect.getHeight() * .33);
     auto midSelect = barSelect.removeFromTop(barSelect.getHeight() * .5);
@@ -181,16 +182,6 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
                 auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID();
                 auto attachment = vectorAT.at(i);
                 *attachment = std::make_unique<Attachment>(apvts, ID, *power);
-
-                String toggleState;
-                if (power->getToggleState())
-                {
-                    toggleState = "on";
-                }
-                else
-                    toggleState = "off";
-
-                DBG("Toggle State at Attachment: " << toggleState);
             }
             
         }

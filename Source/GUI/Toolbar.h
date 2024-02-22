@@ -59,16 +59,15 @@ struct ToolbarItem : public KitikToolbarItemComponent
     {
         auto bounds = getLocalBounds();
 
-        auto toggle = bounds.reduced(bounds.getWidth() * .2, bounds.getHeight() * .2);
+        auto toggle = bounds.reduced(bounds.getWidth() * .25, bounds.getHeight() * .25);
         toggle.setPosition(bounds.getPosition());
-        toggle.translate(-20, bounds.getHeight() * .25);
+        toggle.translate(-15, /*bounds.getHeight() * .25*/0);
 
         power.setBounds(toggle);
     }
 
 private:
     juce::ToggleButton power;
-    //juce::AudioProcessorValueTreeState::ButtonAttachment powerAT;
     Laf lnf;
 };
 
@@ -146,7 +145,7 @@ private:
     KitikToolbar toolbarHigh, toolbarMid, toolbarLow;
     ToolbarFactory tbf;
     Laf lnf;
-    juce::ToggleButton low{ "Low" }, mid{ "Mids" }, high{ "Highs" };
+    juce::ToggleButton low{ "Low" }, mid{ "Mid" }, high{ "High" };
     Attachment lowAT, midAT, highAT;
 
     std::unique_ptr<Attachment> satToggle1AT, satToggle2AT, satToggle3AT,
