@@ -21,6 +21,8 @@ void DistorkEngine::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int> order, int channel)
 {
+    if (!engineToggle->get()) { return; }
+
     updateParams();
 
     for (int i = 0; i < order.size(); i++)

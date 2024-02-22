@@ -26,6 +26,7 @@ MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     addAndMakeVisible(*inGain);
     addAndMakeVisible(*outGain);
     addAndMakeVisible(bypass);
+    bypass.setComponentID("Global");
 
     startTimerHz(24);
 }

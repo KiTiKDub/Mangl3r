@@ -21,6 +21,8 @@ struct DistorkEngine
     void prepareToPlay(juce::dsp::ProcessSpec&);
     void process(juce::dsp::AudioBlock<float>&, std::vector<int>, int);
 
+    juce::AudioParameterBool* engineToggle{ nullptr };
+
     juce::AudioParameterInt* clipperSelect{ nullptr };
     juce::AudioParameterFloat* clipperThresh{ nullptr };
     juce::AudioParameterFloat* clipperInGain{ nullptr };

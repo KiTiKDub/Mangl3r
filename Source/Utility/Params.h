@@ -29,6 +29,14 @@ namespace Params
 
         Oversample_Rate,
 
+        Engine_One_Toggle,
+        Engine_Two_Toggle,
+        Engine_Three_Toggle,
+
+        Engine_One_Mute,
+        Engine_Two_Mute,
+        Engine_Three_Mute,
+
         Saturator_One_Toggle,
         Saturator_Two_Toggle,
         Saturator_Three_Toggle,
@@ -185,6 +193,14 @@ namespace Params
             {Select_Toolbar_Three, "Toolbar Three"},
 
             {Oversample_Rate, "Oversample Rate"},
+
+            {Engine_One_Toggle, "Engine One Toggle"},
+            {Engine_Two_Toggle, "Engine Two Toggle"},
+            {Engine_Three_Toggle, "Engine Three Toggle"},
+
+            {Engine_One_Mute, "Engine One Mute"},
+            {Engine_Two_Mute, "Engine Two Mute"},
+            {Engine_Three_Mute, "Engine Three Mute"},
 
             {Saturator_One_Toggle, "Saturation One Toggle" },
             {Saturator_Two_Toggle,"Saturation Two Toggle" },

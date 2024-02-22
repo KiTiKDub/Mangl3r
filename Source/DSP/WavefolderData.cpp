@@ -25,7 +25,7 @@ void Wavefolder::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
 {
-    if (wavefolderBypass) { return; };
+    if (!wavefolderBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 
@@ -58,6 +58,6 @@ void Wavefolder::updateParams(bool bypass, int typeSelect, std::vector<juce::Aud
     wavefolderTypeSelect = typeSelect;
     wavefolderFactors = factors;
     wavefolderInGainValue = inGain;
-    wavefolderMix = mix;
+    wavefolderMix = mix/100;
     wavefolderOutGainValue = outGain;
 }

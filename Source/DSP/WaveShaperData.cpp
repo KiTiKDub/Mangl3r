@@ -23,7 +23,7 @@ void WaveShaper::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void WaveShaper::process(juce::dsp::AudioBlock<float>& block, int channel)
 {
-    if (waveShaperBypass) { return; };
+    if (!waveShaperBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 

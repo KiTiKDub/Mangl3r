@@ -113,6 +113,10 @@ private:
     std::vector<int> toolbarMidOrder{ 1, 2, 3, 4 };
     std::vector<int> toolbarLowOrder{ 1, 2, 3, 4 };
 
+    juce::AudioParameterBool* lowMute{ nullptr };
+    juce::AudioParameterBool* midMute{ nullptr };
+    juce::AudioParameterBool* highMute{ nullptr };
+
     //TODO:
         //Spectrum Anylzer:
             //Get image rendered and sized
