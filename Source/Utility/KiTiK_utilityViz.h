@@ -16,6 +16,7 @@
         FFTData();
         ~FFTData();
         void pushNextSampleIntoFifo(juce::AudioBuffer<float> buffer);
+        void prepare(float);
         friend class FFTComp;
 
     protected:
@@ -34,6 +35,7 @@
         float fifo[fftSize];
         int fifoIndex = 0;
         bool nextFFTBlockReady = false;
+        float sampleRate;
     };
 
     struct FFTComp : public juce::Component
