@@ -26,7 +26,7 @@ Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor&
     addAndMakeVisible(analyzer);
 
     setSize (700, 600);
-    startTimerHz(24);
+    startTimerHz(60);
 }
 
 Mangl3rAudioProcessorEditor::~Mangl3rAudioProcessorEditor()
@@ -45,19 +45,13 @@ void Mangl3rAudioProcessorEditor::paint (juce::Graphics& g)
     auto bounds = getLocalBounds();
 
     auto analyzerBounds = bounds.removeFromTop(200);
-    g.drawRect(analyzerBounds);
-    g.drawFittedText("Analyzer", analyzerBounds, juce::Justification::centred, 1);
+    g.drawHorizontalLine(analyzerBounds.getBottom(), bounds.getX(), bounds.getRight());
 
     auto selectArea = bounds.removeFromBottom(bounds.getHeight() * .15);
-    g.drawRect(selectArea);
-    g.drawFittedText("Toolbar", selectArea, juce::Justification::centred, 1);
+    g.drawHorizontalLine(selectArea.getY() - 1, bounds.getX(), bounds.getRight());
 
     auto masterArea = bounds.removeFromRight(bounds.getWidth() * .3);
-    g.drawRect(masterArea);
-    g.drawFittedText("Master", masterArea, juce::Justification::centred, 1);
-
-    g.drawRect(bounds);
-    g.drawFittedText("Processing", bounds, juce::Justification::centred, 1);
+    g.drawVerticalLine(masterArea.getX(), masterArea.getY(), masterArea.getBottom());
 }
 
 void Mangl3rAudioProcessorEditor::resized()
