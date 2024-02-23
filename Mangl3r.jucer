@@ -4,8 +4,8 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music">
   <MAINGROUP id="oey3d3" name="Mangl3r">
     <GROUP id="{4E6E2CD4-042B-B174-D651-1260E7FC76EE}" name="Assets">
-      <FILE id="RnVCFc" name="OFFSHORE.TTF" compile="0" resource="0" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>
-      <FILE id="wFzJ82" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="0"
+      <FILE id="RnVCFc" name="OFFSHORE.TTF" compile="0" resource="1" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>
+      <FILE id="wFzJ82" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="1"
             file="../../Muisc/Pictures/KITIK_LOGO_NO_BKGD.png"/>
     </GROUP>
     <GROUP id="{F0EBD4C2-FE48-7CB3-F666-6DF6B659699A}" name="Source">

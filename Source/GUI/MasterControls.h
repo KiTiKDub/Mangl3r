@@ -31,6 +31,10 @@ private:
     juce::Image logo;
     juce::Font newFont;
 
+    juce::URL url{ "https://kwhaley5.gumroad.com/" };
+
+    juce::HyperlinkButton gumroad{ "More Plugins", url };
+
     void updateSWL(juce::AudioProcessorValueTreeState& apvts);
 
     std::array<LevelMeter, 2> meter;

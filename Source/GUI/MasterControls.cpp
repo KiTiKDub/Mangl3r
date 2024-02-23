@@ -28,6 +28,8 @@ MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     addAndMakeVisible(bypass);
     bypass.setComponentID("Global");
 
+    addAndMakeVisible(gumroad);
+
     startTimerHz(24);
 }
 
@@ -74,10 +76,11 @@ void MasterComp::paint(juce::Graphics& g)
     g.drawFittedText((juce::String)input, leftMetersbounds, juce::Justification::centredTop, 1);
     g.drawFittedText((juce::String)output, rightMetersBounds, juce::Justification::centredTop, 1);
     
-    //auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::OFFSHORE_TTF, BinaryData::OFFSHORE_TTFSize));
+    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::OFFSHORE_TTF, BinaryData::OFFSHORE_TTFSize));
     g.setFont(newFont);
     g.setFont(topBounds.getHeight() * .95);
-    g.drawFittedText("DistorK", topBounds, juce::Justification::centred, 1);
+    topBounds.removeFromLeft(5);
+    g.drawFittedText("Mangl3r", topBounds, juce::Justification::centredLeft, 1);
 }
 
 void MasterComp::resized()
@@ -116,6 +119,13 @@ void MasterComp::resized()
     outMeter[0].setBounds(rightMeters);
     outMeter[1].setBounds(rightMetersRight);
     mix->setBounds(bottomBounds);
+
+    topBounds.removeFromLeft(topBounds.getWidth() * .5);
+
+    auto font = juce::Font::Font();
+    gumroad.setFont(font, false);
+    gumroad.setColour(0x1001f00, juce::Colours::white);
+    gumroad.setBounds(topBounds);
 }
 
 void MasterComp::timerCallback()
