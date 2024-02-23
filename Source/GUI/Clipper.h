@@ -37,4 +37,6 @@ private:
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> thresholdAT;
 
     std::vector<juce::String> typeText{ "Hard", "Soft", "Sine", "Hyperbolic Tan", "Arc Tan", "Quintic"};
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ClipperComp)
 };

@@ -38,6 +38,8 @@ struct SliderWithLabels : juce::Slider {
 protected:
     juce::RangedAudioParameter* param;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SliderWithLabels)
+
 };
 
 template <

@@ -18,6 +18,9 @@
 
 struct DistorkEngine
 {
+    DistorkEngine() {};
+    virtual ~DistorkEngine() {};
+
     void prepareToPlay(juce::dsp::ProcessSpec&);
     void process(juce::dsp::AudioBlock<float>&, std::vector<int>, int);
 
@@ -71,4 +74,6 @@ private:
     Wavefolder wavefolder;
 
     void updateParams();
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(DistorkEngine)
 };

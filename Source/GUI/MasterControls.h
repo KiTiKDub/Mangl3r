@@ -45,4 +45,6 @@ private:
 
     juce::ToggleButton bypass{ "Bypass" };
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAT;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MasterComp)
 };

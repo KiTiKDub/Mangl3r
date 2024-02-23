@@ -38,6 +38,7 @@ protected:
     juce::RangedAudioParameter* param;
     juce::String suffix;
 
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(RotarySliderWithLabels)
 };
 
 template <

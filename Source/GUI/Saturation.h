@@ -30,4 +30,6 @@ private:
 
     std::unique_ptr<RotarySliderWithLabels> drive, inGain, outGain, mix;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> driveAT, inGainAT, outGainAT, mixAT;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(SaturationComp)
 };

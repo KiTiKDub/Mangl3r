@@ -69,6 +69,8 @@ struct ToolbarItem : public KitikToolbarItemComponent
 private:
     juce::ToggleButton power;
     Laf lnf;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToolbarItem)
 };
 
 struct ToolbarFactory : public TestToolbarItemFactory
@@ -165,5 +167,7 @@ private:
 
     std::vector<juce::String> oversamplingText{ "1x", "2x", "4x", "8x" };
     const std::map<Params::names, juce::String>& params = Params::getParams();
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(ToolbarComp)
 };
 

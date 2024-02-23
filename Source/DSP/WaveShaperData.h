@@ -12,6 +12,9 @@
 #include <JuceHeader.h>
 struct WaveShaper 
 {
+    WaveShaper() {};
+    virtual ~WaveShaper() {} ;
+
     void prepareToPlay(juce::dsp::ProcessSpec& spec);
     void process(juce::dsp::AudioBlock<float>& block, int channel);
     void updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix);
@@ -33,10 +36,12 @@ private:
     juce::dsp::Gain<float> inGain;
     juce::dsp::Gain<float> outGain;
 
-    bool waveShaperBypass;
-    int waveShaperTypeSelect;
-    std::vector<juce::AudioParameterFloat*> waveShaperFactors;
-    float waveShaperInGainValue;
-    float waveShaperOutGainValue;
-    float waveshaperMix;
+    bool waveShaperBypass{ false };
+    int waveShaperTypeSelect{ 0 };
+    std::vector<juce::AudioParameterFloat*> waveShaperFactors{ nullptr };
+    float waveShaperInGainValue{ 0.f };
+    float waveShaperOutGainValue{ 0.f };
+    float waveshaperMix{ 0.f };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(WaveShaper)
 };

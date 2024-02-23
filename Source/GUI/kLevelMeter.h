@@ -13,6 +13,9 @@
 
 struct LevelMeter : juce::Component
 {
+    LevelMeter() {};
+    virtual ~LevelMeter() override {};
+
     void paint(juce::Graphics& g) override
     {
         using namespace juce;
@@ -43,5 +46,7 @@ struct LevelMeter : juce::Component
 
 private:
     float level = -60.f;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LevelMeter)
 };
 

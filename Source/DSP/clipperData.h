@@ -13,6 +13,9 @@
 
 struct Clipper
 {
+    Clipper() {};
+    virtual ~Clipper() {};
+
     void prepareToPlay(juce::dsp::ProcessSpec& spec);
     void process(juce::dsp::AudioBlock<float>& block, int channel);
     void updateParams(bool bypass, int mode, float threshold, float gainIn, float gainOut, float mix);
@@ -32,10 +35,12 @@ private:
     juce::dsp::Gain<float> inGain;
     juce::dsp::Gain<float> outGain;
 
-    bool clipperBypass;
-    int clipperMode;
-    float clipperThresh;
-    float clipperGainIn;
-    float clipperGainOut;
-    float clipperMix;
+    bool clipperBypass{ false };
+    int clipperMode{ 0 };
+    float clipperThresh{ 0.f };
+    float clipperGainIn{ 0.f };
+    float clipperGainOut{ 0.f };
+    float clipperMix{ 0.f };
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Clipper)
 };

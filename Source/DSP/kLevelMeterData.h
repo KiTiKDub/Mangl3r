@@ -13,6 +13,8 @@
 
 struct LevelMeterData
 {
+	LevelMeterData() {};
+
 	void process(bool inOrOut, int channel, juce::AudioBuffer<float>& buffer)
 	{
 		if (inOrOut) //true is in rms, false is out rms
@@ -35,4 +37,6 @@ private:
 
 	std::array<std::atomic<float>, 2> rmsIn;
 	std::array<std::atomic<float>, 2> rmsOut;
+
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LevelMeterData)
 };

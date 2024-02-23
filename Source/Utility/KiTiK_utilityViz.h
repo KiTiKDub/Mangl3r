@@ -36,6 +36,8 @@
         int fifoIndex = 0;
         bool nextFFTBlockReady = false;
         float sampleRate;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FFTData)
     };
 
     struct FFTComp : public juce::Component
@@ -49,6 +51,8 @@
 
     private:
         FFTData& data;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(FFTComp)
     };
 
     struct OscilloscopeData
@@ -61,6 +65,8 @@
 
     protected:
         juce::AudioBuffer<float> oscBuffer;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscilloscopeData)
 
     };
 
@@ -77,6 +83,8 @@
         OscilloscopeData& data;
 
         std::vector<float> audioPoints;
+
+        JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(OscilloscopeComp)
     };
 
 

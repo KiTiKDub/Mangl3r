@@ -30,4 +30,6 @@ private:
 
     std::unique_ptr<RotarySliderWithLabels> depth, rate, inGain, mix, outGain;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> depthAT, rateAT, inGainAT, mixAT, outGainAT;
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(BitCrusherComp)
 };
