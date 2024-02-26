@@ -11,9 +11,9 @@
 #include "Analyzer.h"
 
 AnalyzerComp::AnalyzerComp(Mangl3rAudioProcessor& ap) : fftComp(ap.fftData),
-    lowBPAT(ap.apvts, "Engine One Toggle", lowBP), lowMuteAT(ap.apvts, "Engine One Mute", lowMute),
+    lowBPAT(ap.apvts, "Engine Three Toggle", lowBP), lowMuteAT(ap.apvts, "Engine Three Mute", lowMute),
     midBPAT(ap.apvts, "Engine Two Toggle", midBP), midMuteAT(ap.apvts, "Engine Two Mute", midMute),
-    highBPAT(ap.apvts, "Engine Three Toggle", highBP), highMuteAT(ap.apvts, "Engine Three Mute", highMute)
+    highBPAT(ap.apvts, "Engine One Toggle", highBP), highMuteAT(ap.apvts, "Engine One Mute", highMute)
 {
     updateRSWL(ap.apvts);
 
