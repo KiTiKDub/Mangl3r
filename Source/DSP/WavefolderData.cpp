@@ -39,7 +39,9 @@ void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
     {
         for (int s = 0; s < context.getInputBlock().getNumSamples(); s++)
         {
-            channelOutput[s] = std::sinf(juce::MathConstants<float>::twoPi * channelInput[s] * wavefolderFactors[0]->get() / 2);
+            auto output = std::sinf(juce::MathConstants<float>::twoPi * channelInput[s] * wavefolderFactors[0]->get() / 2);
+
+            channelOutput[s] = output * wavefolderMix + (1-wavefolderMix) * channelInput[s];
         }
     }
     else
@@ -47,9 +49,13 @@ void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
         for (int s = 0; s < context.getInputBlock().getNumSamples(); s++)
         {
             auto data = channelInput[s] * wavefolderFactors[1]->get();
-            channelOutput[s] = 4 * (std::abs(.25 * data + .25 - std::round(.25 * data + .25)) - .25);
+            auto output = 4 * (std::abs(.25 * data + .25 - std::round(.25 * data + .25)) - .25);
+            channelOutput[s] = output * wavefolderMix + (1 - wavefolderMix) * channelInput[s];
         }
     }
+
+    outGain.setGainDecibels(wavefolderOutGainValue);
+    outGain.process(context);
 }
 
 void Wavefolder::updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix)
