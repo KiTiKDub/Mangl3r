@@ -43,9 +43,9 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
     selectToolbarThree = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Select_Toolbar_Three)));
     oversampleRate = dynamic_cast<juce::AudioParameterInt*>(apvts.getParameter(params.at(names::Oversample_Rate)));
 
-    lowMute = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_One_Mute)));
+    lowMute = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_Three_Mute)));
     midMute = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_Two_Mute)));
-    highMute = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_Three_Mute)));
+    highMute = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_One_Mute)));
 
     engine1.engineToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_One_Toggle)));
     engine2.engineToggle = dynamic_cast<juce::AudioParameterBool*>(apvts.getParameter(params.at(names::Engine_Two_Toggle)));
@@ -355,16 +355,16 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     LP2.setCutoffFrequency(midHighCutoff);
     HP2.setCutoffFrequency(midHighCutoff);
 
-    if (false) //Spectrum analyzer testing
-    {
-        buffer.clear();
-        auto block = juce::dsp::AudioBlock<float>(buffer);
-        auto ctx = juce::dsp::ProcessContextReplacing<float>(block);
-        osc.process(ctx);
-        osc.setFrequency(JUCE_LIVE_CONSTANT(200));
+    //if (false) //Spectrum analyzer testing
+    //{
+    //    buffer.clear();
+    //    auto block = juce::dsp::AudioBlock<float>(buffer);
+    //    auto ctx = juce::dsp::ProcessContextReplacing<float>(block);
+    //    osc.process(ctx);
+    //    osc.setFrequency(JUCE_LIVE_CONSTANT(200));
 
-        gain.process(ctx);
-    }
+    //    gain.process(ctx);
+    //}
 
     for (auto& fb : filterBuffers)
     {
@@ -389,18 +389,6 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     HP2.process(fb2Ctx);
 
     auto ovRate = oversampleRate->get();
-    if (ovRate != lastOSValue)
-    {
-        lastOSValue = ovRate;
-        suspendProcessing(true);
-
-        prepareToPlay(getSampleRate(), buffer.getNumSamples());
-        auto latency = overSamplers[ovRate].getLatencyInSamples();
-
-        setLatencySamples(latency);
-
-        suspendProcessing(false);
-    }
 
     auto ov0Block = overSamplers[ovRate].processSamplesUp(fb0Ctx.getInputBlock());
     auto ov1Block = overSamplers[ovRate + 4].processSamplesUp(fb1Ctx.getInputBlock());
@@ -434,7 +422,7 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         addFilterBand(buffer, filterBuffers[0]);
     if(!midMute->get())
         addFilterBand(buffer, filterBuffers[1]);
-    if (!highMute->get());
+    if (!highMute->get())
         addFilterBand(buffer, filterBuffers[2]);
 
     for (int ch = 0; ch < totalNumInputChannels; ++ch)
@@ -630,15 +618,15 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_One_In), "In Gain", gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_One_Mix), "Mix", mixRange, 100));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_One_Out), "Out Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_One_Toggle), params.at(names::Wavefolder_One_Toggle), true));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_One_Toggle), params.at(names::Wavefolder_One_Toggle), false));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Wavefolder_Two_Type), "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Two_Drive_Sin), "Sin", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(params.at(names::WaveFolder_Two_Drive_Tri), "Tru", driveRange, 1));
+    layout.add(std::make_unique<AudioParameterFloat>(params.at(names::WaveFolder_Two_Drive_Tri), "Tri", driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Two_In), "In Gain", gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Two_Mix), "Mix", mixRange, 100));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Two_Out), "Out Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_Two_Toggle), params.at(names::Wavefolder_Two_Toggle), true));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_Two_Toggle), params.at(names::Wavefolder_Two_Toggle), false));
 
     layout.add(std::make_unique<AudioParameterInt>(params.at(names::Wavefolder_Three_Type), "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Three_Drive_Sin), "Sin", driveRange, 1));
@@ -646,7 +634,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Three_In), "In Gain", gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Three_Mix), "Mix", mixRange, 100));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Wavefolder_Three_Out), "Out Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_Three_Toggle), params.at(names::Wavefolder_Three_Toggle), true));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Wavefolder_Three_Toggle), params.at(names::Wavefolder_Three_Toggle), false));
 
     return layout;
 }

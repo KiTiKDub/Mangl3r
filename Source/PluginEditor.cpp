@@ -70,12 +70,9 @@ void Mangl3rAudioProcessorEditor::paint (juce::Graphics& g)
     auto logoSpace = bounds.reduced(bounds.getWidth() * .425, bounds.getHeight() * .425);
     logoSpace.setX(bounds.getTopLeft().getX());
     logoSpace.setY(bounds.getTopLeft().getY());
-    logoSpace.translate(-25, -10);
+    logoSpace.translate(-25, 0);
 
     auto logo = juce::ImageCache::getFromMemory(BinaryData::KITIK_LOGO_NO_BKGD_png, BinaryData::KITIK_LOGO_NO_BKGD_pngSize);
-    /*g.setOpacity(.8);
-    g.drawImage(logo, logoSpace.toFloat(), juce::RectanglePlacement::centred);
-    g.setOpacity(1);*/
 
     auto selectArea = bounds.removeFromBottom(bounds.getHeight() * .15);
     g.drawHorizontalLine(selectArea.getY() - 1, bounds.getX(), bounds.getRight());
