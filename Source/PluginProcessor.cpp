@@ -22,6 +22,11 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
                        )
 #endif
 {
+    apvts.state.setProperty(PresetManager::presetNameProperty, "", nullptr);
+    apvts.state.setProperty("version", ProjectInfo::versionString, nullptr);
+
+    presetManager = std::make_unique<PresetManager>(apvts);
+
     using namespace Params;
     const auto& params = getParams();
 
@@ -450,15 +455,18 @@ juce::AudioProcessorEditor* Mangl3rAudioProcessor::createEditor()
 //==============================================================================
 void Mangl3rAudioProcessor::getStateInformation (juce::MemoryBlock& destData)
 {
-    // You should use this method to store your parameters in the memory block.
-    // You could do that either as raw data, or use the XML or ValueTree classes
-    // as intermediaries to make it easy to save and load complex data.
+    const auto state = apvts.copyState();
+    const auto xml(state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void Mangl3rAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
-    // You should use this method to restore your parameters from this memory block,
-    // whose contents will have been created by the getStateInformation() call.
+    const auto xmlState = getXmlFromBinary(data, sizeInBytes);
+    if (xmlState == nullptr)
+        return;
+    const auto newTree = juce::ValueTree::fromXml(*xmlState);
+    apvts.replaceState(newTree);
 }
 
 juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::createParameterLayout()

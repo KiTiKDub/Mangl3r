@@ -13,6 +13,7 @@
 #include "DSP/DistorkEngine.h"
 #include "Utility/Params.h"
 #include "Utility/KiTiK_utilityViz.h"
+#include "Utility/PresetManager.h"
 
 //==============================================================================
 /**
@@ -62,6 +63,8 @@ public:
 
     LevelMeterData levelMeterData;
     FFTData fftData;
+    std::unique_ptr<PresetManager> presetManager;
+    PresetManager& getPresetManger() { return *presetManager; }
 
     void setToolbarOrder(std::vector<int>, std::vector<int>, std::vector<int>);
 

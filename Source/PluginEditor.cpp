@@ -11,7 +11,7 @@
 
 //==============================================================================
 Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor& p)
-    : AudioProcessorEditor (&p), audioProcessor (p)
+    : AudioProcessorEditor (&p), audioProcessor (p), presetPanel(p.getPresetManger())
 {
     setLookAndFeel(&lnf);
 
@@ -24,6 +24,26 @@ Mangl3rAudioProcessorEditor::Mangl3rAudioProcessorEditor (Mangl3rAudioProcessor&
     addAndMakeVisible(masterComp);
     addAndMakeVisible(toolbar);
     addAndMakeVisible(analyzer);
+
+    addChildComponent(presetPanel);
+    openPresetManager.setToggleState(false, false);
+    addAndMakeVisible(openPresetManager);
+
+    openPresetManager.setClickingTogglesState(true);
+
+    openPresetManager.onClick = [this]()
+        {
+            if (openPresetManager.getToggleState())
+            {
+                presetPanel.setVisible(true);
+                analyzer.setVisible(false);
+            }
+            else
+            {
+                presetPanel.setVisible(false);
+                analyzer.setVisible(true);
+            }
+        };
 
     setSize (700, 600);
     startTimerHz(60);
@@ -53,15 +73,18 @@ void Mangl3rAudioProcessorEditor::paint (juce::Graphics& g)
     logoSpace.translate(-25, -10);
 
     auto logo = juce::ImageCache::getFromMemory(BinaryData::KITIK_LOGO_NO_BKGD_png, BinaryData::KITIK_LOGO_NO_BKGD_pngSize);
-    g.setOpacity(.8);
+    /*g.setOpacity(.8);
     g.drawImage(logo, logoSpace.toFloat(), juce::RectanglePlacement::centred);
-    g.setOpacity(1);
+    g.setOpacity(1);*/
 
     auto selectArea = bounds.removeFromBottom(bounds.getHeight() * .15);
     g.drawHorizontalLine(selectArea.getY() - 1, bounds.getX(), bounds.getRight());
 
     auto masterArea = bounds.removeFromRight(bounds.getWidth() * .3);
     g.drawVerticalLine(masterArea.getX(), masterArea.getY(), masterArea.getBottom());
+
+    openPresetManager.setImages(true, true, true, logo, 0, juce::Colours::white, juce::Image(), 0, juce::Colours::white, juce::Image(), 0, juce::Colour(64u, 194u, 230u));
+    openPresetManager.setBounds(logoSpace);
 }
 
 void Mangl3rAudioProcessorEditor::resized()
@@ -82,6 +105,7 @@ void Mangl3rAudioProcessorEditor::resized()
     toolbar.setBounds(selectArea);
 
     analyzer.setBounds(analyzerBounds);
+    presetPanel.setBounds(analyzerBounds);
 }
 
 void Mangl3rAudioProcessorEditor::timerCallback()

@@ -19,6 +19,7 @@
 #include "GUI/BitCrusher.h"
 #include "GUI/Analyzer.h"
 #include "GUI/Wavefolder.h"
+#include "Utility/PresetPanel.h"
 
 //==============================================================================
 /**
@@ -38,6 +39,8 @@ public:
 
 private:
 
+    juce::ImageButton openPresetManager;
+
     Laf lnf;
 
     Mangl3rAudioProcessor& audioProcessor;
@@ -52,6 +55,7 @@ private:
     WavefolderComp wavefolder{ audioProcessor.apvts, toolbar };
 
     MasterComp masterComp{ audioProcessor };
+    PresetPanel presetPanel;
 
     //TODO
         //Update Mute solo buttons, fix globabl bypass
