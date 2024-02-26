@@ -75,6 +75,11 @@ PresetPanel::PresetPanel(PresetManager& pm)
         };
 }
 
+PresetPanel::~PresetPanel()
+{
+    setLookAndFeel(nullptr);
+}
+
 void PresetPanel::resized()
 {
     auto bounds = getLocalBounds();

@@ -90,6 +90,9 @@ private:
 
     int lastOSValue{ 0 };
 
+    juce::dsp::Gain<float> masterIn;
+    juce::dsp::Gain<float> masterOut;
+
     juce::AudioParameterBool* globalBypass{ nullptr };
     juce::AudioParameterFloat* masterInValue{ nullptr };
     juce::AudioParameterFloat* masterOutValue{ nullptr };

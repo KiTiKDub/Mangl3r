@@ -241,6 +241,14 @@ void Mangl3rAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
     spec.numChannels = getTotalNumOutputChannels();
     spec.sampleRate = sampleRate;
 
+    masterIn.reset();
+    masterIn.prepare(spec);
+    masterIn.setRampDurationSeconds(.05);
+    
+    masterOut.reset();
+    masterOut.prepare(spec);
+    masterOut.setRampDurationSeconds(.05);
+
     fftData.prepare(sampleRate);
 
     engine1.prepareToPlay(spec);
@@ -329,6 +337,11 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
     juce::AudioBuffer<float> copyBuffer;
     copyBuffer = buffer;
+    auto copyBlock = juce::dsp::AudioBlock<float>(buffer);
+    auto copyContext = juce::dsp::ProcessContextReplacing<float>(copyBlock);
+
+    masterIn.setGainDecibels(masterInValue->get());
+    masterIn.process(copyContext);
 
     levelMeterData.process(true, 0, buffer);
     levelMeterData.process(true, 1, buffer);
@@ -434,6 +447,12 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
             data[s] = (data[s] * masterMix->get() / 100) + (dry[s] * (1 - masterMix->get() / 100));
         }
     }
+
+    auto finalBlock = juce::dsp::AudioBlock<float>(buffer);
+    auto finalContext = juce::dsp::ProcessContextReplacing<float>(finalBlock);
+
+    masterOut.setGainDecibels(masterOutValue->get());
+    masterOut.process(finalContext);
 
     fftData.pushNextSampleIntoFifo(buffer);
 

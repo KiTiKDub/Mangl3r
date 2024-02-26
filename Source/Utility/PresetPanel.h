@@ -16,6 +16,7 @@
 struct PresetPanel : public juce::Component
 {
     PresetPanel(PresetManager& pm);
+    virtual ~PresetPanel() override;
 
     void resized() override;
     void paint(juce::Graphics& g) override;
