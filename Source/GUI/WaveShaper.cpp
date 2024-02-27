@@ -80,7 +80,9 @@ void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
     auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
     auto& selectParam = getParam(apvts, params, bandNames.at(Pos::Type));
 
-    auto correctParam = selectParam.getValue();
+    auto range = selectParam.getNormalisableRange();
+
+    auto correctParam = juce::jmap(selectParam.getValue(), range.start, range.end);
     if (correctParam == 0)
         pos = Pos::Sin;
     else if (correctParam == 1)
@@ -90,25 +92,25 @@ void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
     else
         pos = Pos::GB;
 
-    auto& distortParm = getParam(apvts, params, bandNames.at(pos));
+    auto& distortParam = getParam(apvts, params, bandNames.at(pos));
     auto& mixParam = getParam(apvts, params, bandNames.at(Pos::Mix));
     auto& outGainParam = getParam(apvts, params, bandNames.at(Pos::Out));
 
     inGain.get()->changeParam(&inGainParam);
     select.get()->changeParam(&selectParam);
-    distort.get()->changeParam(&distortParm);
+    distort.get()->changeParam(&distortParam);
     mix.get()->changeParam(&mixParam);
     outGain.get()->changeParam(&outGainParam);
 
     makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
     makeAttachment(selectAT, apvts, params, bandNames.at(Pos::Type), *select);
-    makeAttachment(distortAT, apvts, params, bandNames.at(Pos::Sin), *distort);
+    makeAttachment(distortAT, apvts, params, bandNames.at(pos), *distort);
     makeAttachment(mixAT, apvts, params, bandNames.at(Pos::Mix), *mix);
     makeAttachment(outGainAT, apvts, params, bandNames.at(Pos::Out), *outGain);
 
     addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
     addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
-    addLabelPairs(distort->labels, 1, 3, distortParm, "", 20);
+    addLabelPairs(distort->labels, 1, 3, distortParam, "", 20);
     addLabelPairs(mix->labels, 1, 3, mixParam, "%");
     addLabelPairs(outGain->labels, 1, 3, outGainParam, " dB");
 

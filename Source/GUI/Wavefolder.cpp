@@ -80,9 +80,9 @@ void WavefolderComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
     auto& inGainParam = getParam(apvts, params, bandNames.at(Pos::In));
     auto& selectParam = getParam(apvts, params, bandNames.at(Pos::Type));
 
+    auto range = selectParam.getNormalisableRange();
 
-    auto correctType = selectParam.getValue();
-
+    auto correctType = juce::jmap(selectParam.getValue(), range.start, range.end);
     if (correctType == 0)
         pos = Pos::Sin;
     else
@@ -100,7 +100,7 @@ void WavefolderComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
 
     makeAttachment(inGainAT, apvts, params, bandNames.at(Pos::In), *inGain);
     makeAttachment(selectAT, apvts, params, bandNames.at(Pos::Type), *select);
-    makeAttachment(distortAT, apvts, params, bandNames.at(Pos::Sin), *distort);
+    makeAttachment(distortAT, apvts, params, bandNames.at(pos), *distort);
     makeAttachment(mixAT, apvts, params, bandNames.at(Pos::Mix), *mix);
     makeAttachment(outGainAT, apvts, params, bandNames.at(Pos::Out), *outGain);
 

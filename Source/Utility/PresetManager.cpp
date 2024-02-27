@@ -15,7 +15,7 @@ const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation
 		.getChildFile(ProjectInfo::companyName)
 		.getChildFile(ProjectInfo::projectName)
 };
-const juce::String PresetManager::extension{ "ss" };
+const juce::String PresetManager::extension{ "mangler" };
 const juce::String PresetManager::presetNameProperty{ "presetName" };
 
 PresetManager::PresetManager(juce::AudioProcessorValueTreeState& apvts) :
