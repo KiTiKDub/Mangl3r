@@ -287,7 +287,7 @@ std::vector<Params::names> WaveShaperComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else
+    else if(band == "Low")
     {
         Names = std::vector<Params::names>
         {
@@ -299,6 +299,21 @@ std::vector<Params::names> WaveShaperComp::getParamsAtBand(juce::String& band)
             Params::names::Waveshaper_One_In,
             Params::names::Waveshaper_One_Mix,
             Params::names::Waveshaper_One_Out
+        };
+    }
+
+    else
+    {
+        Names = std::vector<Params::names>
+        {
+            Params::names::Waveshaper_Single_Type,
+            Params::names::Waveshaper_Single_Drive_Sin,
+            Params::names::Waveshaper_Single_Drive_Quad,
+            Params::names::Waveshaper_Single_Drive_Factor,
+            Params::names::Waveshaper_Single_Drive_GB,
+            Params::names::Waveshaper_Single_In,
+            Params::names::Waveshaper_Single_Mix,
+            Params::names::Waveshaper_Single_Out
         };
     }
 

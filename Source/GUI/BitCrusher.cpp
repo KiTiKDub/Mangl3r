@@ -144,7 +144,7 @@ std::vector<Params::names> BitCrusherComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else
+    else if(band == "High")
     {
         Names = std::vector<Params::names>
         {
@@ -153,6 +153,18 @@ std::vector<Params::names> BitCrusherComp::getParamsAtBand(juce::String& band)
             Params::names::Bitcrusher_One_In,
             Params::names::Bitcrusher_One_Mix,
             Params::names::Bitcrusher_One_Out
+        };
+    }
+
+    else
+    {
+        Names = std::vector<Params::names>
+        {
+            Params::names::Bitcrusher_Single_Depth,
+            Params::names::Bitcrusher_Single_Rate,
+            Params::names::Bitcrusher_Single_In,
+            Params::names::Bitcrusher_Single_Mix,
+            Params::names::Bitcrusher_Single_Out
         };
     }
 

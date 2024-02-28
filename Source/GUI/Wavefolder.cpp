@@ -259,7 +259,7 @@ std::vector<Params::names> WavefolderComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else
+    else if(band == "High")
     {
         Names = std::vector<Params::names>
         {
@@ -269,6 +269,19 @@ std::vector<Params::names> WavefolderComp::getParamsAtBand(juce::String& band)
             Params::names::Wavefolder_Three_In,
             Params::names::Wavefolder_Three_Mix,
             Params::names::Wavefolder_Three_Out
+        };
+    }
+
+    else
+    {
+        Names = std::vector<Params::names>
+        {
+            Params::names::Wavefolder_Single_Type,
+            Params::names::Wavefolder_Single_Drive_Sin,
+            Params::names::WaveFolder_Single_Drive_Tri,
+            Params::names::Wavefolder_Single_In,
+            Params::names::Wavefolder_Single_Mix,
+            Params::names::Wavefolder_Single_Out
         };
     }
 

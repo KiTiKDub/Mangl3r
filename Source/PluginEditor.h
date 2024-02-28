@@ -57,6 +57,8 @@ private:
     MasterComp masterComp{ audioProcessor };
     PresetPanel presetPanel;
 
+    bool lastToggleState{ false };
+
     //TODO
         //Update Mute solo buttons, fix globabl bypass
         //Fix crossover hz display

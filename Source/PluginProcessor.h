@@ -66,7 +66,7 @@ public:
     std::unique_ptr<PresetManager> presetManager;
     PresetManager& getPresetManger() { return *presetManager; }
 
-    void setToolbarOrder(std::vector<int>, std::vector<int>, std::vector<int>);
+    void setToolbarOrder(std::vector<int>, std::vector<int>, std::vector<int>, std::vector<int>);
 
 private:
 
@@ -93,6 +93,8 @@ private:
     juce::dsp::Gain<float> masterIn;
     juce::dsp::Gain<float> masterOut;
 
+    juce::AudioParameterBool* singleBandMode{ nullptr };
+
     juce::AudioParameterBool* globalBypass{ nullptr };
     juce::AudioParameterFloat* masterInValue{ nullptr };
     juce::AudioParameterFloat* masterOutValue{ nullptr };
@@ -112,12 +114,13 @@ private:
     juce::AudioParameterFloat* lowMidCrossover{ nullptr };
     juce::AudioParameterFloat* midHighCrossover{ nullptr };
 
-    DistorkEngine engine1, engine2, engine3;
+    DistorkEngine engineHigh, engineMid, engineLow, engineSingle;
 
     std::array <juce::AudioBuffer<float>, 3> filterBuffers;
     std::vector<int> toolbarHighOrder{ 1, 2, 3, 4 };
     std::vector<int> toolbarMidOrder{ 1, 2, 3, 4 };
     std::vector<int> toolbarLowOrder{ 1, 2, 3, 4 };
+    std::vector<int> toolbarSingleOrder{ 1, 2, 3, 4 };
 
     juce::AudioParameterBool* lowMute{ nullptr };
     juce::AudioParameterBool* midMute{ nullptr };
@@ -145,6 +148,11 @@ private:
         //GUI
             //Maybe make it less wide?
 
+    //BETA Feedback:
+    // Fix bug on wavefoldr where numbers aren't switching -> Check waveshaper
+    // Check out bitcrusher
+    // Add single band mode
+    // Fix glitch with wavefoldr and shaper on hover
     //add signalsmith algo. 
 
     juce::dsp::Oscillator<float> osc;

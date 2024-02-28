@@ -24,16 +24,25 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
     toolbarHigh.setComponentID("High");
     toolbarHigh.setEditingActive(true);
     toolbarHigh.setName("High");
+    toolbarHigh.getItemComponent(0)->isClicked = true;
 
     addChildComponent(toolbarMid);
     toolbarMid.addDefaultItems(tbf);
     toolbarMid.setComponentID("Mid");
     toolbarMid.setEditingActive(true);
+    toolbarMid.getItemComponent(0)->isClicked = true;
 
     addChildComponent(toolbarLow);
     toolbarLow.addDefaultItems(tbf);
     toolbarLow.setComponentID("Low");
     toolbarLow.setEditingActive(true);
+    toolbarLow.getItemComponent(0)->isClicked = true;
+
+    addChildComponent(toolbarSingle);
+    toolbarSingle.addDefaultItems(tbf);
+    toolbarSingle.setComponentID("Single");
+    toolbarSingle.setEditingActive(true);
+    toolbarSingle.getItemComponent(0)->isClicked = true;
 
 
     addAndMakeVisible(low);
@@ -90,6 +99,7 @@ void ToolbarComp::resized()
     toolbarHigh.setBounds(bounds);
     toolbarMid.setBounds(bounds);
     toolbarLow.setBounds(bounds);
+    toolbarSingle.setBounds(bounds);
 
     high.setBounds(topSelect);
     mid.setBounds(midSelect);
@@ -100,10 +110,14 @@ void ToolbarComp::resized()
 
 KitikToolbar* ToolbarComp::getCurrentEffect()
 {
+    if (toolbarSingle.isVisible())
+    {
+        return &toolbarSingle;
+    }
+
     if (high.getToggleState())
     {
         return &toolbarHigh;
-
     }
     else if (mid.getToggleState())
     {
@@ -117,6 +131,11 @@ KitikToolbar* ToolbarComp::getCurrentEffect()
 
 juce::String ToolbarComp::getActiveBand()
 {
+    if (toolbarSingle.isVisible())
+    {
+        return toolbarSingle.getComponentID();
+    }
+
     if (high.getToggleState())
     {
         return toolbarHigh.getComponentID();
@@ -137,20 +156,18 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
     auto children = toolbarHigh.getChildren();
     auto childrenMid = toolbarMid.getChildren();
     auto childrenLow = toolbarLow.getChildren();
+    auto childrenSingle = toolbarSingle.getChildren();
 
     //Needs to remove "Additional Items" from the array
     children.removeLast(1);
     childrenMid.removeLast(1);
     childrenLow.removeLast(1);
+    childrenSingle.removeLast(1);
 
     children.addArray(childrenMid);
     children.addArray(childrenLow);
+    children.addArray(childrenSingle);
 
-    auto highOrder = toolbarHigh.getAllItems();
-    auto midOrder = toolbarMid.getAllItems();
-    auto lowOrder = toolbarLow.getAllItems();
-
-    const auto& params = Params::getParams();
     std::vector<Params::names> Names
     {
         Params::names::Saturator_One_Toggle,
@@ -170,6 +187,12 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
         Params::names::Waveshaper_Three_Toggle,
         Params::names::Bitcrusher_Three_Toggle,
         Params::names::Wavefolder_Three_Toggle,
+
+        Params::names::Saturator_Single_Toggle,
+        Params::names::Clipper_Single_Toggle,
+        Params::names::Waveshaper_Single_Toggle,
+        Params::names::Bitcrusher_Single_Toggle,
+        Params::names::Wavefolder_Single_Toggle,
     };
 
     for (int i = 0; i < children.size(); i++) //maybe change this so it can dynmically update the power buttons
@@ -178,13 +201,42 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
         {
             if(auto* power = dynamic_cast<juce::ToggleButton*>(tbComp->getChildComponent(0)))
             {
-                auto check = Names.at(i);
+                //auto check = Names.at(i);
                 auto ID = apvts.getParameter(params.at(Names.at(i)))->getParameterID();
                 auto attachment = vectorAT.at(i);
                 *attachment = std::make_unique<Attachment>(apvts, ID, *power);
             }
             
         }
+    }
+}
+
+void ToolbarComp::updateSingleToggleState(bool ts)
+{
+
+    if (ts)
+    {
+        toolbarHigh.setVisible(false);
+        toolbarMid.setVisible(false);
+        toolbarLow.setVisible(false);
+        toolbarSingle.setVisible(true);
+
+        high.setVisible(false);
+        mid.setVisible(false);
+        low.setVisible(false);
+    }
+
+    else
+    {
+
+        toolbarHigh.setVisible(high.getToggleState());
+        toolbarMid.setVisible(mid.getToggleState());
+        toolbarLow.setVisible(low.getToggleState());
+        toolbarSingle.setVisible(false);
+
+        high.setVisible(true);
+        mid.setVisible(true);
+        low.setVisible(true);
     }
 }
 

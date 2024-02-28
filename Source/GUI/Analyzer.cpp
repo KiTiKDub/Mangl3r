@@ -13,7 +13,8 @@
 AnalyzerComp::AnalyzerComp(Mangl3rAudioProcessor& ap) : fftComp(ap.fftData),
     lowBPAT(ap.apvts, "Engine Three Toggle", lowBP), lowMuteAT(ap.apvts, "Engine Three Mute", lowMute),
     midBPAT(ap.apvts, "Engine Two Toggle", midBP), midMuteAT(ap.apvts, "Engine Two Mute", midMute),
-    highBPAT(ap.apvts, "Engine One Toggle", highBP), highMuteAT(ap.apvts, "Engine One Mute", highMute)
+    highBPAT(ap.apvts, "Engine One Toggle", highBP), highMuteAT(ap.apvts, "Engine One Mute", highMute),
+    singleToggleAT(ap.apvts, "Single Band Mode", singleToggle)
 {
     updateRSWL(ap.apvts);
 
@@ -34,6 +35,9 @@ AnalyzerComp::AnalyzerComp(Mangl3rAudioProcessor& ap) : fftComp(ap.fftData),
     midMute.setButtonText("M");
     addAndMakeVisible(highMute);
     highMute.setButtonText("M");
+
+    addAndMakeVisible(singleToggle);
+    singleToggle.setButtonText("Single");
 
     using namespace Params;
     const auto& paramNames = getParams();
@@ -62,7 +66,7 @@ void AnalyzerComp::resized()
 
     auto buttonSide = bounds.removeFromRight(bounds.getWidth() * .1);
     buttonSide.removeFromTop(buttonSide.getHeight() * .1);
-    buttonSide.removeFromBottom(buttonSide.getHeight() * .11);
+    auto singleToggleArea = buttonSide.removeFromBottom(buttonSide.getHeight() * .11);
     auto highArea = buttonSide.removeFromTop(buttonSide.getHeight() * .33);
     auto highMuteArea = highArea.removeFromLeft(highArea.getWidth() * .5);
     auto midArea = buttonSide.removeFromTop(buttonSide.getHeight() * .5);
@@ -81,6 +85,8 @@ void AnalyzerComp::resized()
     lowMute.setBounds(lowMuteArea);
     midMute.setBounds(midMuteArea);
     highMute.setBounds(highMuteArea);
+
+    singleToggle.setBounds(singleToggleArea);
 }
 
 void AnalyzerComp::paint(juce::Graphics& g)
@@ -142,6 +148,11 @@ void AnalyzerComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts)
 void AnalyzerComp::update()
 {
     fftComp.repaint();
+}
+
+bool AnalyzerComp::getSingleToggleState()
+{
+    return singleToggle.getToggleState();
 }
 
 void AnalyzerComp::drawCrossovers(juce::Graphics& g, juce::Rectangle<int>& r)

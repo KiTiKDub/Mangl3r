@@ -112,19 +112,27 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 
     analyzer.update();
 
+    auto currentToggleState = analyzer.getSingleToggleState();
+
+    if (lastToggleState != currentToggleState)
+    {
+        toolbar.updateSingleToggleState(currentToggleState);
+        displayCorrectDistortion();
+        lastToggleState = currentToggleState;
+    }
+
     auto toolbarHigh = toolbar.getHigh();
     auto toolbarMid = toolbar.getMid();
     auto toolbarLow = toolbar.getLow();
+    auto toolbarSingle = toolbar.getSingle();
 
-    audioProcessor.setToolbarOrder(toolbarHigh->getAllItems(), toolbarMid->getAllItems(), toolbarLow->getAllItems());
+    audioProcessor.setToolbarOrder(toolbarHigh->getAllItems(), toolbarMid->getAllItems(), toolbarLow->getAllItems(), toolbarSingle->getAllItems());
 }
 
 void Mangl3rAudioProcessorEditor::displayCorrectDistortion()
 {
     auto currentToolbar = toolbar.getCurrentEffect(); //maybe I can make the band toggles buttons public and direct access them on click, then I can bring back the if condition. Or just do all of this in the on click
     //optimize this later.
-
-    DBG("Toolbar on click:" << toolbar.getActiveBand()); //this doesn't get updated with mouse button down condition.
 
     auto& childComps = currentToolbar->getChildren();
     for (auto* child : childComps)

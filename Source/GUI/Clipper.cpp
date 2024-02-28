@@ -227,7 +227,7 @@ std::vector<Params::names> ClipperComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else
+    else if(band == "High")
     {
         Names = std::vector<Params::names>
         {
@@ -236,6 +236,18 @@ std::vector<Params::names> ClipperComp::getParamsAtBand(juce::String& band)
             Params::names::Clipper_One_In,
             Params::names::Clipper_One_Mix,
             Params::names::Clipper_One_Out
+        };
+    }
+
+    else
+    {
+        Names = std::vector<Params::names>
+        {
+            Params::names::Clipper_Single_Type,
+            Params::names::Clipper_Single_Threshold,
+            Params::names::Clipper_Single_In,
+            Params::names::Clipper_Single_Mix,
+            Params::names::Clipper_Single_Out
         };
     }
 

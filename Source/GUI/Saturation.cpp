@@ -21,8 +21,6 @@ SaturationComp::SaturationComp(juce::AudioProcessorValueTreeState& apvts, Toolba
     addAndMakeVisible(*mix);
     addAndMakeVisible(*outGain);
 
-    //updateAttachments(apvts, tb);
-
 }
 
 SaturationComp::~SaturationComp()
@@ -40,9 +38,6 @@ void SaturationComp::paint(juce::Graphics& g)
     auto leftSide = bounds.removeFromLeft(bounds.getWidth() * .33);
     auto rightSide = bounds.removeFromRight(bounds.getWidth() * .5);
 
-    /*g.drawRect(leftSide);
-    g.drawRect(rightSide);
-    g.drawRect(bounds);*/
 }
 
 void SaturationComp::resized()
@@ -197,7 +192,7 @@ std::vector<Params::names> SaturationComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else
+    else if(band == "High")
     {
         Names = std::vector<Params::names>
         {
@@ -205,6 +200,17 @@ std::vector<Params::names> SaturationComp::getParamsAtBand(juce::String& band)
             Params::names::Saturator_One_In,
             Params::names::Saturator_One_Mix,
             Params::names::Saturator_One_Out,
+        };
+    }
+
+    else
+    {
+        Names = std::vector<Params::names>
+        {
+            Params::names::Saturator_Single_Drive,
+            Params::names::Saturator_Single_In,
+            Params::names::Saturator_Single_Mix,
+            Params::names::Saturator_Single_Out,
         };
     }
 

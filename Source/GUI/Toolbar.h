@@ -134,9 +134,11 @@ struct ToolbarComp : public juce::Component
     KitikToolbar* getCurrentEffect();
     juce::String getActiveBand();
     void setPowerButtons(juce::AudioProcessorValueTreeState&);
-    KitikToolbar* getHigh() { return &toolbarHigh; };
-    KitikToolbar* getMid() { return &toolbarMid; };
-    KitikToolbar* getLow() { return &toolbarLow; };
+    KitikToolbar* getHigh() { return &toolbarHigh; }
+    KitikToolbar* getMid() { return &toolbarMid; }
+    KitikToolbar* getLow() { return &toolbarLow; }
+    KitikToolbar* getSingle() { return &toolbarSingle; }
+    void updateSingleToggleState(bool);
 
 private:
 
@@ -144,23 +146,23 @@ private:
     
     using Attachment = juce::AudioProcessorValueTreeState::ButtonAttachment;
 
-    KitikToolbar toolbarHigh, toolbarMid, toolbarLow;
+    KitikToolbar toolbarHigh, toolbarMid, toolbarLow, toolbarSingle;
     ToolbarFactory tbf;
     Laf lnf;
     juce::ToggleButton low{ "Low" }, mid{ "Mid" }, high{ "High" };
     Attachment lowAT, midAT, highAT;
 
-    std::unique_ptr<Attachment> satToggle1AT, satToggle2AT, satToggle3AT,
-                                clipToggle1AT, clipToggle2AT, clipToggle3AT,
-                                waveToggle1AT, waveToggle2AT, waveToggle3AT,
-                                bitToggle1AT, bitToggle2AT, bitToggle3AT,
-                                wavefolder1AT, wavefolder2AT, wavefolder3AT;
+    std::unique_ptr<Attachment> satToggleHighAT, satToggleMidAT, satToggleLowAT, satToggleSingleAT,
+                                clipToggleHighAT, clipToggleMidAT, clipToggleLowAT, clipToggleSingleAT,
+                                waveToggleHighAT, waveToggleMidAT, waveToggleLowAT, waveToggleSingleAT,
+                                bitToggleHighAT, bitToggleMidAT, bitToggleLowAT, bitToggleSingleAT,
+                                folderToggleHighAT, folderToggleMidAT, folderToggleLowAT, folderToggleSingleAT;
 
-    std::vector<std::unique_ptr<Attachment>*> vectorAT{&satToggle1AT, &satToggle2AT, &satToggle3AT,
-                                                       &clipToggle1AT, &clipToggle2AT, &clipToggle3AT,
-                                                       &waveToggle1AT, &waveToggle2AT, &waveToggle3AT,
-                                                       &bitToggle1AT, &bitToggle2AT, &bitToggle3AT,
-                                                       &wavefolder1AT, &wavefolder2AT, &wavefolder3AT};
+    std::vector<std::unique_ptr<Attachment>*> vectorAT{&satToggleHighAT, &satToggleMidAT, &satToggleLowAT, &satToggleSingleAT,
+                                                       &clipToggleHighAT, &clipToggleMidAT, &clipToggleLowAT, &clipToggleSingleAT,
+                                                       &waveToggleHighAT, &waveToggleMidAT, &waveToggleLowAT, &waveToggleSingleAT,
+                                                       &bitToggleHighAT, &bitToggleMidAT, &bitToggleLowAT, &bitToggleSingleAT,
+                                                       &folderToggleHighAT, &folderToggleMidAT, &folderToggleLowAT, &folderToggleSingleAT};
 
     std::unique_ptr<RotarySliderWithLabels> oversampleSelect;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> oversampleSelectAT;
