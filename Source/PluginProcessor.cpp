@@ -326,12 +326,12 @@ void Mangl3rAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBloc
         oversample.initProcessing(samplesPerBlock);
     }
 
-    osc.initialise([](float x) {return std::sin(x); });
-    osc.prepare(spec);
-    osc.setFrequency(200);
+    //osc.initialise([](float x) {return std::sin(x); }); //FFT graph testing
+    //osc.prepare(spec);
+    //osc.setFrequency(200);
 
-    gain.prepare(spec);
-    gain.setGainDecibels(-12.f);
+    //gain.prepare(spec);
+    //gain.setGainDecibels(-12.f);
 }
 
 void Mangl3rAudioProcessor::releaseResources()
@@ -375,7 +375,7 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    if (globalBypass->get()) { return; }
+    if (!globalBypass->get()) { return; }
 
     juce::AudioBuffer<float> copyBuffer;
     copyBuffer = buffer;
@@ -389,7 +389,7 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
     levelMeterData.process(true, 0, buffer);
     levelMeterData.process(true, 1, buffer);
 
-    if(!singleBandMode->get())
+    if(singleBandMode->get())
     {
         auto lowMidCutoff = lowMidCrossover->get();
         LP1.setCutoffFrequency(lowMidCutoff);
@@ -546,9 +546,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     auto lowMidRange = NormalisableRange<float>(20, 999, 1, 1);
     auto midHighRange = NormalisableRange<float>(1000, 20000, 1, 1);
 
-    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Single_Band_Mode), "Single", false));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Single_Band_Mode), "Single", true));
 
-    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Global_Bypass), "Global Bypass", false));
+    layout.add(std::make_unique<AudioParameterBool>(params.at(names::Global_Bypass), "Global Bypass", true));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_In_Gain), "In", gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_Out_Gain), "Out", gainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(params.at(names::Master_Mix), "Mix", mixRange, 100));

@@ -12,7 +12,8 @@
 
 MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     audioP(p),
-    bypassAT(p.apvts, "Global Bypass", bypass)
+    bypassAT(p.apvts, "Global Bypass", bypass),
+    singleAT(p.apvts, "Single Band Mode", single)
 
 {
     updateSWL(p.apvts);
@@ -26,7 +27,7 @@ MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     addAndMakeVisible(*inGain);
     addAndMakeVisible(*outGain);
     addAndMakeVisible(bypass);
-    bypass.setComponentID("Global");
+    addAndMakeVisible(single);
 
     addAndMakeVisible(gumroad);
 
@@ -110,9 +111,12 @@ void MasterComp::resized()
     outGainArea.translate(meterBounds.getWidth() * .125, -5);
     outGain->setBounds(outGainArea);
 
-    auto bypassArea = meterBounds.reduced(bounds.getWidth() * .3, 0);
+    auto bypassArea = meterBounds.reduced(bounds.getWidth() * .2, 0);
     bypassArea.removeFromBottom(bypassArea.getHeight() * .95);
+    auto singleArea = bypassArea.removeFromRight(bypassArea.getWidth() * .5);
+    singleArea.translate(-5, 0);
     bypass.setBounds(bypassArea);
+    single.setBounds(singleArea);
 
     meter[0].setBounds(leftMeters);
     meter[1].setBounds(leftMetersRight);
@@ -136,8 +140,23 @@ void MasterComp::timerCallback()
         outMeter[channel].setLevel(audioP.levelMeterData.getOutRMS(channel));
     }
 
+    if (bypass.getToggleState())
+        bypass.setButtonText("On");
+    else
+        bypass.setButtonText("Off");
+
+    if (single.getToggleState())
+        single.setButtonText("Multi");
+    else
+        single.setButtonText("Single");
+
     repaint();
 
+}
+
+bool MasterComp::getSingleToggleState()
+{
+    return single.getToggleState();
 }
 
 void MasterComp::updateSWL(juce::AudioProcessorValueTreeState& apvts)

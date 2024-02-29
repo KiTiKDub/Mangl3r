@@ -112,7 +112,7 @@ void Mangl3rAudioProcessorEditor::timerCallback()
 
     analyzer.update();
 
-    auto currentToggleState = analyzer.getSingleToggleState();
+    auto currentToggleState = !masterComp.getSingleToggleState();
 
     if (lastToggleState != currentToggleState)
     {

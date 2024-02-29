@@ -23,6 +23,7 @@ struct MasterComp : public juce::Component, juce::Timer
     void paint(juce::Graphics& g) override;
     void resized() override;
     void timerCallback() override;
+    bool getSingleToggleState();
 
 private:
 
@@ -43,8 +44,8 @@ private:
     std::unique_ptr<SliderWithLabels> inGain, mix, outGain;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> inGainAT, mixAT, outGainAT;
 
-    juce::ToggleButton bypass{ "Bypass" };
-    juce::AudioProcessorValueTreeState::ButtonAttachment bypassAT;
+    juce::ToggleButton bypass{ "On" }, single{ "Single" };
+    juce::AudioProcessorValueTreeState::ButtonAttachment bypassAT, singleAT;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MasterComp)
 };

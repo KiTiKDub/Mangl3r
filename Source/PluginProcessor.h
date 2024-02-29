@@ -149,14 +149,14 @@ private:
             //Maybe make it less wide?
 
     //BETA Feedback:
-    // Fix bug on wavefoldr where numbers aren't switching -> Check waveshaper
-    // Check out bitcrusher
-    // Add single band mode
-    // Fix glitch with wavefoldr and shaper on hover
+    // Fix bug on wavefoldr where numbers aren't switching -> Check waveshaper DONE
+    // Check out bitcrusher DONE
+    // Add single band mode DONE
+    // Fix glitch with wavefoldr and shaper on hover DONE
     //add signalsmith algo. 
 
-    juce::dsp::Oscillator<float> osc;
-    juce::dsp::Gain<float> gain;
+    /*juce::dsp::Oscillator<float> osc; //FFT graph testing
+    juce::dsp::Gain<float> gain;*/
 
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Mangl3rAudioProcessor)

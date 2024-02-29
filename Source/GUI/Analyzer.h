@@ -25,7 +25,6 @@ struct AnalyzerComp : public juce::Component
 
     void updateRSWL(juce::AudioProcessorValueTreeState& apvts);
     void update();
-    bool getSingleToggleState();
 
 private:
 
@@ -36,8 +35,8 @@ private:
     std::unique_ptr<RotarySliderWithLabels> lowMid, midHigh;
     std::unique_ptr<juce::AudioProcessorValueTreeState::SliderAttachment> lowMidAT, midHighAT;
 
-    juce::ToggleButton lowBP, midBP, highBP, lowMute, midMute, highMute, singleToggle;
-    juce::AudioProcessorValueTreeState::ButtonAttachment lowBPAT, midBPAT, highBPAT, lowMuteAT, midMuteAT, highMuteAT, singleToggleAT;
+    juce::ToggleButton lowBP, midBP, highBP, lowMute, midMute, highMute;
+    juce::AudioProcessorValueTreeState::ButtonAttachment lowBPAT, midBPAT, highBPAT, lowMuteAT, midMuteAT, highMuteAT;
 
     juce::AudioParameterFloat* lowMidCrossover{ nullptr };
     juce::AudioParameterFloat* midHighCrossover{ nullptr };
