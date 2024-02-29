@@ -23,17 +23,20 @@ void Wavefolder::prepareToPlay(juce::dsp::ProcessSpec& spec)
     sampleRate = spec.sampleRate;
 }
 
-void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
+void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int channel)
 {
     if (!wavefolderBypass) { return; };
 
     auto context = juce::dsp::ProcessContextReplacing<float>(block);
 
-    inGain.setGainDecibels(wavefolderInGainValue);
-    inGain.process(context);
+    if (channel == 0)
+    {
+        inGain.setGainDecibels(wavefolderInGainValue);
+        inGain.process(context);
+    }
 
-    auto* channelInput = context.getInputBlock().getChannelPointer(ch);
-    auto* channelOutput = context.getOutputBlock().getChannelPointer(ch);
+    auto* channelInput = context.getInputBlock().getChannelPointer(channel);
+    auto* channelOutput = context.getOutputBlock().getChannelPointer(channel);
 
     if (wavefolderTypeSelect == 0)
     {
@@ -54,8 +57,11 @@ void Wavefolder::process(juce::dsp::AudioBlock<float>& block, int ch)
         }
     }
 
-    outGain.setGainDecibels(wavefolderOutGainValue);
-    outGain.process(context);
+    if (channel == 0)
+    {
+        outGain.setGainDecibels(wavefolderOutGainValue);
+        outGain.process(context);
+    }
 }
 
 void Wavefolder::updateParams(bool bypass, int typeSelect, std::vector<juce::AudioParameterFloat*>& factors, float inGain, float outGain, float mix)
