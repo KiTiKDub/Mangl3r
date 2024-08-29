@@ -63,7 +63,7 @@ public:
     /** @internal */
     void resized() override;
     /** @internal */
-    std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
+    //std::unique_ptr<AccessibilityHandler> createAccessibilityHandler() override;
 
     bool isClicked{ false };
 
@@ -152,7 +152,7 @@ public:
 
     int getItemId(int itemIndex) const noexcept;
 
-    std::vector<int> KitikToolbar::getAllItems();
+    std::vector<int> getAllItems();
 
     KitikToolbarItemComponent* getItemComponent(int itemIndex) const noexcept;
 

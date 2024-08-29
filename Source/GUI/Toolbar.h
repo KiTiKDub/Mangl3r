@@ -119,7 +119,8 @@ struct ToolbarFactory : public TestToolbarItemFactory
         case wavefolder:
             return new ToolbarItem(wavefolder, "Wavefolder");
         }
-
+        
+        return nullptr;
     }
 };
 

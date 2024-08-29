@@ -45,7 +45,7 @@ void MasterComp::paint(juce::Graphics& g)
     auto meterBounds = bounds.reduced(0, bounds.getHeight() * .1);
     meterBounds.translate(0, -bounds.getHeight() * .025);
     auto topBounds = bounds.removeFromTop(bounds.getHeight() * .07);
-    auto bottomBounds = bounds.removeFromBottom(bounds.getHeight() * .11);
+    bounds.removeFromBottom(bounds.getHeight() * .11);
     g.setColour(juce::Colour(64u, 194u, 230u));
 
     juce::Line<int> line;
@@ -77,8 +77,10 @@ void MasterComp::paint(juce::Graphics& g)
     g.drawFittedText((juce::String)input, leftMetersbounds, juce::Justification::centredTop, 1);
     g.drawFittedText((juce::String)output, rightMetersBounds, juce::Justification::centredTop, 1);
     
-    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::OFFSHORE_TTF, BinaryData::OFFSHORE_TTFSize));
+#if JUCE_WINDOWS
+    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::offshore_ttf, BinaryData::offshore_ttfSize));
     g.setFont(newFont);
+#endif
     g.setFont(topBounds.getHeight() * .95);
     topBounds.removeFromLeft(5);
     g.drawFittedText("Mangl3r", topBounds, juce::Justification::centredLeft, 1);
@@ -126,7 +128,7 @@ void MasterComp::resized()
 
     topBounds.removeFromLeft(topBounds.getWidth() * .5);
 
-    auto font = juce::Font::Font();
+    auto font = juce::Font();
     gumroad.setFont(font, false);
     gumroad.setColour(0x1001f00, juce::Colours::white);
     gumroad.setBounds(topBounds);

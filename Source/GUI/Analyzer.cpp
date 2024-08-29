@@ -62,7 +62,6 @@ void AnalyzerComp::resized()
 
     auto buttonSide = bounds.removeFromRight(bounds.getWidth() * .1);
     buttonSide.removeFromTop(buttonSide.getHeight() * .1);
-    auto singleToggleArea = buttonSide.removeFromBottom(buttonSide.getHeight() * .11);
     auto highArea = buttonSide.removeFromTop(buttonSide.getHeight() * .33);
     auto highMuteArea = highArea.removeFromLeft(highArea.getWidth() * .5);
     auto midArea = buttonSide.removeFromTop(buttonSide.getHeight() * .5);

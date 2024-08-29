@@ -59,7 +59,6 @@
         auto bounds = getLocalBounds();
         float width = bounds.getWidth();
         float height = bounds.getHeight();
-        auto skewFactor = width / data.scopeSize;
 
         if (data.nextFFTBlockReady)
         {
@@ -73,8 +72,6 @@
 
         p.startNewSubPath(0, height);
 
-        int numBins = data.scopeSize;
-
         for (int i = 1; i < data.scopeSize; ++i)
         {
             auto point = juce::jmap(data.scopeData[i], -72.f, 0.f, (height - 1), 0.f);
@@ -82,6 +79,11 @@
             float binFreq = i * data.sampleRate / data.fftSize;
             auto normalizedX = juce::mapFromLog10(binFreq, 20.f, 20000.f);
             auto binX = std::floor(normalizedX * width);
+            
+            if(std::isnan(point))
+            {
+                point = 0;
+            }
 
             p.lineTo(binX, point);
         }
@@ -99,7 +101,7 @@
         data.forwardFFT.performFrequencyOnlyForwardTransform(data.fftData);
 
         float min_dB = -72.f;
-        float max_dB = 0;
+        // max_dB = 0;
 
         int numBins = (int)data.fftSize / 2;
 
@@ -130,18 +132,6 @@
             data.scopeData[i] = data.fftData[i];
         }
 
-        //for (int i = 0; i < data.scopeSize; ++i)                         // [3]
-        //{
-        //    auto skewedProportionX = 1.0f - std::exp(std::log(1.0f - (float)i / (float)data.scopeSize) * 0.05f);
-        //    //skewedProportionX =  (std::log10((float)i / (float)data.scopeSize));
-        //    
-        //    auto fftDataIndex = juce::jlimit(0, data.fftSize / 2, (int)(skewedProportionX * (float)data.fftSize * 0.5f));
-        //    auto level = juce::jmap(juce::jlimit(min_dB, max_dB, juce::Decibels::gainToDecibels(data.fftData[fftDataIndex])
-        //        - juce::Decibels::gainToDecibels((float)data.fftSize)),
-        //        min_dB, max_dB, 0.0f, 1.0f);
-
-        //    data.scopeData[i] = level;                                   // [4]
-        //}
     }
 
     //=======================================FFT=======================================

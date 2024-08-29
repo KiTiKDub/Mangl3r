@@ -127,6 +127,8 @@ KitikToolbar* ToolbarComp::getCurrentEffect()
     {
         return &toolbarLow;
     }
+    
+    return nullptr;
 }
 
 juce::String ToolbarComp::getActiveBand()
@@ -149,6 +151,8 @@ juce::String ToolbarComp::getActiveBand()
     {
         return toolbarLow.getComponentID();
     }
+    
+    return "Error";
 }
 
 void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
@@ -158,12 +162,13 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
     auto childrenLow = toolbarLow.getChildren();
     auto childrenSingle = toolbarSingle.getChildren();
 
-    //Needs to remove "Additional Items" from the array
+    //Needs to remove "Additional Items" from the array, only on windows
+#if JUCE_WINDOWS
     children.removeLast(1);
     childrenMid.removeLast(1);
     childrenLow.removeLast(1);
     childrenSingle.removeLast(1);
-
+#endif
     children.addArray(childrenMid);
     children.addArray(childrenLow);
     children.addArray(childrenSingle);
