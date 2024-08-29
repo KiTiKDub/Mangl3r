@@ -287,7 +287,7 @@ std::vector<Params::names> WaveShaperComp::getParamsAtBand(juce::String& band)
         };
     }
 
-    else if(band == "Low")
+    else if(band == "High")
     {
         Names = std::vector<Params::names>
         {

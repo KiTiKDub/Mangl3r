@@ -4,10 +4,9 @@
               addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music">
   <MAINGROUP id="oey3d3" name="Mangl3r">
     <GROUP id="{4E6E2CD4-042B-B174-D651-1260E7FC76EE}" name="Assets">
-      <FILE id="DnXMgA" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="1"
-            file="Assets/KITIK_LOGO_NO_BKGD.png"/>
-      <FILE id="iYJgq0" name="offshore.ttf" compile="0" resource="1" file="Assets/offshore.ttf"
-            xcodeResource="1"/>
+      <FILE id="RnVCFc" name="OFFSHORE.TTF" compile="0" resource="1" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>
+      <FILE id="wFzJ82" name="KITIK_LOGO_NO_BKGD.png" compile="0" resource="1"
+            file="../../Muisc/Pictures/KITIK_LOGO_NO_BKGD.png"/>
     </GROUP>
     <GROUP id="{F0EBD4C2-FE48-7CB3-F666-6DF6B659699A}" name="Source">
       <GROUP id="{2DB4C669-3F36-519F-D481-71245BFE79A7}" name="Utility">
@@ -18,6 +17,10 @@
         <FILE id="biF9xA" name="KitikToolbar.cpp" compile="1" resource="0"
               file="Source/Utility/KitikToolbar.cpp"/>
         <FILE id="DajNNH" name="KitikToolbar.h" compile="0" resource="0" file="Source/Utility/KitikToolbar.h"/>
+        <FILE id="c6tmQb" name="overSampleGain.cpp" compile="1" resource="0"
+              file="Source/Utility/overSampleGain.cpp"/>
+        <FILE id="Xg91Sr" name="overSampleGain.h" compile="0" resource="0"
+              file="Source/Utility/overSampleGain.h"/>
         <FILE id="MkJlHd" name="Params.h" compile="0" resource="0" file="Source/Utility/Params.h"/>
         <FILE id="qD8dSf" name="PresetManager.cpp" compile="1" resource="0"
               file="Source/Utility/PresetManager.cpp"/>
@@ -132,26 +135,5 @@
         <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
-    <XCODE_MAC targetFolder="Builds/MacOSX">
-      <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug"/>
-        <CONFIGURATION isDebug="0" name="Release"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_audio_basics" path="../../juce"/>
-        <MODULEPATH id="juce_audio_devices" path="../../juce"/>
-        <MODULEPATH id="juce_audio_formats" path="../../juce"/>
-        <MODULEPATH id="juce_audio_plugin_client" path="../../juce"/>
-        <MODULEPATH id="juce_audio_processors" path="../../juce"/>
-        <MODULEPATH id="juce_audio_utils" path="../../juce"/>
-        <MODULEPATH id="juce_core" path="../../juce"/>
-        <MODULEPATH id="juce_data_structures" path="../../juce"/>
-        <MODULEPATH id="juce_dsp" path="../../juce"/>
-        <MODULEPATH id="juce_events" path="../../juce"/>
-        <MODULEPATH id="juce_graphics" path="../../juce"/>
-        <MODULEPATH id="juce_gui_basics" path="../../juce"/>
-        <MODULEPATH id="juce_gui_extra" path="../../juce"/>
-      </MODULEPATHS>
-    </XCODE_MAC>
   </EXPORTFORMATS>
 </JUCERPROJECT>

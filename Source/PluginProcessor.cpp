@@ -439,12 +439,10 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
         auto ov1Block = overSamplers[ovRate + 4].processSamplesUp(fb1Ctx.getInputBlock());
         auto ov2Block = overSamplers[ovRate + 8].processSamplesUp(fb2Ctx.getInputBlock());
 
-        for (int ch = 0; ch < totalNumInputChannels; ch++)
-        {
-            engineHigh.process(ov2Block, toolbarHighOrder, ch);
-            engineMid.process(ov1Block, toolbarMidOrder, ch);
-            engineLow.process(ov0Block, toolbarLowOrder, ch);
-        }
+        engineHigh.process(ov2Block, toolbarHighOrder);
+        engineMid.process(ov1Block, toolbarMidOrder);
+        engineLow.process(ov0Block, toolbarLowOrder);
+        
 
         overSamplers[ovRate].processSamplesDown(fb0Ctx.getOutputBlock());
         overSamplers[ovRate + 4].processSamplesDown(fb1Ctx.getOutputBlock());
@@ -476,11 +474,8 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
 
         auto ovBlock = overSamplers[ovRate].processSamplesUp(singleContext.getInputBlock());
 
-        for (int ch = 0; ch < totalNumInputChannels; ch++)
-        {
-            engineSingle.process(ovBlock, toolbarSingleOrder, ch);
-        }
-
+        engineSingle.process(ovBlock, toolbarSingleOrder);
+        
         overSamplers[ovRate].processSamplesDown(singleContext.getOutputBlock());
     }
 
