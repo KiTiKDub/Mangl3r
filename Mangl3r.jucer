@@ -17,6 +17,10 @@
         <FILE id="biF9xA" name="KitikToolbar.cpp" compile="1" resource="0"
               file="Source/Utility/KitikToolbar.cpp"/>
         <FILE id="DajNNH" name="KitikToolbar.h" compile="0" resource="0" file="Source/Utility/KitikToolbar.h"/>
+        <FILE id="c6tmQb" name="overSampleGain.cpp" compile="1" resource="0"
+              file="Source/Utility/overSampleGain.cpp"/>
+        <FILE id="Xg91Sr" name="overSampleGain.h" compile="0" resource="0"
+              file="Source/Utility/overSampleGain.h"/>
         <FILE id="MkJlHd" name="Params.h" compile="0" resource="0" file="Source/Utility/Params.h"/>
         <FILE id="qD8dSf" name="PresetManager.cpp" compile="1" resource="0"
               file="Source/Utility/PresetManager.cpp"/>

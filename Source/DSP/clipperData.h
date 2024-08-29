@@ -10,14 +10,12 @@
 
 #pragma once
 #include <JuceHeader.h>
+#include "../Utility/overSampleGain.h"
 
 struct Clipper
 {
-    Clipper() {};
-    virtual ~Clipper() {};
-
     void prepareToPlay(juce::dsp::ProcessSpec& spec);
-    void process(juce::dsp::AudioBlock<float>& block, int channel);
+    void process(juce::dsp::AudioBlock<float>& block);
     void updateParams(bool bypass, int mode, float threshold, float gainIn, float gainOut, float mix);
 
 private:
@@ -32,15 +30,19 @@ private:
         quintic
     };
 
-    juce::dsp::Gain<float> inGain;
-    juce::dsp::Gain<float> outGain;
+    void processHardClipper(int channel, juce::dsp::AudioBlock<float>& block);
+    void processCubic(int channel, juce::dsp::AudioBlock<float>& block);
+    void processSin(int channel, juce::dsp::AudioBlock<float>& block);
+    void processHyperTangent(int channel, juce::dsp::AudioBlock<float>& block);
+    void processArcTangent(int channel, juce::dsp::AudioBlock<float>& block);
+    void processQuintic(int channel, juce::dsp::AudioBlock<float>& block);
 
-    bool clipperBypass{ false };
-    int clipperMode{ 0 };
-    float clipperThresh{ 0.f };
-    float clipperGainIn{ 0.f };
-    float clipperGainOut{ 0.f };
-    float clipperMix{ 0.f };
+    overSampleGain osg;
 
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(Clipper)
+    bool clipperBypass;
+    int clipperMode;
+    float clipperThresh;
+    float clipperGainIn;
+    float clipperGainOut;
+    float clipperMix;
 };

@@ -16,27 +16,26 @@ void DistorkEngine::prepareToPlay(juce::dsp::ProcessSpec& spec)
     clipper.prepareToPlay(spec);
     waveshaper.prepareToPlay(spec);
     bitcrusher.prepareToPlay(spec);
-    wavefolder.prepareToPlay(spec);
 }
 
-void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int> order, int channel)
+void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int>& distortionProcessOrder)
 {
     if (engineToggle->get()) { return; }
 
     updateParams();
 
-    for (int i = 0; i < order.size(); i++)
+    for (int i = 0; i < distortionProcessOrder.size(); i++)
     {
-        if (order[i] == 1)
-            saturator.process(block, channel);
-        else if (order[i] == 2)
-            clipper.process(block, channel);
-        else if (order[i] == 3)
-            waveshaper.process(block, channel);
-        else if (order[i] == 4)
-            bitcrusher.process(block, channel);
-        else if (order[i] == 5)
-            wavefolder.process(block, channel);
+        if (distortionProcessOrder[i] == 1)
+            saturator.process(block);
+        else if (distortionProcessOrder[i] == 2)
+            clipper.process(block);
+        else if (distortionProcessOrder[i] == 3)
+            waveshaper.process(block);
+        else if (distortionProcessOrder[i] == 4)
+            bitcrusher.process(block);
+        else if (distortionProcessOrder[i] == 5)
+            wavefolder.process(block);
     }
 }
 
@@ -46,5 +45,4 @@ void DistorkEngine::updateParams()
     clipper.updateParams(clipperToggle->get(), clipperSelect->get(), clipperThresh->get(), clipperInGain->get(), clipperOutGain->get(), clipperMix->get());
     waveshaper.updateParams(waveShaperToggle->get(), waveShaperSelect->get(), waveShaperFactorsHolder, waveShaperInGain->get(), waveShaperOutGain->get(), waveShaperMix->get());
     bitcrusher.updateParams(crusherToggle->get(), crusherBitDepth->get(), crusherBitRate->get(), crusherInGain->get(), crusherOutGain->get(), crusherMix->get());
-    wavefolder.updateParams(wavefolderToggle->get(), wavefolderSelect->get(), wavefolderFactorsHolder, wavefolderInGain->get(), wavefolderOutGain->get(), wavefolderMix->get());
 }
