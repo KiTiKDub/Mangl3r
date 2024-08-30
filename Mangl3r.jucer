@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="e6fZiy" name="Mangl3r" projectType="audioplug" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music">
+              addUsingNamespaceToJuceHeader="0" jucerFormatVersion="1" companyName="KiTiK Music"
+              version="1.1.0">
   <MAINGROUP id="oey3d3" name="Mangl3r">
     <GROUP id="{4E6E2CD4-042B-B174-D651-1260E7FC76EE}" name="Assets">
       <FILE id="RnVCFc" name="OFFSHORE.TTF" compile="0" resource="1" file="../../../APPDATA/LOCAL/MICROSOFT/WINDOWS/FONTS/OFFSHORE.TTF"/>

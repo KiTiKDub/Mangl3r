@@ -536,6 +536,7 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     AudioProcessorValueTreeState::ParameterLayout layout;
 
     auto gainRange = NormalisableRange<float>(-24, 24, .1, 1);
+    auto internalGainRange = NormalisableRange<float>(-6, 6, .1, 1);
     auto mixRange = NormalisableRange<float>(0, 100, 1, 1);
     auto lowMidRange = NormalisableRange<float>(20, 999, 1, 1);
     auto midHighRange = NormalisableRange<float>(1000, 20000, 1, 1);
@@ -570,29 +571,29 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     auto threshRange = NormalisableRange<float>(-60, 0, .1, 1);
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Clipper_One_Type),1}, "Clipper Type", 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_Threshold),1}, "Threshold", threshRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_One_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Clipper_One_Toggle),1}, params.at(names::Clipper_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Clipper_Two_Type),1}, "Clipper Type", 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_Threshold),1}, "Threshold", threshRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Two_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Clipper_Two_Toggle),1}, params.at(names::Clipper_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Clipper_Three_Type),1}, "Clipper Type", 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_Threshold),1}, "Threshold", threshRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Three_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Clipper_Three_Toggle),1}, params.at(names::Clipper_Three_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Clipper_Single_Type),1}, "Clipper Type", 0, 5, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_Threshold),1}, "Threshold", threshRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Clipper_Single_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Clipper_Single_Toggle),1}, params.at(names::Clipper_Single_Toggle), true));
 
@@ -605,9 +606,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Drive_Quad),1}, "Drive", moreThanOne, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Drive_Factor),1}, "Drive", lessThanOne, .05));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Drive_GB),1}, "Drive", moreThanOne, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Mix),1}, "Dry/Wet", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_One_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Waveshaper_One_Toggle),1}, params.at(names::Waveshaper_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Waveshaper_Two_Type),1}, "Type", 0, 3, 0));
@@ -615,9 +616,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Drive_Quad),1}, "Drive", moreThanOne, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Drive_Factor),1}, "Drive", lessThanOne, .05));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Drive_GB),1}, "Drive", moreThanOne, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Mix),1}, "Dry/Wet", mixRange, 1000));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Two_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Waveshaper_Two_Toggle),1}, params.at(names::Waveshaper_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Waveshaper_Three_Type),1}, "Type", 0, 3, 0));
@@ -625,9 +626,9 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Drive_Quad),1}, "Drive", moreThanOne, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Drive_Factor),1}, "Drive", lessThanOne, .05));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Drive_GB),1}, "Drive", moreThanOne, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Mix),1}, "Dry/Wet", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Three_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Waveshaper_Three_Toggle),1}, params.at(names::Waveshaper_Three_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Waveshaper_Single_Type),1}, "Type", 0, 3, 0));
@@ -635,63 +636,63 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Drive_Quad),1}, "Drive", moreThanOne, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Drive_Factor),1}, "Drive", lessThanOne, .05));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Drive_GB),1}, "Drive", moreThanOne, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Mix),1}, "Dry/Wet", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Waveshaper_Single_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Waveshaper_Single_Toggle),1}, params.at(names::Waveshaper_Single_Toggle), true));
 
     //BitCrusher Controls
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_One_Depth),1}, "Bit Depth", 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_One_Rate),1}, "Bit Rate", 1, 25, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_One_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_One_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_One_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_One_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_One_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Bitcrusher_One_Toggle),1}, params.at(names::Bitcrusher_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Two_Depth),1}, "Bit Depth", 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Two_Rate),1}, "Bit Rate", 1, 25, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Two_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Two_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Two_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Two_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Two_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Bitcrusher_Two_Toggle),1}, params.at(names::Bitcrusher_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Three_Depth),1}, "Bit Depth", 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Three_Rate),1}, "Bit Rate", 1, 25, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Three_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Three_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Three_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Three_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Three_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Bitcrusher_Three_Toggle),1}, params.at(names::Bitcrusher_Three_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Single_Depth),1}, "Bit Depth", 1, 16, 16));
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Bitcrusher_Single_Rate),1}, "Bit Rate", 1, 25, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Single_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Single_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Single_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Single_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Bitcrusher_Single_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Bitcrusher_Single_Toggle),1}, params.at(names::Bitcrusher_Single_Toggle), true));
 
     //Saturation Controls
     auto driveRange = NormalisableRange<float>(1, 10, .1, 1);
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_Drive),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_One_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Saturator_One_Toggle),1}, params.at(names::Saturator_One_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_Drive),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Two_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Saturator_Two_Toggle),1}, params.at(names::Saturator_Two_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_Drive),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Three_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique <AudioParameterBool>(juce::ParameterID{params.at(names::Saturator_Three_Toggle),1}, params.at(names::Saturator_Three_Toggle), true));
 
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_Drive),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_In),1}, "In Gain", gainRange, 0));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_In),1}, "In Gain", internalGainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Saturator_Single_Mix),1}, "Dry/Wet", mixRange, 100));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Saturator_Single_Toggle),1}, params.at(names::Saturator_Single_Toggle), true));
 
@@ -699,33 +700,33 @@ juce::AudioProcessorValueTreeState::ParameterLayout Mangl3rAudioProcessor::creat
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Wavefolder_One_Type),1}, "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_Drive_Sin),1}, "Drive", driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::WaveFolder_One_Drive_Tri),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_Mix),1}, "Mix", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_One_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Wavefolder_One_Toggle),1}, params.at(names::Wavefolder_One_Toggle), false));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Wavefolder_Two_Type),1}, "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_Drive_Sin),1}, "Drive", driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::WaveFolder_Two_Drive_Tri),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_Mix),1}, "Mix", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Two_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Wavefolder_Two_Toggle),1}, params.at(names::Wavefolder_Two_Toggle), false));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Wavefolder_Three_Type),1}, "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_Drive_Sin),1}, "Drive", driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::WaveFolder_Three_Drive_Tri),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_Mix),1}, "Mix", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Three_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Wavefolder_Three_Toggle),1}, params.at(names::Wavefolder_Three_Toggle), false));
 
     layout.add(std::make_unique<AudioParameterInt>(juce::ParameterID{params.at(names::Wavefolder_Single_Type),1}, "Type", 0, 1, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_Drive_Sin),1}, "Drive", driveRange, 1));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::WaveFolder_Single_Drive_Tri),1}, "Drive", driveRange, 1));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_In),1}, "In Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_In),1}, "In Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_Mix),1}, "Mix", mixRange, 100));
-    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_Out),1}, "Out Gain", gainRange, 0));
+    layout.add(std::make_unique<AudioParameterFloat>(juce::ParameterID{params.at(names::Wavefolder_Single_Out),1}, "Out Gain", internalGainRange, 0));
     layout.add(std::make_unique<AudioParameterBool>(juce::ParameterID{params.at(names::Wavefolder_Single_Toggle),1}, params.at(names::Wavefolder_Single_Toggle), false));
 
     return layout;

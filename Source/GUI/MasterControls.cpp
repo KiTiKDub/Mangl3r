@@ -78,7 +78,7 @@ void MasterComp::paint(juce::Graphics& g)
     g.drawFittedText((juce::String)output, rightMetersBounds, juce::Justification::centredTop, 1);
     
 #if JUCE_WINDOWS
-    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::offshore_ttf, BinaryData::offshore_ttfSize));
+    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::OFFSHORE_TTF, BinaryData::OFFSHORE_TTFSize));
     g.setFont(newFont);
 #endif
     g.setFont(topBounds.getHeight() * .95);
