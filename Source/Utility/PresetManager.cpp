@@ -12,8 +12,8 @@
 
 const juce::File PresetManager::defaultDirectory{ juce::File::getSpecialLocation(
 	juce::File::SpecialLocationType::commonDocumentsDirectory)
-		.getChildFile(ProjectInfo::companyName)
-		.getChildFile(ProjectInfo::projectName)
+		.getChildFile("KiTiK Music")
+		.getChildFile("Mangl3r")
 };
 const juce::String PresetManager::extension{ "mangler" };
 const juce::String PresetManager::presetNameProperty{ "presetName" };

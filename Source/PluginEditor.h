@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <JuceHeader.h>
+#include <juce_gui_basics/juce_gui_basics.h>
 #include "PluginProcessor.h"
 #include "GUI/kLookAndFeel.h"
 #include "GUI/MasterControls.h"
@@ -58,15 +58,6 @@ private:
     PresetPanel presetPanel;
 
     bool lastToggleState{ false };
-
-    //TODO
-        //Update Mute solo buttons, fix globabl bypass
-        //Fix crossover hz display
-        //Fix crossovers, OS, toolbar change buttons, toolbar button text
-        //Change colors of crossover lines colors
-        //Change name to Mangler
-        //Add link to more plugins
-        //change spectrum analyzer background color?
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (Mangl3rAudioProcessorEditor)
 };

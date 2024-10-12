@@ -76,12 +76,9 @@ void MasterComp::paint(juce::Graphics& g)
 
     g.drawFittedText((juce::String)input, leftMetersbounds, juce::Justification::centredTop, 1);
     g.drawFittedText((juce::String)output, rightMetersBounds, juce::Justification::centredTop, 1);
-    
-#if JUCE_WINDOWS
-    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::OFFSHORE_TTF, BinaryData::OFFSHORE_TTFSize));
+
+    auto newFont = juce::Font(juce::Typeface::createSystemTypefaceFor(BinaryData::offshore_ttf, BinaryData::offshore_ttfSize));
     g.setFont(newFont);
-#endif
-    g.setFont(topBounds.getHeight() * .95);
     topBounds.removeFromLeft(5);
     g.drawFittedText("Mangl3r", topBounds, juce::Justification::centredLeft, 1);
 }

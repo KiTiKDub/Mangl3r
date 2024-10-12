@@ -23,7 +23,7 @@ Mangl3rAudioProcessor::Mangl3rAudioProcessor()
 #endif
 {
     apvts.state.setProperty(PresetManager::presetNameProperty, "", nullptr);
-    apvts.state.setProperty("version", ProjectInfo::versionString, nullptr);
+    apvts.state.setProperty("version", "1.1.1", nullptr);
 
     presetManager = std::make_unique<PresetManager>(apvts);
 

@@ -8,7 +8,7 @@
 
 #pragma once
 
-#include <JuceHeader.h>
+#include <juce_audio_basics/juce_audio_basics.h>
 #include "DSP/kLevelMeterData.h"
 #include "DSP/DistorkEngine.h"
 #include "Utility/Params.h"
