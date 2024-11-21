@@ -16,7 +16,7 @@ void BitCrusher::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void BitCrusher::process(juce::dsp::AudioBlock<float>& block)
 {
-    if (crusherBypass) { return; };
+    if (!crusherBypass) { return; };
 
     for (int channel = 0; channel < block.getNumChannels(); channel++)
     {

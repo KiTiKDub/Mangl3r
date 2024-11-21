@@ -61,7 +61,7 @@ public:
     static juce::AudioProcessorValueTreeState::ParameterLayout createParameterLayout();
     juce::AudioProcessorValueTreeState apvts{ *this, nullptr, "parameters", createParameterLayout() };
 
-    LevelMeterData levelMeterData;
+    LevelMeterData levelMeterData, zeroDbMeterData;
     FFTData fftData;
     std::unique_ptr<PresetManager> presetManager;
     PresetManager& getPresetManger() { return *presetManager; }

@@ -44,7 +44,6 @@ ToolbarComp::ToolbarComp(AudioProcessorValueTreeState& apvts) :
     toolbarSingle.setEditingActive(true);
     toolbarSingle.getItemComponent(0)->isClicked = true;
 
-
     addAndMakeVisible(low);
     low.setComponentID("Select");
     addAndMakeVisible(mid);
@@ -162,13 +161,6 @@ void ToolbarComp::setPowerButtons(juce::AudioProcessorValueTreeState& apvts)
     auto childrenLow = toolbarLow.getChildren();
     auto childrenSingle = toolbarSingle.getChildren();
 
-    //Needs to remove "Additional Items" from the array, only on windows
-#if JUCE_WINDOWS
-    children.removeLast(1);
-    childrenMid.removeLast(1);
-    childrenLow.removeLast(1);
-    childrenSingle.removeLast(1);
-#endif
     children.addArray(childrenMid);
     children.addArray(childrenLow);
     children.addArray(childrenSingle);

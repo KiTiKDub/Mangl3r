@@ -16,6 +16,20 @@
 #include "SliderWithLabels.h"
 #include "../Utility/Params.h"
 
+struct GainCompensator : public juce::Component
+{
+  GainCompensator(Mangl3rAudioProcessor &);
+  ~GainCompensator() {};
+
+  void paint(juce::Graphics &g) override;
+  void resized() override {};
+  float getCompensateValue();
+
+private:
+  Mangl3rAudioProcessor &audioP;
+  juce::SmoothedValue<float> smoothValue;
+};
+
 struct MasterComp : public juce::Component, juce::Timer
 {
     MasterComp(Mangl3rAudioProcessor&);
@@ -47,6 +61,8 @@ private:
 
     juce::ToggleButton bypass{ "On" }, single{ "Single" };
     juce::AudioProcessorValueTreeState::ButtonAttachment bypassAT, singleAT;
+
+    GainCompensator gainCompensator;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MasterComp)
 };

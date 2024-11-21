@@ -263,15 +263,18 @@ int Mangl3rAudioProcessor::getCurrentProgram()
 
 void Mangl3rAudioProcessor::setCurrentProgram (int index)
 {
+    juce::ignoreUnused();
 }
 
 const juce::String Mangl3rAudioProcessor::getProgramName (int index)
 {
+    juce::ignoreUnused();
     return {};
 }
 
 void Mangl3rAudioProcessor::changeProgramName (int index, const juce::String& newName)
 {
+    juce::ignoreUnused();
 }
 
 //==============================================================================
@@ -368,6 +371,7 @@ bool Mangl3rAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 
 void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce::MidiBuffer& midiMessages)
 {
+    juce::ignoreUnused();
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
@@ -489,6 +493,9 @@ void Mangl3rAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, juce
             data[s] = (data[s] * masterMix->get() / 100) + (dry[s] * (1 - masterMix->get() / 100));
         }
     }
+
+    zeroDbMeterData.process(false, 0, buffer);
+    zeroDbMeterData.process(false, 1, buffer);
 
     masterOut.setGainDecibels(masterOutValue->get());
     masterOut.process(singleContext);

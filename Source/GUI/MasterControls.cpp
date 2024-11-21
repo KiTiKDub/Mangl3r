@@ -13,7 +13,8 @@
 MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     audioP(p),
     bypassAT(p.apvts, "Global Bypass", bypass),
-    singleAT(p.apvts, "Single Band Mode", single)
+    singleAT(p.apvts, "Single Band Mode", single),
+    gainCompensator(p)
 
 {
     updateSWL(p.apvts);
@@ -30,6 +31,8 @@ MasterComp::MasterComp(Mangl3rAudioProcessor& p) :
     addAndMakeVisible(single);
 
     addAndMakeVisible(gumroad);
+
+    addAndMakeVisible(gainCompensator);
 
     startTimerHz(24);
 }
@@ -73,6 +76,12 @@ void MasterComp::paint(juce::Graphics& g)
 
     auto rightMetersBounds = meterBounds.reduced(bounds.getWidth() * .4, 0);
     rightMetersBounds.translate(meterBounds.getWidth() * .35, 0);
+
+    auto compArea = meterBounds.reduced(bounds.getWidth() * .47, 0);
+    compArea.removeFromTop(compArea.getHeight() * .535);
+    compArea.removeFromBottom(compArea.getHeight() * .15);
+    compArea.translate(meterBounds.getWidth() * .2, -5);
+    gainCompensator.setBounds(compArea);
 
     g.drawFittedText((juce::String)input, leftMetersbounds, juce::Justification::centredTop, 1);
     g.drawFittedText((juce::String)output, rightMetersBounds, juce::Justification::centredTop, 1);
@@ -192,4 +201,43 @@ void MasterComp::updateSWL(juce::AudioProcessorValueTreeState& apvts)
         {
             addLabelPairs(mix->labels, mixParam, "%");
         };
+}
+
+GainCompensator::GainCompensator(Mangl3rAudioProcessor &p) :
+    audioP(p)
+{
+    smoothValue.reset(44100, .0025f);
+}
+
+void GainCompensator::paint(juce::Graphics &g)
+{
+    auto bounds = getLocalBounds();
+    g.setColour(juce::Colours::white);
+    // g.drawRect(bounds);
+
+    auto position = juce::jmap(getCompensateValue(), -24.f, 0.f, (float)bounds.getHeight(), 5.f);
+    smoothValue.setTargetValue(position);
+
+    juce::Point<float> tip, top, bottom;
+    tip.setXY(0, smoothValue.getNextValue());
+    top.setXY(bounds.getWidth(), smoothValue.getNextValue() - 5);
+    bottom.setXY(bounds.getWidth(), smoothValue.getNextValue() + 5);
+
+    juce::Path triangle;
+    triangle.addTriangle(tip, top, bottom);
+    g.fillPath(triangle);
+}
+
+float GainCompensator::getCompensateValue()
+{
+    auto inRMS = (audioP.levelMeterData.getRMS(0) + audioP.levelMeterData.getRMS(1)) / 2;
+    auto outRMS = (audioP.zeroDbMeterData.getOutRMS(0) + audioP.zeroDbMeterData.getOutRMS(1)) / 2;
+
+    auto compensate = inRMS - outRMS;
+    if (compensate > 0)
+    {
+        compensate = 0;
+    }
+
+    return compensate;
 }

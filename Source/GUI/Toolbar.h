@@ -57,6 +57,7 @@ struct ToolbarItem : public KitikToolbarItemComponent
 
     void contentAreaChanged(const juce::Rectangle<int>& newArea) override
     {
+        juce::ignoreUnused();
         auto bounds = getLocalBounds();
 
         auto toggle = bounds.reduced(bounds.getWidth() * .25, bounds.getHeight() * .25);

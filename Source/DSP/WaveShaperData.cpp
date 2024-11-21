@@ -16,7 +16,7 @@ void WaveShaper::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void WaveShaper::process(juce::dsp::AudioBlock<float>& block)
 {
-    if (waveShaperBypass) { return; };
+    if (!waveShaperBypass) { return; };
 
     for (int channel = 0; channel < block.getNumChannels(); channel++)
     {

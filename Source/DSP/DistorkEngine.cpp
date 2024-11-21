@@ -16,6 +16,7 @@ void DistorkEngine::prepareToPlay(juce::dsp::ProcessSpec& spec)
     clipper.prepareToPlay(spec);
     waveshaper.prepareToPlay(spec);
     bitcrusher.prepareToPlay(spec);
+    wavefolder.prepareToPlay(spec);
 }
 
 void DistorkEngine::process(juce::dsp::AudioBlock<float>& block, std::vector<int>& distortionProcessOrder)
@@ -45,4 +46,5 @@ void DistorkEngine::updateParams()
     clipper.updateParams(clipperToggle->get(), clipperSelect->get(), clipperThresh->get(), clipperInGain->get(), clipperOutGain->get(), clipperMix->get());
     waveshaper.updateParams(waveShaperToggle->get(), waveShaperSelect->get(), waveShaperFactorsHolder, waveShaperInGain->get(), waveShaperOutGain->get(), waveShaperMix->get());
     bitcrusher.updateParams(crusherToggle->get(), crusherBitDepth->get(), crusherBitRate->get(), crusherInGain->get(), crusherOutGain->get(), crusherMix->get());
+    wavefolder.updateParams(wavefolderToggle->get(), wavefolderSelect->get(), wavefolderFactorsHolder, wavefolderInGain->get(), wavefolderOutGain->get(), wavefolderMix->get());
 }

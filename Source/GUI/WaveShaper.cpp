@@ -118,6 +118,10 @@ void WaveShaperComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
         {
             addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
         };
+    distort.get()->onValueChange = [this, &distortParam]()
+    {
+        addLabelPairs(distort->labels, 1, 3, distortParam, "", 20);
+    };
     select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
         {
             addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
@@ -184,7 +188,6 @@ void WaveShaperComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, Toolb
     select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
         {
             addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
-            updateDistortType(apvts, tb);
         };
     mix.get()->onValueChange = [this, &mixParam]()
         {

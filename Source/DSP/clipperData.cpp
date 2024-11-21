@@ -17,7 +17,7 @@ void Clipper::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void Clipper::process(juce::dsp::AudioBlock<float>& block)
 {
-    if (clipperBypass) { return; };
+    if (!clipperBypass) { return; };
 
     for (int channel = 0; channel < block.getNumChannels(); channel++)
     {

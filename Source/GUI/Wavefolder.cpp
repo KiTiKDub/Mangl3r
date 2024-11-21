@@ -114,6 +114,10 @@ void WavefolderComp::updateAttachments(juce::AudioProcessorValueTreeState& apvts
         {
             addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
         };
+    distort.get()->onValueChange = [this, &distortParm]()
+    {
+        addLabelPairs(distort->labels, 1, 3, distortParm, "", 20);
+    };
     select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
         {
             addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
@@ -174,10 +178,14 @@ void WavefolderComp::updateRSWL(juce::AudioProcessorValueTreeState& apvts, Toolb
         {
             addLabelPairs(inGain->labels, 1, 3, inGainParam, " dB");
         };
+    distort.get()->onValueChange = [this, &distortParm]()
+    {
+        addLabelPairs(distort->labels, 1, 3, distortParm, "", 20);
+    };
     select.get()->onValueChange = [this, &selectParam, &apvts, &tb]()
         {
             addLabelPairs(select->labels, 1, 3, selectParam, "", 20, typeText);
-            updateDistortType(apvts, tb);
+            // updateDistortType(apvts, tb);
         };
     mix.get()->onValueChange = [this, &mixParam]()
         {

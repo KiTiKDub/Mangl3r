@@ -16,7 +16,7 @@ void Saturation::prepareToPlay(juce::dsp::ProcessSpec& spec)
 
 void Saturation::process(juce::dsp::AudioBlock<float>& block)
 {
-    if (satBypass) { return; };
+    if (!satBypass) { return; };
 
     for (int channel = 0; channel < block.getNumChannels(); channel++)
     {
